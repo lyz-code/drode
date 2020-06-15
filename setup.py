@@ -50,7 +50,7 @@ setup(
     },
     install_requires=[
         "argcomplete>=1.11.1",
-        "boto3>=1.13.24"
+        "boto3>=1.13.24",
         "ruamel.yaml>=0.16.10",
         "requests>=2.23.0",
         "tabulate>=0.8.7"
