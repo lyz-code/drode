@@ -1,0 +1,29 @@
+# ID of the project to be acted upon.
+active_project:
+
+# Projects definition, a list of items with the following structure:
+# * id: Project identifier, it's what you'll use in the command line to
+#     reference it, so keep it short.
+# * name: A more descriptive definition of your project.
+# * pipeline: Drone pipeline identifier, usually in the form of `repo_name` or
+#     `organization_name/repo_name`.
+# * aws: A dictionary of AWS resources related to the project. With the
+#      following keys:
+#     autoscaling_groups:
+#       production: Production autoscaling group name.
+#       staging: Staging autoscaling group name.
+#
+#
+
+projects:
+#  test_project_1:
+#    name: Test project 1
+#    pipeline: test_projects/webpage
+#
+#  test_project_2:
+#    name: Test project 2
+#    pipeline: test_projects/backend
+#    aws:
+#      autoscaling_groups:
+#        production: backend-production
+#        staging: backend-staging

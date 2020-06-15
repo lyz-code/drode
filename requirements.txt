@@ -1,0 +1,8 @@
+argcomplete>=1.11.1
+boto3>=1.13.24
+requests>=2.23.0
+ruamel.yaml>=0.16.10
+pytest
+pytest-cov
+requests-mock
+tabulate>=0.8.7
