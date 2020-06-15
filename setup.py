@@ -37,7 +37,7 @@ class PostInstallCommand(install):
 
 setup(
     name='drode',
-    version=__version__,
+    version=__version__, # noqa: F821
     description='Wrapper over Drone API to make deployments an easier task',
     author='lyz',
     author_email='lyz@riseup.net',
@@ -48,7 +48,6 @@ setup(
     cmdclass={
         "install": PostInstallCommand,
     },
-
     install_requires=[
         "argcomplete>=1.11.1",
         "boto3>=1.13.24"
