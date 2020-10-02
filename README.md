@@ -90,7 +90,7 @@ i-32okgadslk3jos03l  192.21.2.158  Healthy/InService  2020-06-09T18:50  staging-
 To install `drode`, simply:
 
 ```bash
-pip3 install git+git://github.com/lyz-code/drode
+pip install drode
 ```
 
 `drode` configuration is done through the yaml file located at
