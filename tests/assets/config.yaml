@@ -3,7 +3,7 @@
 verbose: info
 
 # ID of the project to be acted upon.
-active_project:
+active_project: test_project_1
 
 # Projects definition, a list of items with the following structure:
 # * id: Project identifier, it's what you'll use in the command line to
@@ -20,14 +20,14 @@ active_project:
 #
 
 projects:
-#  test_project_1:
-#    name: Test project 1
-#    pipeline: test_projects/webpage
-#
-#  test_project_2:
-#    name: Test project 2
-#    pipeline: test_projects/backend
-#    aws:
-#      autoscaling_groups:
-#        production: backend-production
-#        staging: backend-staging
+  test_project_1:
+    name: Test project 1
+    pipeline: test_projects/webpage
+    aws:
+      autoscaling_groups:
+        production: backend-production
+        staging: backend-staging
+
+  test_project_2:
+    name: Test project 2
+    pipeline: test_projects/backend
