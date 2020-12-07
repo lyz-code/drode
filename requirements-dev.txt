@@ -53,14 +53,14 @@ flake8-typing-imports==1.10.1  # via -r requirements-dev.in
 flake8-use-fstring==1.1   # via -r requirements-dev.in
 flake8-variables-names==0.0.3  # via -r requirements-dev.in
 flake8==3.8.4             # via dlint, flake8-annotations, flake8-bugbear, flake8-comprehensions, flake8-debugger, flake8-docstrings, flake8-eradicate, flake8-expression-complexity, flake8-markdown, flake8-mutable, flake8-polyfill, flake8-pytest, flake8-simplify, flake8-typing-imports, flake8-use-fstring, flakehell
-flakehell==0.7.0          # via -r requirements-dev.in
+flakehell==0.7.1          # via -r requirements-dev.in
 future==0.18.2            # via lunr
 gitdb==4.0.5              # via gitpython
 gitpython==3.1.11         # via bandit, mkdocs-git-revision-date-localized-plugin
 htmlmin==0.1.12           # via mkdocs-minify-plugin
 identify==1.5.10          # via pre-commit
 idna==2.10                # via -r requirements.txt, requests
-importlib-metadata==3.1.0  # via -r requirements.txt, argcomplete, flake8, flake8-comprehensions, flake8-simplify, flake8-typing-imports, markdown, pluggy, pre-commit, pytest, stevedore, virtualenv
+importlib-metadata==3.1.0  # via -r requirements.txt
 iniconfig==1.1.1          # via pytest
 isort==5.6.4              # via -r requirements-dev.in, pylint
 jinja2==2.11.2            # via mkdocs
@@ -122,7 +122,7 @@ tabulate==0.8.7           # via -r requirements.txt
 toml==0.10.2              # via black, dparse, flakehell, pre-commit, pylint, pytest
 tornado==6.1              # via livereload, mkdocs
 tqdm==4.53.0              # via nltk
-typed-ast==1.4.1          # via astroid, black, flake8-annotations, mypy
+typed-ast==1.4.1          # via black, mypy
 typing-extensions==3.7.4.3  # via black, mypy
 urllib3==1.26.2           # via -r requirements.txt, botocore, flakehell, requests
 virtualenv==20.2.1        # via pre-commit
