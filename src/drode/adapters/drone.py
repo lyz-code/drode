@@ -100,7 +100,9 @@ class Drone:
                 f"the pipeline {project_pipeline}"
             ) from error
 
-    def get(self, url: str, method: str = "get") -> requests.models.Response:
+    def get(
+        self, url: str, method: str = "get", max_retries: int = 5
+    ) -> requests.models.Response:
         """Fetch the content of an url.
 
         It's a requests wrapper to handle errors and configuration.
@@ -115,19 +117,27 @@ class Drone:
         Raises:
             DroneAPIError: If the drone API returns a response with status code != 200.
         """
-        if method == "post":
-            response = requests.post(
-                url,
-                headers={"Authorization": f"Bearer {self.drone_token}"},
-            )
-        else:
-            response = requests.get(
-                url,
-                headers={"Authorization": f"Bearer {self.drone_token}"},
-            )
+        retry = 0
+        while retry < max_retries:
+            try:
+                if method == "post":
+                    response = requests.post(
+                        url,
+                        headers={"Authorization": f"Bearer {self.drone_token}"},
+                    )
+                else:
+                    response = requests.get(
+                        url,
+                        headers={"Authorization": f"Bearer {self.drone_token}"},
+                    )
 
-        if response.status_code == 200:
-            return response
+                if response.status_code == 200:
+                    return response
+                retry += 1
+                log.debug(f"There was an error fetching url {url}")
+            except requests.exceptions.RequestException:
+                retry += 1
+                log.debug(f"There was an error fetching url {url}")
 
         raise DroneAPIError(
             f"{response.status_code} error while trying to access {url}"
