@@ -8,3 +8,6 @@ mkdocs-autolinks-plugin
 mkdocs-material
 mkdocstrings
 markdown-include
+
+# Required for TypedDict
+mypy
