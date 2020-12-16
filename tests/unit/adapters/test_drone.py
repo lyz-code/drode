@@ -259,13 +259,48 @@ def test_get_generates_post_request(drone: Drone, requests_mock: Mocker) -> None
     )
 
 
+def test_get_retries_url_if_there_are_errors(
+    drone: Drone, requests_mock: Mocker
+) -> None:
+    """
+    Given: A Drone adapter.
+    When: Using the get method and the API returns a 401 less than the maximum allowed.
+    Then: A requests object is returned with the query result.
+    """
+    requests_mock.get(
+        "http://url",
+        [
+            {"status_code": 401},
+            {"status_code": 401},
+            {"status_code": 401},
+            {"status_code": 401},
+            {"text": "hi", "status_code": 200},
+        ],
+    )
+
+    result = drone.get("http://url")
+
+    assert result.text == "hi"
+    assert requests_mock.request_history[0].method == "GET"
+
+
 def test_get_handles_url_errors(drone: Drone, requests_mock: Mocker) -> None:
     """
     Given: A Drone adapter.
-    When: Using the get method and the API returns a 401.
+    When: Using the get method and the API returns a 401 more than the allowed retries.
     Then: a DroneAPIError exception is raised.
     """
-    requests_mock.get("http://url", status_code=401)
+    requests_mock.get(
+        "http://url",
+        [
+            {"status_code": 401},
+            {"status_code": 401},
+            {"status_code": 401},
+            {"status_code": 401},
+            {"status_code": 401},
+            {"status_code": 401},
+        ],
+    )
 
     with pytest.raises(DroneAPIError) as error:
         drone.get("http://url")
