@@ -31,6 +31,8 @@ mkdocs-material==6.1.7    # via -r docs/requirements.in, -r docs/requirements.tx
 mkdocs-minify-plugin==0.3.0  # via -r docs/requirements.in, -r docs/requirements.txt
 mkdocs==1.1.2             # via -r docs/requirements.in, -r docs/requirements.txt, mkdocs-autolinks-plugin, mkdocs-git-revision-date-localized-plugin, mkdocs-htmlproofer-plugin, mkdocs-material, mkdocs-minify-plugin, mkdocstrings
 mkdocstrings==0.13.6      # via -r docs/requirements.in, -r docs/requirements.txt
+mypy-extensions==0.4.3    # via mypy
+mypy==0.790               # via -r docs/requirements.in
 nltk==3.5                 # via -r docs/requirements.txt, lunr
 pygments==2.7.3           # via -r docs/requirements.txt, mkdocs-material
 pymdown-extensions==8.0.1  # via -r docs/requirements.txt, mkdocs-material, mkdocstrings
@@ -44,6 +46,7 @@ smmap==3.0.4              # via -r docs/requirements.txt, gitdb
 soupsieve==2.1            # via -r docs/requirements.txt, beautifulsoup4
 tornado==6.1              # via -r docs/requirements.txt, livereload, mkdocs
 tqdm==4.54.1              # via -r docs/requirements.txt, nltk
-typing-extensions==3.7.4.3  # via -r docs/requirements.txt, importlib-metadata
+typed-ast==1.4.1          # via mypy
+typing-extensions==3.7.4.3  # via -r docs/requirements.txt, importlib-metadata, mypy
 urllib3==1.26.2           # via -r docs/requirements.txt, requests
 zipp==3.4.0               # via -r docs/requirements.txt, importlib-metadata
