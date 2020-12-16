@@ -1,23 +1,34 @@
+"""Python package building configuration."""
+
 import logging
 import os
+import re
 import shutil
+from glob import glob
+from os.path import basename, splitext
 
 from setuptools import find_packages, setup
+from setuptools.command.egg_info import egg_info
 from setuptools.command.install import install
 
 log = logging.getLogger(__name__)
+# Avoid loading the package to extract the version
+with open("src/drode/version.py") as fp:
+    version_match = re.search(r'__version__ = "(?P<version>.*)"', fp.read())
+    if version_match is None:
+        raise ValueError("The version is not specified in the version.py file.")
+    version = version_match["version"]
 
-# Get the version from drode/version.py without importing the package
-exec(compile(open("drode/version.py").read(), "drode/version.py", "exec"))
 
-
-class PostInstallCommand(install):
+class PostInstallCommand(install):  # type: ignore
     """Post-installation for installation mode."""
 
-    def run(self):
+    def run(self) -> None:
+        """Create required directories and files."""
         install.run(self)
+
         try:
-            data_directory = os.path.expanduser("~/.local/share/drode")
+            data_directory = os.path.expanduser("~/.local/share/my_test_project")
             os.makedirs(data_directory)
             log.info("Data directory created")
         except FileExistsError:
@@ -34,24 +45,30 @@ class PostInstallCommand(install):
             log.info("Copied default configuration template")
 
 
+class PostEggInfoCommand(egg_info):  # type: ignore
+    """Post-installation for egg_info mode."""
+
+    def run(self) -> None:
+        """Create required directories and files."""
+        egg_info.run(self)
+
+
 setup(
     name="drode",
-    version=__version__,  # noqa: F821
-    description="Wrapper over Drone API to make deployments an easier task",
-    author="lyz",
-    author_email="lyz@riseup.net",
+    version=version,
+    description="A Cookiecutter template for creating Python projects",
+    author="Lyz",
+    author_email="lyz-code-security-advisories@riseup.net",
     license="GNU General Public License v3",
-    url="https://github.com/lyz-code/drode",
     long_description=open("README.md").read(),
-    packages=find_packages(exclude=("tests",)),
-    entry_points={"console_scripts": ["drode = drode:main"]},
-    cmdclass={
-        "install": PostInstallCommand,
-    },
-    python_requires=">=3.6",
     long_description_content_type="text/markdown",
+    url="https://github.com/lyz-code/drode",
+    packages=find_packages("src"),
+    package_dir={"": "src"},
+    py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
+    python_requires=">=3.6",
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
         "Operating System :: Unix",
@@ -64,11 +81,17 @@ setup(
         "Topic :: Utilities",
         "Natural Language :: English",
     ],
+    entry_points="""
+        [console_scripts]
+        drode=drode.entrypoints.cli:cli
+    """,
+    cmdclass={"install": PostInstallCommand, "egg_info": PostEggInfoCommand},
     install_requires=[
-        "argcomplete>=1.11.1",
-        "boto3>=1.13.24",
-        "ruamel.yaml>=0.16.10",
-        "requests>=2.23.0",
-        "tabulate>=0.8.7",
+        "argcomplete",
+        "boto3",
+        "ruamel.yaml",
+        "requests",
+        "tabulate",
+        "Click",
     ],
 )

@@ -1,0 +1,24 @@
+{
+    "template": "git@github.com:lyz-code/cookiecutter-python-project.git",
+    "commit": "389b589d4a7995b8469c4d31c5a5f7d5d4458ac5",
+    "context": {
+        "cookiecutter": {
+            "project_name": "Drode",
+            "project_slug": "drode",
+            "project_description": "`drode` is a wrapper over the Drone and AWS APIs to make deployments more user friendly.",
+            "requirements": "argcomplete, boto3, ruyaml, requests, tabulate",
+            "configure_command_line": "True",
+            "read_configuration_from_yaml": "True",
+            "github_user": "lyz-code",
+            "github_token_pass_path": "internet/github.lyz-code.api_token",
+            "pypi_token_pass_path": "internet/pypi.token",
+            "test_pypi_token_pass_path": "internet/test.pypi.token",
+            "author": "Lyz",
+            "author_email": "lyz-code-security-advisories@riseup.net",
+            "security_advisories_email": "lyz-code-security-advisories@riseup.net",
+            "project_underscore_slug": "drode",
+            "_template": "git@github.com:lyz-code/cookiecutter-python-project.git"
+        }
+    },
+    "directory": null
+}
