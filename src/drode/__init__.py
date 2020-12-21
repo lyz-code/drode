@@ -2,4 +2,6 @@
 
 from typing import List
 
-__all__: List[str] = []
+from drode.adapters.aws import AWS
+
+__all__: List[str] = ["AWS"]
