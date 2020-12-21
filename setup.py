@@ -93,7 +93,7 @@ setup(
         # Until we migrate to python 3.8 so we can import TypedDict directly
         "mypy_extensions",
         # Until the charset 4.0.0 is globally accepted
-        "requests==2.25.0",
+        "requests==2.25.1",
         "tabulate",
         "Click",
     ],
