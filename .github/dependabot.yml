@@ -1,8 +1,9 @@
 ---
-version: 2
-
-updates:
-  - package-ecosystem: pip
+version: 1
+update_configs:
+  - package_manager: pip
     directory: /
-    schedule:
-      interval: weekly
+    update_schedule: live
+    automerged_updates:
+      - match:
+          update_type: all

@@ -154,3 +154,88 @@ def test_get_autoscaling_handles_unexistent(aws: AWS, boto: Mock) -> None:
     assert "There are no autoscaling groups named inexistent_autoscaling_group" in str(
         error.value
     )
+
+
+def test_get_autoscaling_handles_launch_templates(aws: AWS, boto: Mock) -> None:
+    """
+    Given: An AWS adapter and an existing autoscaling group using launch templates.
+    When: Using the get_autoscaling_group.
+    Then: The information of the launch template is returned
+    """
+    boto = boto.client.return_value
+    boto.describe_auto_scaling_groups.return_value = {
+        "AutoScalingGroups": [
+            {
+                "AutoScalingGroupARN": "autoscaling_arn",
+                "AutoScalingGroupName": "production_autoscaling_group_name",
+                "AvailabilityZones": ["us-west-1a", "us-west-1b", "us-west-1c"],
+                "CreatedTime": datetime.datetime(2020, 5, 19, 16, 8, 26, 535000),
+                "DefaultCooldown": 300,
+                "DesiredCapacity": 2,
+                "EnabledMetrics": [],
+                "HealthCheckGracePeriod": 300,
+                "HealthCheckType": "ELB",
+                "Instances": [
+                    {
+                        "AvailabilityZone": "us-west-1d",
+                        "HealthStatus": "Healthy",
+                        "InstanceId": "i-xxxxxxxxxxxxxxxxx",
+                        "LaunchTemplate": {
+                            "LaunchTemplateId": "lt-xxxxxxxxxxxxxxxxx",
+                            "LaunchTemplateName": "old-launch-template-name",
+                            "Version": "1",
+                        },
+                        "LifecycleState": "InService",
+                        "ProtectedFromScaleIn": False,
+                    },
+                ],
+                "LaunchTemplate": {
+                    "LaunchTemplateId": "lt-xxxxxxxxxxxxxxxxx",
+                    "LaunchTemplateName": "launch-template-name",
+                    "Version": "1",
+                },
+                "LoadBalancerNames": [],
+                "MaxSize": 10,
+                "MinSize": 2,
+                "NewInstancesProtectedFromScaleIn": False,
+                "ServiceLinkedRoleARN": "servicelinkedrolearn",
+                "SuspendedProcesses": [],
+                "TargetGroupARNs": ["target_group_arn"],
+                "TerminationPolicies": ["Default"],
+            }
+        ],
+        "ResponseMetadata": {"HTTPStatusCode": 200},
+    }
+    # ECE001: Expression is too complex (7.5 > 7). It's the way the API is defined.
+    boto.describe_instances.return_value = {  # noqa: ECE001
+        "Reservations": [
+            {
+                "Groups": [],
+                "Instances": [
+                    {
+                        "InstanceType": "t2.medium",
+                        "LaunchTime": datetime.datetime(2020, 6, 8, 11, 29, 27),
+                        "PrivateIpAddress": "192.168.1.13",
+                        "State": {"Code": 16, "Name": "running"},
+                    }
+                ],
+            }
+        ],
+        "ResponseMetadata": {"HTTPStatusCode": 200},
+    }
+    desired_result = {
+        "template": "launch-template-name:1",
+        "instances": [
+            {
+                "Instance": "i-xxxxxxxxxxxxxxxxx",
+                "IP": "192.168.1.13",
+                "Status": "Healthy/InService",
+                "Created": "2020-06-08T11:29",
+                "Template": "old-launch-template-name:1",
+            }
+        ],
+    }
+
+    result = aws.get_autoscaling_group("production_autoscaling_group_name")
+
+    assert result == desired_result

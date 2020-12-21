@@ -80,7 +80,16 @@ class AWS:
             autoscaling_group = autoscaling.describe_auto_scaling_groups(
                 AutoScalingGroupNames=[autoscaling_name]
             )["AutoScalingGroups"][0]
-            autoscaler_info["template"] = autoscaling_group["LaunchConfigurationName"]
+            try:
+                autoscaler_info["template"] = autoscaling_group[
+                    "LaunchConfigurationName"
+                ]
+            except KeyError:
+                autoscaler_info["template"] = (
+                    f'{autoscaling_group["LaunchTemplate"]["LaunchTemplateName"][:35]}'
+                    f':{autoscaling_group["LaunchTemplate"]["Version"]}'
+                )
+
         except IndexError as error:
             raise AWSStateError(
                 f"There are no autoscaling groups named {autoscaling_name}"
@@ -90,6 +99,13 @@ class AWS:
             ec2_data = ec2.describe_instances(
                 InstanceIds=[instance_data["InstanceId"]]
             )["Reservations"][0]["Instances"][0]
+            try:
+                instance_template = instance_data["LaunchConfigurationName"][:35]
+            except KeyError:
+                instance_template = (
+                    f'{instance_data["LaunchTemplate"]["LaunchTemplateName"][:35]}'
+                    f':{instance_data["LaunchTemplate"]["Version"]}'
+                )
 
             autoscaler_info["instances"].append(
                 {
@@ -100,7 +116,7 @@ class AWS:
                         f"{instance_data['LifecycleState']}"
                     ),
                     "Created": ec2_data["LaunchTime"].strftime("%Y-%m-%dT%H:%M"),
-                    "Template": instance_data["LaunchConfigurationName"][:35],
+                    "Template": instance_template,
                 }
             )
 
