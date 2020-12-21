@@ -50,7 +50,16 @@
         <span class=n>autoscaling_group</span> <span class=o>=</span> <span class=n>autoscaling</span><span class=o>.</span><span class=n>describe_auto_scaling_groups</span><span class=p>(</span>
             <span class=n>AutoScalingGroupNames</span><span class=o>=</span><span class=p>[</span><span class=n>autoscaling_name</span><span class=p>]</span>
         <span class=p>)[</span><span class=s2>"AutoScalingGroups"</span><span class=p>][</span><span class=mi>0</span><span class=p>]</span>
-        <span class=n>autoscaler_info</span><span class=p>[</span><span class=s2>"template"</span><span class=p>]</span> <span class=o>=</span> <span class=n>autoscaling_group</span><span class=p>[</span><span class=s2>"LaunchConfigurationName"</span><span class=p>]</span>
+        <span class=k>try</span><span class=p>:</span>
+            <span class=n>autoscaler_info</span><span class=p>[</span><span class=s2>"template"</span><span class=p>]</span> <span class=o>=</span> <span class=n>autoscaling_group</span><span class=p>[</span>
+                <span class=s2>"LaunchConfigurationName"</span>
+            <span class=p>]</span>
+        <span class=k>except</span> <span class=ne>KeyError</span><span class=p>:</span>
+            <span class=n>autoscaler_info</span><span class=p>[</span><span class=s2>"template"</span><span class=p>]</span> <span class=o>=</span> <span class=p>(</span>
+                <span class=sa>f</span><span class=s1>'</span><span class=si>{</span><span class=n>autoscaling_group</span><span class=p>[</span><span class=s2>"LaunchTemplate"</span><span class=p>][</span><span class=s2>"LaunchTemplateName"</span><span class=p>][:</span><span class=mi>35</span><span class=p>]</span><span class=si>}</span><span class=s1>'</span>
+                <span class=sa>f</span><span class=s1>':</span><span class=si>{</span><span class=n>autoscaling_group</span><span class=p>[</span><span class=s2>"LaunchTemplate"</span><span class=p>][</span><span class=s2>"Version"</span><span class=p>]</span><span class=si>}</span><span class=s1>'</span>
+            <span class=p>)</span>
+
     <span class=k>except</span> <span class=ne>IndexError</span> <span class=k>as</span> <span class=n>error</span><span class=p>:</span>
         <span class=k>raise</span> <span class=n>AWSStateError</span><span class=p>(</span>
             <span class=sa>f</span><span class=s2>"There are no autoscaling groups named </span><span class=si>{</span><span class=n>autoscaling_name</span><span class=si>}</span><span class=s2>"</span>
@@ -60,6 +69,13 @@
         <span class=n>ec2_data</span> <span class=o>=</span> <span class=n>ec2</span><span class=o>.</span><span class=n>describe_instances</span><span class=p>(</span>
             <span class=n>InstanceIds</span><span class=o>=</span><span class=p>[</span><span class=n>instance_data</span><span class=p>[</span><span class=s2>"InstanceId"</span><span class=p>]]</span>
         <span class=p>)[</span><span class=s2>"Reservations"</span><span class=p>][</span><span class=mi>0</span><span class=p>][</span><span class=s2>"Instances"</span><span class=p>][</span><span class=mi>0</span><span class=p>]</span>
+        <span class=k>try</span><span class=p>:</span>
+            <span class=n>instance_template</span> <span class=o>=</span> <span class=n>instance_data</span><span class=p>[</span><span class=s2>"LaunchConfigurationName"</span><span class=p>][:</span><span class=mi>35</span><span class=p>]</span>
+        <span class=k>except</span> <span class=ne>KeyError</span><span class=p>:</span>
+            <span class=n>instance_template</span> <span class=o>=</span> <span class=p>(</span>
+                <span class=sa>f</span><span class=s1>'</span><span class=si>{</span><span class=n>instance_data</span><span class=p>[</span><span class=s2>"LaunchTemplate"</span><span class=p>][</span><span class=s2>"LaunchTemplateName"</span><span class=p>][:</span><span class=mi>35</span><span class=p>]</span><span class=si>}</span><span class=s1>'</span>
+                <span class=sa>f</span><span class=s1>':</span><span class=si>{</span><span class=n>instance_data</span><span class=p>[</span><span class=s2>"LaunchTemplate"</span><span class=p>][</span><span class=s2>"Version"</span><span class=p>]</span><span class=si>}</span><span class=s1>'</span>
+            <span class=p>)</span>
 
         <span class=n>autoscaler_info</span><span class=p>[</span><span class=s2>"instances"</span><span class=p>]</span><span class=o>.</span><span class=n>append</span><span class=p>(</span>
             <span class=p>{</span>
@@ -70,7 +86,7 @@
                     <span class=sa>f</span><span class=s2>"</span><span class=si>{</span><span class=n>instance_data</span><span class=p>[</span><span class=s1>'LifecycleState'</span><span class=p>]</span><span class=si>}</span><span class=s2>"</span>
                 <span class=p>),</span>
                 <span class=s2>"Created"</span><span class=p>:</span> <span class=n>ec2_data</span><span class=p>[</span><span class=s2>"LaunchTime"</span><span class=p>]</span><span class=o>.</span><span class=n>strftime</span><span class=p>(</span><span class=s2>"%Y-%m-</span><span class=si>%d</span><span class=s2>T%H:%M"</span><span class=p>),</span>
-                <span class=s2>"Template"</span><span class=p>:</span> <span class=n>instance_data</span><span class=p>[</span><span class=s2>"LaunchConfigurationName"</span><span class=p>][:</span><span class=mi>35</span><span class=p>],</span>
+                <span class=s2>"Template"</span><span class=p>:</span> <span class=n>instance_template</span><span class=p>,</span>
             <span class=p>}</span>
         <span class=p>)</span>
 
