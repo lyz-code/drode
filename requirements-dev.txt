@@ -17,8 +17,8 @@ babel==2.9.0              # via -r docs/requirements.txt, mkdocs-git-revision-da
 bandit==1.7.0             # via -r requirements-dev.in
 beautifulsoup4==4.9.3     # via -r docs/requirements.txt, mkdocs-htmlproofer-plugin, mkdocstrings
 black==20.8b1             # via -r requirements-dev.in
-boto3==1.16.40            # via -r requirements.txt
-botocore==1.19.40         # via -r requirements.txt, boto3, s3transfer
+boto3==1.16.43            # via -r requirements.txt
+botocore==1.19.43         # via -r requirements.txt, boto3, s3transfer
 certifi==2020.12.5        # via -r docs/requirements.txt, -r requirements.txt, requests
 cfgv==3.2.0               # via pre-commit
 chardet==3.0.4            # via -r docs/requirements.txt, -r requirements.txt, requests
@@ -137,4 +137,4 @@ zipp==3.4.0               # via -r docs/requirements.txt, -r requirements.txt, i
 
 # The following packages are considered to be unsafe in a requirements file:
 pip==20.3.3               # via pip-tools
-setuptools==51.1.0.post20201221  # via flake8-annotations-complexity, flake8-expression-complexity, flake8-variables-names, ruyaml, safety, yamllint
+setuptools==51.1.0        # via flake8-annotations-complexity, flake8-expression-complexity, flake8-variables-names, ruyaml, safety, yamllint
