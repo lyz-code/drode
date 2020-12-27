@@ -54,6 +54,17 @@ markers = [
     "secondary: mark tests that use functionality tested in the same file (deselect with '-m \"not secondary\"')"
 ]
 
+# --------- Coverage -------------
+
+[tool.coverage.report]
+exclude_lines = [
+    # Have to re-enable the standard pragma
+    'pragma: no cover',
+
+    # Ignore the Abstract classes definition
+    'raise NotImplementedError',
+]
+
 # --------- Isort -------------
 
 [tool.isort]

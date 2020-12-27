@@ -12,6 +12,7 @@ from setuptools.command.egg_info import egg_info
 from setuptools.command.install import install
 
 log = logging.getLogger(__name__)
+
 # Avoid loading the package to extract the version
 with open("src/drode/version.py") as fp:
     version_match = re.search(r'__version__ = "(?P<version>.*)"', fp.read())
@@ -56,7 +57,10 @@ class PostEggInfoCommand(egg_info):  # type: ignore
 setup(
     name="drode",
     version=version,
-    description="A Cookiecutter template for creating Python projects",
+    description=(
+        "`drode` is a wrapper over the Drone and AWS APIs to make deployments more "
+        "user friendly."
+    ),
     author="Lyz",
     author_email="lyz-code-security-advisories@riseup.net",
     license="GNU General Public License v3",
@@ -65,6 +69,7 @@ setup(
     url="https://github.com/lyz-code/drode",
     packages=find_packages("src"),
     package_dir={"": "src"},
+    package_data={"drode": ["py.typed"]},
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
     python_requires=">=3.6",
     classifiers=[
