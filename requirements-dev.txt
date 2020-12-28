@@ -21,7 +21,7 @@ boto3==1.16.43            # via -r requirements.txt
 botocore==1.19.43         # via -r requirements.txt, boto3, s3transfer
 certifi==2020.12.5        # via -r docs/requirements.txt, -r requirements.txt, requests
 cfgv==3.2.0               # via pre-commit
-chardet==3.0.4            # via -r docs/requirements.txt, -r requirements.txt, requests
+chardet==4.0.0            # via -r docs/requirements.txt, -r requirements.txt, requests
 click==7.1.2              # via -r docs/requirements.txt, -r requirements.txt, autoimport, black, mkdocs, nltk, pip-tools, safety, yamlfix
 colorama==0.4.4           # via flakehell
 coverage==5.3.1           # via pytest-cov
@@ -78,7 +78,7 @@ mkdocs-autolinks-plugin==0.2.0  # via -r docs/requirements.in, -r docs/requireme
 mkdocs-git-revision-date-localized-plugin==0.8  # via -r docs/requirements.in, -r docs/requirements.txt
 mkdocs-htmlproofer-plugin==0.0.3  # via -r docs/requirements.in, -r docs/requirements.txt
 mkdocs-material-extensions==1.0.1  # via -r docs/requirements.txt, mkdocs-material
-mkdocs-material==6.1.7    # via -r docs/requirements.in, -r docs/requirements.txt, mkdocs-material-extensions
+mkdocs-material==6.2.3    # via -r docs/requirements.in, -r docs/requirements.txt, mkdocs-material-extensions
 mkdocs-minify-plugin==0.3.0  # via -r docs/requirements.in, -r docs/requirements.txt
 mkdocs==1.1.2             # via -r docs/requirements.in, -r docs/requirements.txt, mkdocs-autolinks-plugin, mkdocs-git-revision-date-localized-plugin, mkdocs-htmlproofer-plugin, mkdocs-material, mkdocs-minify-plugin, mkdocstrings
 mkdocstrings==0.13.6      # via -r docs/requirements.in, -r docs/requirements.txt
@@ -99,7 +99,7 @@ pydocstyle==5.1.1         # via flake8-docstrings
 pyflakes==2.2.0           # via autoflake, flake8
 pygments==2.7.3           # via -r docs/requirements.txt, flakehell, mkdocs-material
 pylint==2.6.0             # via -r requirements-dev.in
-pymdown-extensions==8.0.1  # via -r docs/requirements.txt, mkdocs-material, mkdocstrings
+pymdown-extensions==8.1   # via -r docs/requirements.txt, mkdocs-material, mkdocstrings
 pyparsing==2.4.7          # via packaging
 pyprojroot==0.2.0         # via autoimport
 pytest-cov==2.10.1        # via -r requirements-dev.in
@@ -107,11 +107,11 @@ pytest-pythonpath==0.7.3  # via -r requirements-dev.in
 pytest==6.2.1             # via -r requirements-dev.in, pytest-cov, pytest-pythonpath
 python-dateutil==2.8.1    # via -r requirements.txt, botocore
 pytkdocs==0.9.0           # via -r docs/requirements.txt, mkdocstrings
-pytz==2020.4              # via -r docs/requirements.txt, babel
+pytz==2020.5              # via -r docs/requirements.txt, babel
 pyyaml==5.3.1             # via -r docs/requirements.txt, bandit, dparse, mkdocs, pre-commit, yamllint
 regex==2020.11.13         # via -r docs/requirements.txt, black, nltk
 requests-mock==1.8.0      # via -r requirements-dev.in
-requests==2.25.0          # via -r docs/requirements.txt, -r requirements.txt, mkdocs-htmlproofer-plugin, requests-mock, safety
+requests==2.25.1          # via -r docs/requirements.txt, -r requirements.txt, mkdocs-htmlproofer-plugin, requests-mock, safety
 ruamel.yaml.clib==0.2.2   # via -r requirements.txt, ruamel.yaml
 ruamel.yaml==0.16.12      # via -r requirements.txt
 ruyaml==0.20.0            # via yamlfix
@@ -125,7 +125,7 @@ stevedore==3.3.0          # via bandit
 tabulate==0.8.7           # via -r requirements.txt
 toml==0.10.2              # via black, dparse, flakehell, pre-commit, pylint, pytest
 tornado==6.1              # via -r docs/requirements.txt, livereload, mkdocs
-tqdm==4.54.1              # via -r docs/requirements.txt, nltk
+tqdm==4.55.0              # via -r docs/requirements.txt, nltk
 typed-ast==1.4.1          # via -r docs/requirements.txt, astroid, black, flake8-annotations, mypy
 typing-extensions==3.7.4.3  # via -r docs/requirements.txt, -r requirements.txt, black, importlib-metadata, mypy
 urllib3==1.26.2           # via -r docs/requirements.txt, -r requirements.txt, botocore, flakehell, requests
