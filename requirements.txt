@@ -15,7 +15,7 @@ importlib-metadata==3.3.0  # via argcomplete
 jmespath==0.10.0          # via boto3, botocore
 mypy-extensions==0.4.3    # via drode (setup.py)
 python-dateutil==2.8.1    # via botocore
-requests==2.25.0          # via drode (setup.py)
+requests==2.25.1          # via drode (setup.py)
 ruamel.yaml.clib==0.2.2   # via ruamel.yaml
 ruamel.yaml==0.16.12      # via drode (setup.py)
 s3transfer==0.3.3         # via boto3
