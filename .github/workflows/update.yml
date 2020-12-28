@@ -20,6 +20,8 @@ jobs:
         run: pip install pip-tools
       - name: Update requirements
         run: make update
+      - name: Install the program
+        run: make install
       - name: Run tests
         run: make all
       - name: Commit files
