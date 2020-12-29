@@ -5,8 +5,8 @@
 #    pip-compile --allow-unsafe
 #
 argcomplete==1.12.2       # via drode (setup.py)
-boto3==1.16.44            # via drode (setup.py)
-botocore==1.19.44         # via boto3, s3transfer
+boto3==1.16.45            # via drode (setup.py)
+botocore==1.19.45         # via boto3, s3transfer
 certifi==2020.12.5        # via requests
 chardet==4.0.0            # via requests
 click==7.1.2              # via drode (setup.py)
