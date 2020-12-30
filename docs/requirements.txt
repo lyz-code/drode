@@ -111,7 +111,7 @@ tornado==6.1
     #   mkdocs
 tqdm==4.55.0
     # via nltk
-typed-ast==1.4.1
+typed-ast==1.4.2
     # via mypy
 typing-extensions==3.7.4.3
     # via
