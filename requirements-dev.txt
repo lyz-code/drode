@@ -40,9 +40,9 @@ beautifulsoup4==4.9.3
     #   mkdocstrings
 black==20.8b1
     # via -r requirements-dev.in
-boto3==1.16.46
+boto3==1.16.47
     # via -r requirements.txt
-botocore==1.19.46
+botocore==1.19.47
     # via
     #   -r requirements.txt
     #   boto3
