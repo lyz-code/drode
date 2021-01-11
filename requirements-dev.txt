@@ -171,7 +171,7 @@ idna==2.10
     #   -r docs/requirements.txt
     #   -r requirements.txt
     #   requests
-importlib-metadata==3.3.0
+importlib-metadata==3.4.0
     # via
     #   -r docs/requirements.txt
     #   -r requirements.txt
@@ -399,7 +399,7 @@ s3transfer==0.3.3
     # via
     #   -r requirements.txt
     #   boto3
-safety==1.10.1
+safety==1.10.2
     # via -r requirements-dev.in
 sh==1.14.1
     # via autoimport
@@ -443,7 +443,7 @@ tornado==6.1
     #   -r docs/requirements.txt
     #   livereload
     #   mkdocs
-tqdm==4.55.2
+tqdm==4.56.0
     # via
     #   -r docs/requirements.txt
     #   nltk
@@ -469,7 +469,7 @@ urllib3==1.26.2
     #   botocore
     #   flakehell
     #   requests
-virtualenv==20.2.2
+virtualenv==20.3.0
     # via pre-commit
 wrapt==1.12.1
     # via astroid
