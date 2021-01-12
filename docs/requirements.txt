@@ -84,7 +84,7 @@ mypy==0.790
     # via -r docs/requirements.in
 nltk==3.5
     # via lunr
-pygments==2.7.3
+pygments==2.7.4
     # via mkdocs-material
 pymdown-extensions==8.1
     # via
