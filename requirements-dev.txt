@@ -39,9 +39,9 @@ beautifulsoup4==4.9.3
     #   mkdocs-htmlproofer-plugin
 black==20.8b1
     # via -r requirements-dev.in
-boto3==1.16.56
+boto3==1.16.57
     # via -r requirements.txt
-botocore==1.19.56
+botocore==1.19.57
     # via
     #   -r requirements.txt
     #   boto3
@@ -365,7 +365,7 @@ pytz==2020.5
     # via
     #   -r docs/requirements.txt
     #   babel
-pyyaml==5.3.1
+pyyaml==5.4
     # via
     #   -r docs/requirements.txt
     #   bandit
@@ -469,7 +469,7 @@ urllib3==1.26.2
     #   botocore
     #   flakehell
     #   requests
-virtualenv==20.3.1
+virtualenv==20.4.0
     # via pre-commit
 wrapt==1.12.1
     # via astroid
