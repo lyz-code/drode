@@ -6,7 +6,7 @@
 #
 argcomplete==1.12.2
     # via drode (setup.py)
-boto3==1.16.59
+boto3==1.16.60
     # via drode (setup.py)
 botocore==1.19.59
     # via
