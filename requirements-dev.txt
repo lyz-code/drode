@@ -39,9 +39,9 @@ beautifulsoup4==4.9.3
     #   mkdocs-htmlproofer-plugin
 black==20.8b1
     # via -r requirements-dev.in
-boto3==1.17.4
+boto3==1.17.5
     # via -r requirements.txt
-botocore==1.20.4
+botocore==1.20.5
     # via
     #   -r requirements.txt
     #   boto3
@@ -153,7 +153,7 @@ gitdb==4.0.5
     # via
     #   -r docs/requirements.txt
     #   gitpython
-gitpython==3.1.12
+gitpython==3.1.13
     # via
     #   -r docs/requirements.txt
     #   bandit
@@ -200,7 +200,7 @@ jmespath==0.10.0
     #   -r requirements.txt
     #   boto3
     #   botocore
-joblib==1.0.0
+joblib==1.0.1
     # via
     #   -r docs/requirements.txt
     #   nltk
@@ -420,7 +420,7 @@ smmap==3.0.5
     #   gitdb
 snowballstemmer==2.1.0
     # via pydocstyle
-soupsieve==2.1
+soupsieve==2.2
     # via
     #   -r docs/requirements.txt
     #   beautifulsoup4
@@ -441,7 +441,7 @@ tornado==6.1
     #   -r docs/requirements.txt
     #   livereload
     #   mkdocs
-tqdm==4.56.0
+tqdm==4.56.1
     # via
     #   -r docs/requirements.txt
     #   nltk
