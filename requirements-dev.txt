@@ -173,17 +173,6 @@ importlib-metadata==3.4.0
     # via
     #   -r docs/requirements.txt
     #   -r requirements.txt
-    #   argcomplete
-    #   flake8
-    #   flake8-comprehensions
-    #   flake8-simplify
-    #   flake8-typing-imports
-    #   markdown
-    #   pluggy
-    #   pre-commit
-    #   pytest
-    #   stevedore
-    #   virtualenv
 iniconfig==1.1.1
     # via pytest
 isort==5.7.0
@@ -331,7 +320,7 @@ pygments==2.8.0
     #   -r docs/requirements.txt
     #   flakehell
     #   mkdocs-material
-pylint==2.6.0
+pylint==2.6.2
     # via -r requirements-dev.in
 pymdown-extensions==8.1.1
     # via
@@ -386,9 +375,7 @@ requests==2.25.1
     #   requests-mock
     #   safety
 ruamel.yaml.clib==0.2.2
-    # via
-    #   -r requirements.txt
-    #   ruamel.yaml
+    # via -r requirements.txt
 ruamel.yaml==0.16.12
     # via
     #   -r requirements.txt
@@ -448,18 +435,14 @@ tqdm==4.56.2
 typed-ast==1.4.2
     # via
     #   -r docs/requirements.txt
-    #   astroid
     #   black
-    #   flake8-annotations
     #   mypy
 typing-extensions==3.7.4.3
     # via
     #   -r docs/requirements.txt
     #   -r requirements.txt
     #   black
-    #   importlib-metadata
     #   mypy
-    #   pytkdocs
 urllib3==1.26.3
     # via
     #   -r docs/requirements.txt
