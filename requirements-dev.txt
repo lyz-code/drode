@@ -39,9 +39,9 @@ beautifulsoup4==4.9.3
     #   mkdocs-htmlproofer-plugin
 black==20.8b1
     # via -r requirements-dev.in
-boto3==1.17.9
+boto3==1.17.10
     # via -r requirements.txt
-botocore==1.20.9
+botocore==1.20.10
     # via
     #   -r requirements.txt
     #   boto3
@@ -426,7 +426,7 @@ soupsieve==2.2
     #   beautifulsoup4
 stevedore==3.3.0
     # via bandit
-tabulate==0.8.7
+tabulate==0.8.8
     # via -r requirements.txt
 toml==0.10.2
     # via
@@ -441,7 +441,7 @@ tornado==6.1
     #   -r docs/requirements.txt
     #   livereload
     #   mkdocs
-tqdm==4.56.2
+tqdm==4.57.0
     # via
     #   -r docs/requirements.txt
     #   nltk
