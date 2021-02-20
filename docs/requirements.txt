@@ -80,7 +80,7 @@ mkdocstrings==0.14.0
     # via -r docs/requirements.in
 mypy-extensions==0.4.3
     # via mypy
-mypy==0.800
+mypy==0.812
     # via -r docs/requirements.in
 nltk==3.5
     # via lunr
