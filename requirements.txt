@@ -40,7 +40,7 @@ s3transfer==0.3.4
     # via boto3
 six==1.15.0
     # via python-dateutil
-tabulate==0.8.8
+tabulate==0.8.9
     # via drode (setup.py)
 typing-extensions==3.7.4.3
     # via importlib-metadata
