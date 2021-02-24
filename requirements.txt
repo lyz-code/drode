@@ -20,7 +20,7 @@ click==7.1.2
     # via drode (setup.py)
 idna==2.10
     # via requests
-importlib-metadata==3.4.0
+importlib-metadata==3.6.0
     # via argcomplete
 jmespath==0.10.0
     # via
