@@ -14,10 +14,14 @@ astor==0.8.1
     # via flake8-simplify
 astpretty==2.1.0
     # via flake8-expression-complexity
-astroid==2.5.0
+astroid==2.5.1
     # via pylint
 asttokens==2.0.4
     # via flake8-aaa
+astunparse==1.6.3
+    # via
+    #   -r docs/requirements.txt
+    #   pytkdocs
 attrs==20.3.0
     # via
     #   flake8-bugbear
@@ -46,6 +50,10 @@ botocore==1.20.17
     #   -r requirements.txt
     #   boto3
     #   s3transfer
+cached-property==1.5.2
+    # via
+    #   -r docs/requirements.txt
+    #   pytkdocs
 certifi==2020.12.5
     # via
     #   -r docs/requirements.txt
@@ -71,7 +79,7 @@ click==7.1.2
     #   yamlfix
 colorama==0.4.4
     # via flakehell
-coverage==5.4
+coverage==5.5
     # via pytest-cov
 distlib==0.3.1
     # via virtualenv
@@ -227,6 +235,7 @@ markdown==3.3.4
     #   -r docs/requirements.txt
     #   markdown-include
     #   mkdocs
+    #   mkdocs-autorefs
     #   mkdocs-material
     #   mkdocstrings
     #   pymdown-extensions
@@ -243,6 +252,10 @@ mkdocs-autolinks-plugin==0.3.0
     # via
     #   -r docs/requirements.in
     #   -r docs/requirements.txt
+mkdocs-autorefs==0.1.1
+    # via
+    #   -r docs/requirements.txt
+    #   mkdocstrings
 mkdocs-git-revision-date-localized-plugin==0.8
     # via
     #   -r docs/requirements.in
@@ -269,12 +282,13 @@ mkdocs==1.1.2
     #   -r docs/requirements.in
     #   -r docs/requirements.txt
     #   mkdocs-autolinks-plugin
+    #   mkdocs-autorefs
     #   mkdocs-git-revision-date-localized-plugin
     #   mkdocs-htmlproofer-plugin
     #   mkdocs-material
     #   mkdocs-minify-plugin
     #   mkdocstrings
-mkdocstrings==0.14.0
+mkdocstrings==0.15.0
     # via
     #   -r docs/requirements.in
     #   -r docs/requirements.txt
@@ -331,7 +345,7 @@ pygments==2.8.0
     #   -r docs/requirements.txt
     #   flakehell
     #   mkdocs-material
-pylint==2.7.1
+pylint==2.7.2
     # via -r requirements-dev.in
 pymdown-extensions==8.1.1
     # via
@@ -355,7 +369,7 @@ python-dateutil==2.8.1
     # via
     #   -r requirements.txt
     #   botocore
-pytkdocs==0.10.1
+pytkdocs==0.11.0
     # via
     #   -r docs/requirements.txt
     #   mkdocstrings
@@ -406,6 +420,7 @@ six==1.15.0
     #   -r docs/requirements.txt
     #   -r requirements.txt
     #   asttokens
+    #   astunparse
     #   bandit
     #   flake8-debugger
     #   livereload
@@ -468,6 +483,10 @@ urllib3==1.26.3
     #   requests
 virtualenv==20.4.2
     # via pre-commit
+wheel==0.36.2
+    # via
+    #   -r docs/requirements.txt
+    #   astunparse
 wrapt==1.12.1
     # via astroid
 yamlfix==0.4.0
@@ -483,7 +502,7 @@ zipp==3.4.0
 # The following packages are considered to be unsafe in a requirements file:
 pip==21.0.1
     # via pip-tools
-setuptools==53.1.0
+setuptools==54.0.0
     # via
     #   flake8-annotations-complexity
     #   flake8-expression-complexity
