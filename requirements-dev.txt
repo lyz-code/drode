@@ -43,9 +43,9 @@ beautifulsoup4==4.9.3
     #   mkdocs-htmlproofer-plugin
 black==20.8b1
     # via -r requirements-dev.in
-boto3==1.17.20
+boto3==1.17.21
     # via -r requirements.txt
-botocore==1.20.20
+botocore==1.20.21
     # via
     #   -r requirements.txt
     #   boto3
@@ -248,7 +248,7 @@ mccabe==0.6.1
     # via
     #   flake8
     #   pylint
-mkdocs-autolinks-plugin==0.3.0
+mkdocs-autolinks-plugin==0.4.0
     # via
     #   -r docs/requirements.in
     #   -r docs/requirements.txt
@@ -268,7 +268,7 @@ mkdocs-material-extensions==1.0.1
     # via
     #   -r docs/requirements.txt
     #   mkdocs-material
-mkdocs-material==7.0.3
+mkdocs-material==7.0.4
     # via
     #   -r docs/requirements.in
     #   -r docs/requirements.txt
@@ -493,7 +493,7 @@ yamlfix==0.4.0
     # via -r requirements-dev.in
 yamllint==1.26.0
     # via -r requirements-dev.in
-zipp==3.4.0
+zipp==3.4.1
     # via
     #   -r docs/requirements.txt
     #   -r requirements.txt

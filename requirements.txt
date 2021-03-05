@@ -6,9 +6,9 @@
 #
 argcomplete==1.12.2
     # via drode (setup.py)
-boto3==1.17.20
+boto3==1.17.21
     # via drode (setup.py)
-botocore==1.20.20
+botocore==1.20.21
     # via
     #   boto3
     #   s3transfer
@@ -48,5 +48,5 @@ urllib3==1.26.3
     # via
     #   botocore
     #   requests
-zipp==3.4.0
+zipp==3.4.1
     # via importlib-metadata
