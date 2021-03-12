@@ -43,9 +43,9 @@ beautifulsoup4==4.9.3
     #   mkdocs-htmlproofer-plugin
 black==20.8b1
     # via -r requirements-dev.in
-boto3==1.17.25
+boto3==1.17.26
     # via -r requirements.txt
-botocore==1.20.25
+botocore==1.20.26
     # via
     #   -r requirements.txt
     #   boto3
@@ -170,7 +170,7 @@ htmlmin==0.1.12
     # via
     #   -r docs/requirements.txt
     #   mkdocs-minify-plugin
-identify==2.1.1
+identify==2.1.2
     # via pre-commit
 idna==2.10
     # via
