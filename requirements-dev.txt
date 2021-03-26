@@ -43,9 +43,9 @@ beautifulsoup4==4.9.3
     #   mkdocs-htmlproofer-plugin
 black==20.8b1
     # via -r requirements-dev.in
-boto3==1.17.36
+boto3==1.17.38
     # via -r requirements.txt
-botocore==1.20.36
+botocore==1.20.38
     # via
     #   -r requirements.txt
     #   boto3
@@ -157,7 +157,7 @@ future==0.18.2
     # via
     #   -r docs/requirements.txt
     #   lunr
-gitdb==4.0.5
+gitdb==4.0.6
     # via
     #   -r docs/requirements.txt
     #   gitpython
