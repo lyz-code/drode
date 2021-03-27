@@ -6,9 +6,9 @@
 #
 argcomplete==1.12.2
     # via drode (setup.py)
-boto3==1.17.38
+boto3==1.17.39
     # via drode (setup.py)
-botocore==1.20.38
+botocore==1.20.39
     # via
     #   boto3
     #   s3transfer
@@ -20,7 +20,7 @@ click==7.1.2
     # via drode (setup.py)
 idna==2.10
     # via requests
-importlib-metadata==3.7.3
+importlib-metadata==3.8.0
     # via argcomplete
 jmespath==0.10.0
     # via
@@ -34,7 +34,7 @@ requests==2.25.1
     # via drode (setup.py)
 ruamel.yaml.clib==0.2.2
     # via ruamel.yaml
-ruamel.yaml==0.16.13
+ruamel.yaml==0.17.0
     # via drode (setup.py)
 s3transfer==0.3.6
     # via boto3
