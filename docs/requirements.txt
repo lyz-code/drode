@@ -90,7 +90,7 @@ mypy-extensions==0.4.3
     # via mypy
 mypy==0.812
     # via -r docs/requirements.in
-nltk==3.5
+nltk==3.6.1
     # via lunr
 pygments==2.8.1
     # via mkdocs-material
