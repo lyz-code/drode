@@ -6,6 +6,7 @@ mkdocs-htmlproofer-plugin
 mkdocs-minify-plugin
 mkdocs-autolinks-plugin
 mkdocs-material
+mkdocs-section-index
 mkdocstrings
 markdown-include
 
