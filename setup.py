@@ -54,6 +54,9 @@ class PostEggInfoCommand(egg_info):  # type: ignore
         egg_info.run(self)
 
 
+with open("README.md", "r") as readme_file:
+    readme = readme_file.read()
+
 setup(
     name="drode",
     version=version,
@@ -65,7 +68,7 @@ setup(
     author_email="lyz-code-security-advisories@riseup.net",
     license="GNU General Public License v3",
     # SIM115: Use context handler for opening files. In this case it doesn't make sense.
-    long_description=open("README.md").read(),  # noqa: SIM115
+    long_description=readme,
     long_description_content_type="text/markdown",
     url="https://github.com/lyz-code/drode",
     packages=find_packages("src"),
