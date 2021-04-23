@@ -4,11 +4,11 @@
 #
 #    pip-compile --allow-unsafe
 #
-argcomplete==1.12.2
+argcomplete==1.12.3
     # via drode (setup.py)
-boto3==1.17.52
+boto3==1.17.56
     # via drode (setup.py)
-botocore==1.20.52
+botocore==1.20.56
     # via
     #   boto3
     #   s3transfer
@@ -20,7 +20,7 @@ click==7.1.2
     # via drode (setup.py)
 idna==2.10
     # via requests
-importlib-metadata==3.10.1
+importlib-metadata==4.0.1
     # via argcomplete
 jmespath==0.10.0
     # via
@@ -36,7 +36,7 @@ ruamel.yaml.clib==0.2.2
     # via ruamel.yaml
 ruamel.yaml==0.17.4
     # via drode (setup.py)
-s3transfer==0.3.7
+s3transfer==0.4.2
     # via boto3
 six==1.15.0
     # via python-dateutil
