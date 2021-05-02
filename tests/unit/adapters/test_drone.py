@@ -75,7 +75,8 @@ def test_build_info_returns_expected_json(drone: Drone, requests_mock: Mocker) -
     }
     requests_mock.get(
         f"{drone.drone_url}/api/repos/owner/repository/builds/274",
-        [{"json": response_json, "status_code": 200}],
+        json=response_json,
+        status_code=200,
     )
 
     result = drone.build_info("owner/repository", 274)
@@ -267,9 +268,12 @@ def test_get_retries_url_if_there_are_errors(
     When: Using the get method and the API returns a 401 less than the maximum allowed.
     Then: A requests object is returned with the query result.
     """
+    # ignore: Argument 2 to "get" of "MockerCore" has incompatible type
+    #   "List[object]"; expected "int". The library doesn't have type hints so there's
+    #   nothing we can do
     requests_mock.get(
         "http://url",
-        [
+        [  # type: ignore
             {"status_code": 401},
             {"status_code": 401},
             {"status_code": 401},
@@ -290,9 +294,12 @@ def test_get_handles_url_errors(drone: Drone, requests_mock: Mocker) -> None:
     When: Using the get method and the API returns a 401 more than the allowed retries.
     Then: a DroneAPIError exception is raised.
     """
+    # ignore: Argument 2 to "get" of "MockerCore" has incompatible type
+    #   "List[object]"; expected "int". The library doesn't have type hints so there's
+    #   nothing we can do
     requests_mock.get(
         "http://url",
-        [
+        [  # type: ignore
             {"status_code": 401},
             {"status_code": 401},
             {"status_code": 401},
