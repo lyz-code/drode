@@ -38,7 +38,7 @@ ruamel.yaml==0.17.4
     # via drode (setup.py)
 s3transfer==0.4.2
     # via boto3
-six==1.15.0
+six==1.16.0
     # via python-dateutil
 tabulate==0.8.9
     # via drode (setup.py)
