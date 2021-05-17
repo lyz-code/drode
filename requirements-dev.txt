@@ -19,9 +19,7 @@ astroid==2.5.6
 asttokens==2.0.5
     # via flake8-aaa
 astunparse==1.6.3
-    # via
-    #   -r docs/requirements.txt
-    #   pytkdocs
+    # via -r docs/requirements.txt
 attrs==21.2.0
     # via
     #   flake8-bugbear
@@ -51,9 +49,7 @@ botocore==1.20.69
     #   boto3
     #   s3transfer
 cached-property==1.5.2
-    # via
-    #   -r docs/requirements.txt
-    #   pytkdocs
+    # via -r docs/requirements.txt
 certifi==2020.12.5
     # via
     #   -r docs/requirements.txt
@@ -79,7 +75,7 @@ click==7.1.2
     #   yamlfix
 colorama==0.4.4
     # via flakehell
-coverage==5.5
+coverage[toml]==5.5
     # via pytest-cov
 distlib==0.3.1
     # via virtualenv
@@ -183,18 +179,6 @@ importlib-metadata==4.0.1
     # via
     #   -r docs/requirements.txt
     #   -r requirements.txt
-    #   argcomplete
-    #   flake8
-    #   flake8-comprehensions
-    #   flake8-simplify
-    #   flake8-typing-imports
-    #   markdown
-    #   pep517
-    #   pluggy
-    #   pre-commit
-    #   pytest
-    #   stevedore
-    #   virtualenv
 iniconfig==1.1.1
     # via pytest
 isort==5.8.0
@@ -366,7 +350,7 @@ pyparsing==2.4.7
     # via packaging
 pyprojroot==0.2.0
     # via autoimport
-pytest-cov==2.11.1
+pytest-cov==2.12.0
     # via -r requirements-dev.in
 pytest-pythonpath==0.7.3
     # via -r requirements-dev.in
@@ -455,6 +439,7 @@ tabulate==0.8.9
 toml==0.10.2
     # via
     #   black
+    #   coverage
     #   dparse
     #   flakehell
     #   pep517
@@ -473,18 +458,12 @@ tqdm==4.60.0
 typed-ast==1.4.3
     # via
     #   -r docs/requirements.txt
-    #   astroid
-    #   black
-    #   flake8-annotations
     #   mypy
 typing-extensions==3.10.0.0
     # via
     #   -r docs/requirements.txt
     #   -r requirements.txt
-    #   black
-    #   importlib-metadata
     #   mypy
-    #   pytkdocs
 urllib3==1.26.4
     # via
     #   -r docs/requirements.txt
@@ -509,7 +488,6 @@ zipp==3.4.1
     #   -r docs/requirements.txt
     #   -r requirements.txt
     #   importlib-metadata
-    #   pep517
 
 # The following packages are considered to be unsafe in a requirements file:
 pip==21.1.1
@@ -521,4 +499,3 @@ setuptools==56.1.0
     #   flake8-variables-names
     #   ruyaml
     #   safety
-    #   yamllint
