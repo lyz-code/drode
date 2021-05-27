@@ -44,7 +44,7 @@ tabulate==0.8.9
     # via drode (setup.py)
 typing-extensions==3.10.0.0
     # via importlib-metadata
-urllib3==1.26.4
+urllib3==1.26.5
     # via
     #   botocore
     #   requests
