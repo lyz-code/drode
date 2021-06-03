@@ -273,7 +273,7 @@ def test_get_retries_url_if_there_are_errors(
     #   nothing we can do
     requests_mock.get(
         "http://url",
-        [  # type: ignore
+        [
             {"status_code": 401},
             {"status_code": 401},
             {"status_code": 401},
@@ -299,7 +299,7 @@ def test_get_handles_url_errors(drone: Drone, requests_mock: Mocker) -> None:
     #   nothing we can do
     requests_mock.get(
         "http://url",
-        [  # type: ignore
+        [
             {"status_code": 401},
             {"status_code": 401},
             {"status_code": 401},
