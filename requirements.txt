@@ -18,7 +18,7 @@ chardet==4.0.0
     # via requests
 click==8.0.1
     # via drode (setup.py)
-idna==2.10
+idna==3.2
     # via requests
 importlib-metadata==4.5.0
     # via
