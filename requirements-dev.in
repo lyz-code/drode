@@ -42,6 +42,8 @@ bandit
 
 # Type checkers
 mypy
+types-requests
+types-tabulate
 
 # Formatters
 autoimport

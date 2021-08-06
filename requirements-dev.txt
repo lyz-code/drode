@@ -482,6 +482,10 @@ typed-ast==1.4.3
     #   black
     #   flake8-annotations
     #   mypy
+types-requests==2.25.2
+    # via -r requirements-dev.in
+types-tabulate==0.8.0
+    # via -r requirements-dev.in
 typing-extensions==3.10.0.0
     # via
     #   -r docs/requirements.txt
