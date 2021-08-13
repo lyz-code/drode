@@ -43,9 +43,9 @@ beautifulsoup4==4.9.3
     #   mkdocs-htmlproofer-plugin
 black==21.7b0
     # via -r requirements-dev.in
-boto3==1.18.19
+boto3==1.18.20
     # via -r requirements.txt
-botocore==1.21.19
+botocore==1.21.20
     # via
     #   -r requirements.txt
     #   boto3
@@ -528,7 +528,7 @@ zipp==3.5.0
     #   pep517
 
 # The following packages are considered to be unsafe in a requirements file:
-pip==21.2.3
+pip==21.2.4
     # via pip-tools
 setuptools==57.4.0
     # via
