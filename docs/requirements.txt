@@ -93,7 +93,7 @@ mypy-extensions==0.4.3
     # via mypy
 packaging==21.0
     # via mkdocs
-pygments==2.9.0
+pygments==2.10.0
     # via mkdocs-material
 pymdown-extensions==8.2
     # via
