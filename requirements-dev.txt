@@ -43,9 +43,9 @@ beautifulsoup4==4.9.3
     #   mkdocs-htmlproofer-plugin
 black==21.7b0
     # via -r requirements-dev.in
-boto3==1.18.28
+boto3==1.18.29
     # via -r requirements.txt
-botocore==1.21.28
+botocore==1.21.29
     # via
     #   -r requirements.txt
     #   boto3
@@ -59,7 +59,7 @@ certifi==2021.5.30
     #   -r docs/requirements.txt
     #   -r requirements.txt
     #   requests
-cfgv==3.3.0
+cfgv==3.3.1
     # via pre-commit
 charset-normalizer==2.0.4
     # via
@@ -181,7 +181,7 @@ idna==3.2
     #   -r docs/requirements.txt
     #   -r requirements.txt
     #   requests
-importlib-metadata==4.6.4
+importlib-metadata==4.7.0
     # via
     #   -r docs/requirements.txt
     #   -r requirements.txt
@@ -422,7 +422,7 @@ requests==2.26.0
     #   safety
 requests-mock==1.9.3
     # via -r requirements-dev.in
-ruamel.yaml==0.17.13
+ruamel.yaml==0.17.14
     # via -r requirements.txt
 ruamel.yaml.clib==0.2.6
     # via

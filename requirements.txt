@@ -6,9 +6,9 @@
 #
 argcomplete==1.12.3
     # via drode (setup.py)
-boto3==1.18.28
+boto3==1.18.29
     # via drode (setup.py)
-botocore==1.21.28
+botocore==1.21.29
     # via
     #   boto3
     #   s3transfer
@@ -20,7 +20,7 @@ click==8.0.1
     # via drode (setup.py)
 idna==3.2
     # via requests
-importlib-metadata==4.6.4
+importlib-metadata==4.7.0
     # via
     #   argcomplete
     #   click
@@ -34,7 +34,7 @@ python-dateutil==2.8.2
     # via botocore
 requests==2.26.0
     # via drode (setup.py)
-ruamel.yaml==0.17.13
+ruamel.yaml==0.17.14
     # via drode (setup.py)
 ruamel.yaml.clib==0.2.6
     # via ruamel.yaml
