@@ -6,9 +6,9 @@
 #
 argcomplete==1.12.3
     # via drode (setup.py)
-boto3==1.18.29
+boto3==1.18.30
     # via drode (setup.py)
-botocore==1.21.29
+botocore==1.21.30
     # via
     #   boto3
     #   s3transfer
@@ -20,7 +20,7 @@ click==8.0.1
     # via drode (setup.py)
 idna==3.2
     # via requests
-importlib-metadata==4.7.0
+importlib-metadata==4.7.1
     # via
     #   argcomplete
     #   click
