@@ -20,7 +20,7 @@ click==8.0.1
     # via drode (setup.py)
 idna==3.2
     # via requests
-importlib-metadata==4.7.1
+importlib-metadata==4.8.1
     # via
     #   argcomplete
     #   click
