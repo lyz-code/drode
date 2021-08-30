@@ -20,7 +20,7 @@ click==8.0.1
     # via drode (setup.py)
 idna==3.2
     # via requests
-importlib-metadata==4.7.1
+importlib-metadata==4.8.1
     # via
     #   argcomplete
     #   click
@@ -34,7 +34,7 @@ python-dateutil==2.8.2
     # via botocore
 requests==2.26.0
     # via drode (setup.py)
-ruamel.yaml==0.17.14
+ruamel.yaml==0.17.16
     # via drode (setup.py)
 ruamel.yaml.clib==0.2.6
     # via ruamel.yaml
@@ -44,7 +44,7 @@ six==1.16.0
     # via python-dateutil
 tabulate==0.8.9
     # via drode (setup.py)
-typing-extensions==3.10.0.0
+typing-extensions==3.10.0.1
     # via importlib-metadata
 urllib3==1.26.6
     # via

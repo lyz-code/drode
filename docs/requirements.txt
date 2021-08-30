@@ -28,7 +28,7 @@ htmlmin==0.1.12
     # via mkdocs-minify-plugin
 idna==3.2
     # via requests
-importlib-metadata==4.7.1
+importlib-metadata==4.8.1
     # via
     #   click
     #   markdown
@@ -127,7 +127,7 @@ toml==0.10.2
     # via mypy
 typed-ast==1.4.3
     # via mypy
-typing-extensions==3.10.0.0
+typing-extensions==3.10.0.1
     # via
     #   gitpython
     #   importlib-metadata
