@@ -127,7 +127,7 @@ toml==0.10.2
     # via mypy
 typed-ast==1.4.3
     # via mypy
-typing-extensions==3.10.0.1
+typing-extensions==3.10.0.2
     # via
     #   gitpython
     #   importlib-metadata
