@@ -278,7 +278,7 @@ mkdocs-htmlproofer-plugin==0.7.0
     # via
     #   -r docs/requirements.in
     #   -r docs/requirements.txt
-mkdocs-material==7.2.7
+mkdocs-material==7.2.8
     # via
     #   -r docs/requirements.in
     #   -r docs/requirements.txt
@@ -286,7 +286,7 @@ mkdocs-material-extensions==1.0.3
     # via
     #   -r docs/requirements.txt
     #   mkdocs-material
-mkdocs-minify-plugin==0.4.0
+mkdocs-minify-plugin==0.4.1
     # via
     #   -r docs/requirements.in
     #   -r docs/requirements.txt
@@ -486,7 +486,7 @@ typed-ast==1.4.3
     #   black
     #   flake8-annotations
     #   mypy
-types-requests==2.25.6
+types-requests==2.25.7
     # via -r requirements-dev.in
 types-tabulate==0.8.2
     # via -r requirements-dev.in
