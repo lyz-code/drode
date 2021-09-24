@@ -41,9 +41,9 @@ beautifulsoup4==4.10.0
     #   mkdocs-htmlproofer-plugin
 black==21.9b0
     # via -r requirements-dev.in
-boto3==1.18.46
+boto3==1.18.47
     # via -r requirements.txt
-botocore==1.21.46
+botocore==1.21.47
     # via
     #   -r requirements.txt
     #   boto3
@@ -294,7 +294,7 @@ mkdocs-section-index==0.3.1
     # via
     #   -r docs/requirements.in
     #   -r docs/requirements.txt
-mkdocstrings==0.16.0
+mkdocstrings==0.16.1
     # via
     #   -r docs/requirements.in
     #   -r docs/requirements.txt
