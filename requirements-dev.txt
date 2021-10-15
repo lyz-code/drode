@@ -41,9 +41,9 @@ beautifulsoup4==4.10.0
     #   mkdocs-htmlproofer-plugin
 black==21.9b0
     # via -r requirements-dev.in
-boto3==1.18.61
+boto3==1.18.62
     # via -r requirements.txt
-botocore==1.21.61
+botocore==1.21.62
     # via
     #   -r requirements.txt
     #   boto3
@@ -92,7 +92,7 @@ eradicate==2.0.0
     # via flake8-eradicate
 execnet==1.9.0
     # via pytest-xdist
-filelock==3.3.0
+filelock==3.3.1
     # via virtualenv
 flake8==3.9.2
     # via
@@ -487,7 +487,7 @@ typed-ast==1.4.3
     #   black
     #   flake8-annotations
     #   mypy
-types-requests==2.25.10
+types-requests==2.25.11
     # via -r requirements-dev.in
 types-tabulate==0.8.3
     # via -r requirements-dev.in
