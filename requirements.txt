@@ -6,9 +6,9 @@
 #
 argcomplete==1.12.3
     # via drode (setup.py)
-boto3==1.18.64
+boto3==1.18.65
     # via drode (setup.py)
-botocore==1.21.64
+botocore==1.21.65
     # via
     #   boto3
     #   s3transfer
