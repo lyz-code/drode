@@ -15,9 +15,7 @@ astroid==2.8.4
 asttokens==2.0.5
     # via flake8-aaa
 astunparse==1.6.3
-    # via
-    #   -r docs/requirements.txt
-    #   pytkdocs
+    # via -r docs/requirements.txt
 attrs==21.2.0
     # via
     #   flake8-bugbear
@@ -39,7 +37,7 @@ beautifulsoup4==4.10.0
     # via
     #   -r docs/requirements.txt
     #   mkdocs-htmlproofer-plugin
-black==21.9b0
+black==22.1.0
     # via -r requirements-dev.in
 boto3==1.19.4
     # via -r requirements.txt
@@ -49,9 +47,7 @@ botocore==1.22.4
     #   boto3
     #   s3transfer
 cached-property==1.5.2
-    # via
-    #   -r docs/requirements.txt
-    #   pytkdocs
+    # via -r docs/requirements.txt
 certifi==2021.10.8
     # via
     #   -r docs/requirements.txt
@@ -187,20 +183,7 @@ importlib-metadata==4.8.1
     # via
     #   -r docs/requirements.txt
     #   -r requirements.txt
-    #   argcomplete
-    #   click
-    #   flake8
-    #   flake8-comprehensions
-    #   flake8-simplify
-    #   flake8-typing-imports
-    #   markdown
     #   mkdocs
-    #   pep517
-    #   pluggy
-    #   pre-commit
-    #   pytest
-    #   stevedore
-    #   virtualenv
 iniconfig==1.1.1
     # via pytest
 isort==5.9.3
@@ -418,8 +401,6 @@ pyyaml-env-tag==0.1
     # via
     #   -r docs/requirements.txt
     #   mkdocs
-regex==2021.10.23
-    # via black
 requests==2.26.0
     # via
     #   -r docs/requirements.txt
@@ -432,9 +413,7 @@ requests-mock==1.9.3
 ruamel.yaml==0.17.16
     # via -r requirements.txt
 ruamel.yaml.clib==0.2.6
-    # via
-    #   -r requirements.txt
-    #   ruamel.yaml
+    # via -r requirements.txt
 ruyaml==0.20.0
     # via yamlfix
 s3transfer==0.5.0
@@ -485,12 +464,7 @@ tomli==1.2.2
     #   coverage
     #   pep517
 typed-ast==1.4.3
-    # via
-    #   -r docs/requirements.txt
-    #   astroid
-    #   black
-    #   flake8-annotations
-    #   mypy
+    # via -r docs/requirements.txt
 types-requests==2.25.11
     # via -r requirements-dev.in
 types-tabulate==0.8.3
@@ -499,13 +473,7 @@ typing-extensions==3.10.0.2
     # via
     #   -r docs/requirements.txt
     #   -r requirements.txt
-    #   astroid
-    #   black
-    #   gitpython
-    #   importlib-metadata
     #   mypy
-    #   pylint
-    #   pytkdocs
 urllib3==1.26.7
     # via
     #   -r docs/requirements.txt
@@ -535,7 +503,6 @@ zipp==3.6.0
     #   -r docs/requirements.txt
     #   -r requirements.txt
     #   importlib-metadata
-    #   pep517
 
 # The following packages are considered to be unsafe in a requirements file:
 pip==21.3.1
