@@ -34,7 +34,7 @@ python-dateutil==2.8.2
     # via botocore
 requests==2.26.0
     # via drode (setup.py)
-ruamel.yaml==0.17.16
+ruamel.yaml==0.17.21
     # via drode (setup.py)
 ruamel.yaml.clib==0.2.6
     # via ruamel.yaml
