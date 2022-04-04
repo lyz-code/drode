@@ -19,6 +19,8 @@ def print_autoscaling_group_info(autoscaler_info: AutoscalerInfo) -> None:
 def print_status(project_status: ProjectStatus) -> None:
     """Print the project environment status."""
     for environment, autoscaler_info in project_status.items():
+        if autoscaler_info == {}:
+            continue
         print(f"# {environment}")
         print_autoscaling_group_info(autoscaler_info)
         print()
