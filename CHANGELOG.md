@@ -1,3 +1,12 @@
+## 1.2.1 (2022-05-19)
+
+### Fix
+
+- status works when staging autoscaling group is not set
+- create config file if it doesn't exist
+- migrate dependency management to pdm
+- status works when staging autoscaling group is not set
+
 ## 1.2.0 (2021-04-23)
 
 ## 1.1.0 (2020-12-21)
