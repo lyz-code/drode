@@ -162,9 +162,9 @@ class FakeAWS(AWS):
         super().__init__()
         self.correct_config = True
 
-    # ignore: The parent is a static method, but we need the self here.
+    # ignore and W0221: The parent is a static method, but we need the self here.
     #   As it's for testing there is no problem breaking the Liskov principle.
-    def check_configuration(self) -> None:  # type: ignore
+    def check_configuration(self) -> None:  # type: ignore # noqa: W0221
         """Check if the client is able to interact with the AWS server.
 
         Makes sure that the AWS is correctly configured.

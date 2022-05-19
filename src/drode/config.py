@@ -6,11 +6,9 @@ import shutil
 from collections import UserDict
 from typing import Any, Dict, List, Union
 
-from ruamel.yaml import YAML  # type: ignore
+from ruamel.yaml import YAML
 from ruamel.yaml.parser import ParserError
 from ruamel.yaml.scanner import ScannerError
-
-# ignore: It complains that ruamel.yaml doesn't have the object YAML, but it does.
 
 # NOTE: We can't migrate to maison or goodconf as they only support read only
 # interaction with the configuration, and we need to update it because we save the
@@ -49,7 +47,11 @@ class Config(UserDict):  # type: ignore # noqa: R0901
         self.load()
 
     def get(
-        self, key: str, default: Any = None
+        # ANN401: default signature is not trivial, and this code will be deprecated,
+        # so it's not worth it the time.
+        self,
+        key: str,
+        default: Any = None,  # noqa: ANN401
     ) -> Union[str, int, Dict[str, Any], List[Any]]:
         """Fetch the configuration value of the specified key.
 

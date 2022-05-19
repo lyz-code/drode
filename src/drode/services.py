@@ -6,7 +6,7 @@ and handlers to achieve the program's purpose.
 
 import logging
 import time
-from typing import Dict, Optional, Union
+from typing import Dict, Optional
 
 from .adapters import Drone
 from .adapters.aws import AWS, AutoscalerInfo
@@ -130,7 +130,7 @@ def promote(
     project_pipeline: str,
     environment: str,
     build_number: Optional[int] = None,
-) -> Union[int, None]:
+) -> Optional[int]:
     """Promote build_number or commit id to the desired environment.
 
     Args:
