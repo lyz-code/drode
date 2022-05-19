@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := test
-isort = isort src tests setup.py
-black = black --target-version py39 src tests
+isort = pdm run isort src tests setup.py
+black = pdm run black --target-version py39 src tests
 
 .PHONY: install
 install:
