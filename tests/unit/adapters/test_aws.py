@@ -15,7 +15,7 @@ from drode.adapters.aws import AWS, AWSConfigurationError, AWSStateError
 @pytest.fixture(name="boto")
 def boto_() -> Generator[Mock, None, None]:
     """Prepare the boto mock."""
-    boto_patch = patch("drode.adapters.aws.boto3", autospect=True)
+    boto_patch = patch("drode.adapters.aws.boto3", autospec=True)
     boto = boto_patch.start()
 
     yield boto
