@@ -6,13 +6,14 @@ from typing import Optional
 
 import click
 from click.core import Context
+from ruamel.yaml.parser import ParserError
 
-from drode import services, version, views
-from drode.adapters.aws import AWSConfigurationError
-from drode.adapters.drone import DroneBuildError, DroneConfigurationError
-from drode.config import ConfigError
-from drode.entrypoints import load_aws, load_config, load_drone, load_logger
-from drode.version import __version__
+from .. import services, version, views
+from ..adapters.aws import AWSConfigurationError
+from ..adapters.drone import DroneBuildError, DroneConfigurationError
+from ..config import ConfigError
+from ..version import __version__
+from . import load_aws, load_config, load_drone, load_logger
 
 log = logging.getLogger(__name__)
 
@@ -32,7 +33,11 @@ def cli(ctx: Context, config_path: str, verbose: bool) -> None:
     """Command line interface main click entrypoint."""
     ctx.ensure_object(dict)
 
-    ctx.obj["config"] = load_config(config_path)
+    try:
+        ctx.obj["config"] = load_config(config_path)
+    except ParserError as error:
+        log.error(error)
+        sys.exit(1)
 
     try:
         ctx.obj["drone"]

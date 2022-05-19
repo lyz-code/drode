@@ -1,4 +1,4 @@
-"""Gather all the orchestration functionality required by the program to work.
+"""Define all the orchestration functionality required by the program to work.
 
 Classes and functions that connect the different domain model objects with the adapters
 and handlers to achieve the program's purpose.
@@ -8,10 +8,10 @@ import logging
 import time
 from typing import Dict, Optional, Union
 
-from drode.adapters import Drone
-from drode.adapters.aws import AWS, AutoscalerInfo
-from drode.adapters.drone import DronePromoteError
-from drode.config import Config, ConfigError
+from .adapters import Drone
+from .adapters.aws import AWS, AutoscalerInfo
+from .adapters.drone import DronePromoteError
+from .config import Config, ConfigError
 
 log = logging.getLogger(__name__)
 

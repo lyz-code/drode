@@ -1,6 +1,5 @@
 """Tests the wait service."""
 
-
 import logging
 from unittest.mock import call, patch
 

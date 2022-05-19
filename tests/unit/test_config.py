@@ -42,25 +42,13 @@ def test_load_handles_wrong_file_format(yaml_mock: Mock, config: Config) -> None
         config.load()
 
 
-def test_load_handles_file_not_found(config: Config) -> None:
-    """
-    Given: An inexistent config file.
-    When: configuration is loaded.
-    Then: A ConfigError is returned.
-    """
-    config.config_path = "inexistent.yaml"
-
-    with pytest.raises(ConfigError):
-        config.load()
-
-
 def test_save_config(config: Config) -> None:
     """Saving the configuration to the yaml file works."""
     config.data = {"a": "b"}
 
     config.save()  # act
 
-    with open(config.config_path, "r") as file_cursor:
+    with open(config.config_path, "r", encoding="utf-8") as file_cursor:
         assert "a:" in file_cursor.read()
 
 

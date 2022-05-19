@@ -1,6 +1,6 @@
 {
   "template": "git@github.com:lyz-code/cookiecutter-python-project.git",
-  "commit": "f38de85495097610a17385287260e26668d159cc",
+  "commit": "6131513cfdd0167c74ef96808eb889119d30d040",
   "context": {
     "cookiecutter": {
       "project_name": "Drode",

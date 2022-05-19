@@ -8,9 +8,9 @@ import logging
 import os
 import sys
 
-from drode.adapters import Drone
-from drode.adapters.aws import AWS
-from drode.config import Config, ConfigError
+from ..adapters import Drone
+from ..adapters.aws import AWS
+from ..config import Config, ConfigError
 
 log = logging.getLogger(__name__)
 
