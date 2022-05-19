@@ -46,8 +46,8 @@ def test_version(runner: CliRunner) -> None:
     result = runner.invoke(cli, ["--version"])
 
     assert result.exit_code == 0
-    assert re.match(
-        fr" *drode version: {__version__}\n" r" *python version: .*\n *platform: .*",
+    assert re.search(
+        rf" *drode: {__version__}\n" r" *Python: .*\n *Platform: .*",
         result.stdout,
     )
 
@@ -72,6 +72,96 @@ def test_load_config_handles_configerror_exceptions(
         f'while parsing a flow sequence\n  in "{config_file}", '
         "line 1, column 1\nexpected ',' or ']', but got '<stream end>'\n  in"
         f' "{config_file}", line 1, column 15',
+    ) in caplog.record_tuples
+
+
+def test_load_config_creates_default_file_if_it_doesnt_exist(
+    runner: CliRunner, caplog: LogCaptureFixture, config: Config
+) -> None:
+    """
+    Given: A missing configuration file.
+    When: CLI is initialized
+    Then: The file is created and the commandline ends well.
+    """
+    os.remove(config.config_path)
+
+    result = runner.invoke(cli, ["null"])
+
+    assert result.exit_code == 0
+    with open("assets/config.yaml", "r", encoding="utf-8") as file_descriptor:
+        default_config = file_descriptor.read()
+    with open(config.config_path, "r", encoding="utf-8") as file_descriptor:
+        created_config = file_descriptor.read()
+    assert created_config == default_config
+
+
+def test_set_active_project_happy_path(
+    runner: CliRunner, caplog: LogCaptureFixture
+) -> None:
+    """
+    Given: An existent project.
+    When: The set subcommand is called on that project.
+    Then: The project is activated
+    """
+    result = runner.invoke(cli, ["set", "test_project_1"])
+
+    assert result.exit_code == 0
+    assert (
+        "drode.services",
+        logging.INFO,
+        "The project test_project_1 is now active",
+    ) in caplog.record_tuples
+
+
+def test_set_active_project_unhappy_path(
+    runner: CliRunner, caplog: LogCaptureFixture
+) -> None:
+    """
+    Given: A configured drode program.
+    When: The set subcommand is called on an inexistent project.
+    Then: The exception is gracefully handled.
+    """
+    result = runner.invoke(cli, ["set", "inexistent"])
+
+    assert result.exit_code == 1
+    assert (
+        "drode.entrypoints.cli",
+        logging.ERROR,
+        "The project inexistent does not exist",
+    ) in caplog.record_tuples
+
+
+def test_active_project_happy_path(runner: CliRunner) -> None:
+    """
+    Given: An existent project.
+    When: The active subcommand is called on that project.
+    Then: The project that is active is returned.
+    """
+    result = runner.invoke(cli, ["active"])
+
+    assert result.exit_code == 0
+    assert "test_project_1" in result.stdout
+
+
+def test_active_project_unhappy_path(
+    runner: CliRunner, caplog: LogCaptureFixture, config: Config
+) -> None:
+    """
+    Given: A drode program without any active project
+    When: The active subcommand is called.
+    Then: The exception is gracefully handled.
+    """
+    del config.data["active_project"]
+    config.save()
+
+    result = runner.invoke(cli, ["active"])
+
+    assert result.exit_code == 1
+    assert (
+        "drode.entrypoints.cli",
+        logging.ERROR,
+        "There are more than one project configured but none is marked as active. "
+        "Please use drode set command to define one.",
     ) in caplog.record_tuples
 
 
@@ -164,76 +254,6 @@ def test_load_drone_handles_wrong_drone_credentials(
         "drode.entrypoints",
         logging.ERROR,
         "Please set the DRONE_SERVER and DRONE_TOKEN environmental variables",
-    ) in caplog.record_tuples
-
-
-def test_set_active_project_happy_path(
-    runner: CliRunner, caplog: LogCaptureFixture
-) -> None:
-    """
-    Given: An existent project.
-    When: The set subcommand is called on that project.
-    Then: The project is activated
-    """
-    result = runner.invoke(cli, ["set", "test_project_1"])
-
-    assert result.exit_code == 0
-    assert (
-        "drode.services",
-        logging.INFO,
-        "The project test_project_1 is now active",
-    ) in caplog.record_tuples
-
-
-def test_set_active_project_unhappy_path(
-    runner: CliRunner, caplog: LogCaptureFixture
-) -> None:
-    """
-    Given: A configured drode program.
-    When: The set subcommand is called on an inexistent project.
-    Then: The exception is gracefully handled.
-    """
-    result = runner.invoke(cli, ["set", "inexistent"])
-
-    assert result.exit_code == 1
-    assert (
-        "drode.entrypoints.cli",
-        logging.ERROR,
-        "The project inexistent does not exist",
-    ) in caplog.record_tuples
-
-
-def test_active_project_happy_path(runner: CliRunner) -> None:
-    """
-    Given: An existent project.
-    When: The active subcommand is called on that project.
-    Then: The project that is active is returned.
-    """
-    result = runner.invoke(cli, ["active"])
-
-    assert result.exit_code == 0
-    assert "test_project_1" in result.stdout
-
-
-def test_active_project_unhappy_path(
-    runner: CliRunner, caplog: LogCaptureFixture, config: Config
-) -> None:
-    """
-    Given: A drode program without any active project
-    When: The active subcommand is called.
-    Then: The exception is gracefully handled.
-    """
-    del config.data["active_project"]
-    config.save()
-
-    result = runner.invoke(cli, ["active"])
-
-    assert result.exit_code == 1
-    assert (
-        "drode.entrypoints.cli",
-        logging.ERROR,
-        "There are more than one project configured but none is marked as active. "
-        "Please use drode set command to define one.",
     ) in caplog.record_tuples
 
 

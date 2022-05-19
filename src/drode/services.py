@@ -1,4 +1,4 @@
-"""Gather all the orchestration functionality required by the program to work.
+"""Define all the orchestration functionality required by the program to work.
 
 Classes and functions that connect the different domain model objects with the adapters
 and handlers to achieve the program's purpose.
@@ -6,12 +6,12 @@ and handlers to achieve the program's purpose.
 
 import logging
 import time
-from typing import Dict, Optional, Union
+from typing import Dict, Optional
 
-from drode.adapters import Drone
-from drode.adapters.aws import AWS, AutoscalerInfo
-from drode.adapters.drone import DronePromoteError
-from drode.config import Config, ConfigError
+from .adapters import Drone
+from .adapters.aws import AWS, AutoscalerInfo
+from .adapters.drone import DronePromoteError
+from .config import Config, ConfigError
 
 log = logging.getLogger(__name__)
 
@@ -130,7 +130,7 @@ def promote(
     project_pipeline: str,
     environment: str,
     build_number: Optional[int] = None,
-) -> Union[int, None]:
+) -> Optional[int]:
     """Promote build_number or commit id to the desired environment.
 
     Args:

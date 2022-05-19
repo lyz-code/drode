@@ -1,11 +1,11 @@
 [![Actions Status](https://github.com/lyz-code/drode/workflows/Tests/badge.svg)](https://github.com/lyz-code/drode/actions)
 [![Actions Status](https://github.com/lyz-code/drode/workflows/Build/badge.svg)](https://github.com/lyz-code/drode/actions)
-[![Coverage Status](https://coveralls.io/repos/github/lyz-code/drode/badge.svg?branch=master)](https://coveralls.io/github/lyz-code/drode?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/lyz-code/drode/badge.svg?branch=main)](https://coveralls.io/github/lyz-code/drode?branch=main)
 
 `drode` is a wrapper over the Drone and AWS APIs to make deployments more user
 friendly.
 
-It assumes that the projects are configured to continuous deliver all master
+It assumes that the projects are configured to continuous deliver all
 commits to staging. Then those commits can be promoted to production or to
 staging for upgrades and rollbacks.
 
@@ -25,7 +25,7 @@ pip install drode
 
 `drode` configuration is done through the yaml file located at
 `~/.local/share/drode/config.yaml`. The [default
-template](https://github.com/lyz-code/drode/blob/master/assets/config.yaml) is
+template](https://github.com/lyz-code/drode/blob/main/assets/config.yaml) is
 provided at installation time.
 
 It is assumed that Drone environmental variables `DRONE_SERVER` and
@@ -44,7 +44,7 @@ $: drode verify
 
 Let's see `drode` in action.
 
-Imagine a push in master triggers a drone job.
+Imagine a push in `main` triggers a drone job.
 
 Drone jobs can take from seconds to dozens of minutes. Keeping a constant eye on
 the job status introduces several undesired context changes. You can use the
@@ -73,7 +73,7 @@ Are you sure? [y/n]: y
 ```
 
 `drode promote` promotes to production the last successful job originated by
-a push event in master. You are given the information of the job and are
+a push event in `main`. You are given the information of the job and are
 prompted if you want to continue. Only `y` or `yes` will complete the
 deployment.
 
@@ -134,20 +134,20 @@ giants, namely:
 [Mypy](https://mypy.readthedocs.io/en/stable/)
 : Python static type checker.
 
-[Flakehell](https://github.com/life4/flakehell)
+[Flakeheaven](https://github.com/flakeheaven/flakeheaven)
 : Python linter with [lots of
-    checks](https://lyz-code.github.io/blue-book/devops/flakehell/#plugins).
+    checks](https://lyz-code.github.io/blue-book/devops/flakeheaven#plugins).
 
 [Black](https://black.readthedocs.io/en/stable/)
 : Python formatter to keep a nice style without effort.
 
-[Autoimport](https://github.com/lyz-code/autoimport)
+[Autoimport](https://lyz-code.github.io/autoimport)
 : Python formatter to automatically fix wrong import statements.
 
 [isort](https://github.com/timothycrosley/isort)
 : Python formatter to order the import statements.
 
-[Pip-tools](https://github.com/jazzband/pip-tools)
+[PDM](https://pdm.fming.dev/)
 : Command line tool to manage the dependencies.
 
 [Mkdocs](https://www.mkdocs.org/)

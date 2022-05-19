@@ -2,14 +2,17 @@
 
 import logging
 import os
+import shutil
 from collections import UserDict
 from typing import Any, Dict, List, Union
 
-from ruamel.yaml import YAML  # type: ignore
+from ruamel.yaml import YAML
 from ruamel.yaml.parser import ParserError
 from ruamel.yaml.scanner import ScannerError
 
-# It complains that ruamel.yaml doesn't have the object YAML, but it does.
+# NOTE: We can't migrate to maison or goodconf as they only support read only
+# interaction with the configuration, and we need to update it because we save the
+# state in the config file, which is not that nice.
 
 log = logging.getLogger(__name__)
 
@@ -44,7 +47,11 @@ class Config(UserDict):  # type: ignore # noqa: R0901
         self.load()
 
     def get(
-        self, key: str, default: Any = None
+        # ANN401: default signature is not trivial, and this code will be deprecated,
+        # so it's not worth it the time.
+        self,
+        key: str,
+        default: Any = None,  # noqa: ANN401
     ) -> Union[str, int, Dict[str, Any], List[Any]]:
         """Fetch the configuration value of the specified key.
 
@@ -110,19 +117,21 @@ class Config(UserDict):  # type: ignore # noqa: R0901
     def load(self) -> None:
         """Load the configuration from the configuration YAML file."""
         try:
-            with open(os.path.expanduser(self.config_path), "r") as file_cursor:
+            with open(self.config_path, "r", encoding="utf-8") as file_cursor:
                 try:
                     self.data = YAML().load(file_cursor)
                 except (ParserError, ScannerError) as error:
                     raise ConfigError(str(error)) from error
-        except FileNotFoundError as error:
-            raise ConfigError(
+        except FileNotFoundError:
+            log.warning(
                 "The configuration file {self.config_path} could not be found."
-            ) from error
+                "\n Copying the default one."
+            )
+            shutil.copy("assets/config.yaml", self.config_path)
 
     def save(self) -> None:
         """Save the configuration in the configuration YAML file."""
-        with open(os.path.expanduser(self.config_path), "w+") as file_cursor:
+        with open(self.config_path, "w+", encoding="utf-8") as file_cursor:
             yaml = YAML()
             yaml.default_flow_style = False
             yaml.dump(self.data, file_cursor)
