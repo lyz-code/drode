@@ -1,3 +1,10 @@
+## 1.2.2 (2022-05-23)
+
+### Fix
+
+- remove mypy-typedict dependency using dataclasses for models
+- remove mypy-typedict dependency using dataclasses for models
+
 ## 1.2.1 (2022-05-19)
 
 ### Fix
