@@ -1489,7 +1489,7 @@ summary = "Backport of pathlib-compatible object wrapper for zip files"
 
 [metadata]
 lock_version = "3.1"
-content_hash = "sha256:80a5f3a448568d9aa99a36437351dc3ba47715b4d98aa2c6f79a3a70dc0ab471"
+content_hash = "sha256:e68351854abf61a47c8a6c8827cb61a387dd594b4843c737a23ea402b5818858"
 
 [metadata.files]
 "argcomplete 1.12.3" = [

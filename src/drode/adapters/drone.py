@@ -1,10 +1,10 @@
 """Gather the integration with the Drone web application."""
 
 import logging
-from typing import Any, List
+from dataclasses import dataclass
+from typing import Any, List, Optional
 
 import requests
-from mypy_extensions import TypedDict
 
 log = logging.getLogger(__name__)
 
@@ -25,12 +25,14 @@ class DronePromoteError(Exception):
     """Exception to gather job promotion errors."""
 
 
-class BuildInfo(TypedDict, total=False):
+@dataclass
+# R0902: Too many attributes, but it's a model, so it doesn't mind
+class BuildInfo:  # noqa: R0902
     """Build information schema."""
 
     # VNE003: variables should not shadow builtins. As we're defining just the schema
     #   of a dictionary we can safely ignore it.
-    id: int  # noqa: VNE003
+    id: int  # noqa: VNE003, C0103
     status: str
     number: int
     trigger: str
@@ -39,10 +41,14 @@ class BuildInfo(TypedDict, total=False):
     source: str
     after: str
     target: str
-    author_name: str
     deploy_to: str
     started: int
     finished: int
+    parent: Optional[int]
+    before: Optional[str]
+    author_login: Optional[str]
+    author_name: Optional[str]
+    sender: Optional[str]
     stages: List[Any]
 
 
@@ -91,9 +97,10 @@ class Drone:
             info: build information.
         """
         try:
-            return self.get(
+            build_data = self.get(
                 f"{self.drone_url}/api/repos/{project_pipeline}/builds/{build_number}"
-            ).json()
+            ).json()[0]
+            return BuildInfo(**build_data)
         except DroneAPIError as error:
             raise DroneBuildError(
                 f"The build {build_number} was not found at "
@@ -152,9 +159,10 @@ class Drone:
         Returns:
             info: Last build information.
         """
-        return self.get(f"{self.drone_url}/api/repos/{project_pipeline}/builds").json()[
-            0
-        ]
+        build_data = self.get(
+            f"{self.drone_url}/api/repos/{project_pipeline}/builds"
+        ).json()[0]
+        return BuildInfo(**build_data)
 
     def last_success_build_info(
         self, project_pipeline: str, branch: str = "master"
@@ -173,13 +181,13 @@ class Drone:
             f"{self.drone_url}/api/repos/{project_pipeline}/builds"
         ).json()
 
-        for build in build_history:
+        for build_data in build_history:
             if (
-                build["status"] == "success"
-                and build["target"] == branch
-                and build["event"] == "push"
+                build_data["status"] == "success"
+                and build_data["target"] == branch
+                and build_data["event"] == "push"
             ):
-                return build
+                return BuildInfo(**build_data)
         raise DroneBuildError(
             f"There are no successful jobs with target branch {branch}"
         )

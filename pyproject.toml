@@ -104,7 +104,7 @@ test = [
     "pytest-cov>=3.0.0",
     "pytest-xdist>=2.4.0",
     "pytest-freezegun>=0.4.2",
-    "pydantic-factories>=0.5.0",
+    "pydantic-factories>=1.2.9",
     "requests-mock>=1.9.3",
 ]
 doc = [

@@ -13,6 +13,8 @@ from drode.adapters.drone import (
     DroneConfigurationError,
 )
 
+from ...factories import BuildInfoFactory
+
 
 @pytest.fixture(name="drone")
 def drone_() -> Drone:
@@ -57,22 +59,24 @@ def test_build_info_returns_expected_json(drone: Drone, requests_mock: Mocker) -
     When: The build_info method is called for id 274.
     Then: The json of the 274 build is returned.
     """
-    response_json = {
-        "id": 879,
-        "status": "success",
-        "number": "209",
-        "trigger": "trigger_author",
-        "event": "promote",
-        "message": "commit message",
-        "source": "master",
-        "after": "9d924b358sflwegk30bbfa0571f754ec2a0b7457",
-        "target": "master",
-        "author_name": "Commit Author",
-        "deploy_to": "production",
-        "started": 1591128214,
-        "finished": 0,
-        "stages": [],
-    }
+    response_json = (
+        BuildInfoFactory.build(
+            id=879,
+            status="success",
+            number=274,
+            trigger="trigger_author",
+            event="promote",
+            message="commit message",
+            source="master",
+            after="9d924b358sflwegk30bbfa0571f754ec2a0b7457",
+            target="master",
+            author_name="Commit Author",
+            deploy_to="production",
+            started=1591128214,
+            finished=0,
+            stages=[],
+        ).__dict__,
+    )
     requests_mock.get(
         f"{drone.drone_url}/api/repos/owner/repository/builds/274",
         json=response_json,
@@ -81,7 +85,7 @@ def test_build_info_returns_expected_json(drone: Drone, requests_mock: Mocker) -
 
     result = drone.build_info("owner/repository", 274)
 
-    assert result == response_json
+    assert result.number == 274
 
 
 def test_build_info_raises_exception_if_build_number_doesnt_exist(
@@ -114,32 +118,32 @@ def test_last_build_info_returns_the_last_build_json(
     Then: The last job build information is returned.
     """
     response_json = [
-        {
-            "id": 882,
-            "number": 209,
-            "finished": 1,
-            "status": "success",
-            "source": "feat/1",
-            "target": "feat/1",
-        },
-        {
-            "id": 881,
-            "number": 208,
-            "finished": 1,
-            "status": "success",
-            "source": "master",
-            "target": "master",
-            "event": "promote",
-        },
-        {
-            "id": 880,
-            "number": 207,
-            "finished": 1,
-            "status": "success",
-            "source": "master",
-            "target": "master",
-            "event": "push",
-        },
+        BuildInfoFactory.build(
+            id=882,
+            number=209,
+            finished=1,
+            status="success",
+            source="feat/1",
+            target="feat/1",
+        ).__dict__,
+        BuildInfoFactory.build(
+            id=881,
+            number=208,
+            finished=1,
+            status="success",
+            source="master",
+            target="master",
+            event="promote",
+        ).__dict__,
+        BuildInfoFactory.build(
+            id=880,
+            number=207,
+            finished=1,
+            status="success",
+            source="master",
+            target="master",
+            event="push",
+        ).__dict__,
     ]
     requests_mock.get(
         f"{drone.drone_url}/api/repos/owner/repository/builds",
@@ -148,7 +152,7 @@ def test_last_build_info_returns_the_last_build_json(
 
     result = drone.last_build_info("owner/repository")
 
-    assert result == response_json[0]
+    assert result.id == 882
 
 
 def test_last_success_build_info_searches_master_and_push_events_by_default(
@@ -162,36 +166,36 @@ def test_last_success_build_info_searches_master_and_push_events_by_default(
     requests_mock.get(
         f"{drone.drone_url}/api/repos/owner/repository/builds",
         json=[
-            {
-                "id": 882,
-                "number": 209,
-                "finished": 1,
-                "status": "success",
-                "source": "feat/1",
-                "target": "feat/1",
-            },
-            {
-                "id": 881,
-                "number": 208,
-                "finished": 1,
-                "status": "success",
-                "source": "master",
-                "target": "master",
-                "event": "promote",
-            },
-            {
-                "id": 880,
-                "number": 207,
-                "finished": 1,
-                "status": "success",
-                "source": "master",
-                "target": "master",
-                "event": "push",
-            },
+            BuildInfoFactory.build(
+                id=882,
+                number=209,
+                finished=1,
+                status="success",
+                source="feat/1",
+                target="feat/1",
+            ).__dict__,
+            BuildInfoFactory.build(
+                id=881,
+                number=208,
+                finished=1,
+                status="success",
+                source="master",
+                target="master",
+                event="promote",
+            ).__dict__,
+            BuildInfoFactory.build(
+                id=880,
+                number=207,
+                finished=1,
+                status="success",
+                source="master",
+                target="master",
+                event="push",
+            ).__dict__,
         ],
     )
 
-    result = drone.last_success_build_info("owner/repository")["number"]
+    result = drone.last_success_build_info("owner/repository").number
 
     assert result == 207
 
@@ -207,14 +211,14 @@ def test_last_success_build_info_handles_no_result(
     requests_mock.get(
         f"{drone.drone_url}/api/repos/owner/repository/builds",
         json=[
-            {
-                "id": 882,
-                "number": 209,
-                "finished": 1,
-                "status": "failure",
-                "source": "feat/1",
-                "target": "feat/1",
-            },
+            BuildInfoFactory.build(
+                id=882,
+                number=209,
+                finished=1,
+                status="failure",
+                source="feat/1",
+                target="feat/1",
+            ).__dict__,
         ],
     )
 
@@ -325,15 +329,15 @@ def test_promote_launches_promote_drone_job(
     """
     requests_mock.get(
         f"{drone.drone_url}/api/repos/owner/repository/builds/172",
-        json={
-            "id": 882,
-            "number": 172,
-            "status": "success",
-            "after": "9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-            "target": "master",
-            "event": "push",
-            "message": "updated README",
-        },
+        json=BuildInfoFactory.build(
+            id=882,
+            number=172,
+            status="success",
+            after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+            target="master",
+            event="push",
+            message="updated README",
+        ).__dict__,
     )
     promote_url = (
         f"{drone.drone_url}/api/repos/owner/repository/builds/172/promote"
@@ -341,24 +345,24 @@ def test_promote_launches_promote_drone_job(
     )
     requests_mock.post(
         promote_url,
-        json={
-            "id": 100207,
-            "number": 174,
-            "parent": 172,
-            "status": "pending",
-            "event": "promote",
-            "message": "updated README",
-            "before": "e3320539a4c03ccfda992641646deb67d8bf98f3",
-            "after": "9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-            "source": "master",
-            "target": "master",
-            "author_login": "octocat",
-            "author_name": "The Octocat",
-            "sender": "bradrydzewski",
-            "started": 0,
-            "finished": 0,
-            "stages": [],
-        },
+        json=BuildInfoFactory.build(
+            id=100207,
+            number=174,
+            parent=172,
+            status="pending",
+            event="promote",
+            message="updated README",
+            before="e3320539a4c03ccfda992641646deb67d8bf98f3",
+            after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+            source="master",
+            target="master",
+            author_login="octocat",
+            author_name="The Octocat",
+            sender="bradrydzewski",
+            started=0,
+            finished=0,
+            stages=[],
+        ).__dict__,
     )
 
     result = drone.promote("owner/repository", 172, "production")
