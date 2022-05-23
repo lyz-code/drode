@@ -10,6 +10,8 @@ from tests.fake_adapters import FakeDrone
 from drode import services
 from drode.adapters.drone import DronePromoteError
 
+from ...factories import BuildInfoFactory
+
 
 def test_promote_promotes_desired_build_number(
     drone: FakeDrone, caplog: LogCaptureFixture
@@ -22,24 +24,24 @@ def test_promote_promotes_desired_build_number(
     drone.set_builds(
         {
             209: [
-                {
-                    "number": 209,
-                    "finished": 1,
-                    "target": "feat/1",
-                    "status": "success",
-                    "event": "push",
-                }
+                BuildInfoFactory.build(
+                    number=209,
+                    finished=1,
+                    target="feat/1",
+                    status="success",
+                    event="push",
+                )
             ],
             208: [
-                {
-                    "number": 208,
-                    "finished": 1,
-                    "target": "master",
-                    "status": "success",
-                    "after": "9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-                    "message": "updated README",
-                    "event": "push",
-                }
+                BuildInfoFactory.build(
+                    number=208,
+                    finished=1,
+                    target="master",
+                    status="success",
+                    event="push",
+                    after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                    message="updated README",
+                )
             ],
         }
     )
@@ -69,15 +71,15 @@ def test_promote_does_nothing_if_user_doesnt_confirm(
     drone.set_builds(
         {
             208: [
-                {
-                    "number": 208,
-                    "finished": 1,
-                    "target": "master",
-                    "status": "success",
-                    "after": "9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-                    "message": "updated README",
-                    "event": "push",
-                }
+                BuildInfoFactory.build(
+                    number=208,
+                    finished=1,
+                    target="master",
+                    status="success",
+                    event="push",
+                    after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                    message="updated README",
+                )
             ],
         }
     )
@@ -103,10 +105,10 @@ def test_promote_doesnt_promote_failed_jobs(drone: FakeDrone) -> None:
     drone.set_builds(
         {
             209: [
-                {
-                    "number": 209,
-                    "status": "killed",
-                }
+                BuildInfoFactory.build(
+                    number=209,
+                    status="killed",
+                )
             ]
         }
     )
@@ -130,24 +132,24 @@ def test_promote_launches_last_successful_master_job_if_none(
     drone.set_builds(
         {
             209: [
-                {
-                    "number": 209,
-                    "finished": 1,
-                    "target": "feat/1",
-                    "status": "success",
-                    "event": "push",
-                }
+                BuildInfoFactory.build(
+                    number=209,
+                    finished=1,
+                    target="feat/1",
+                    status="success",
+                    event="push",
+                )
             ],
             208: [
-                {
-                    "number": 208,
-                    "finished": 1,
-                    "target": "master",
-                    "status": "success",
-                    "after": "9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-                    "message": "updated README",
-                    "event": "push",
-                }
+                BuildInfoFactory.build(
+                    number=208,
+                    finished=1,
+                    target="master",
+                    status="success",
+                    event="push",
+                    after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                    message="updated README",
+                )
             ],
         }
     )

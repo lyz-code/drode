@@ -11,6 +11,8 @@ from drode.adapters.drone import (
     DroneConfigurationError,
 )
 
+from .factories import BuildInfoFactory
+
 Builds = Dict[int, List[BuildInfo]]
 
 
@@ -117,9 +119,9 @@ class FakeDrone(Drone):
             build_number
             for build_number, build in self.builds.items()
             if (
-                build[0]["status"] == "success"
-                and build[0]["target"] == branch
-                and build[0]["event"] == "push"
+                build[0].status == "success"
+                and build[0].target == branch
+                and build[0].event == "push"
             )
         ]
         try:
@@ -145,11 +147,13 @@ class FakeDrone(Drone):
         """
         last_build = self.last_build_info(project_pipeline)
 
-        if not isinstance(last_build["number"], int):
+        if not isinstance(last_build.number, int):
             raise ValueError("You don't have defined correctly the build number")
 
-        new_build_number = last_build["number"] + 1
-        self.builds[new_build_number] = [{"number": new_build_number}]
+        new_build_number = last_build.number + 1
+        self.builds[new_build_number] = [
+            BuildInfoFactory.build(number=new_build_number)
+        ]
 
         return new_build_number
 

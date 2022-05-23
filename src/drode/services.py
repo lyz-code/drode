@@ -35,31 +35,25 @@ def wait(
     """
     if build_number is None:
         last_build = drone.last_build_info(project_pipeline)
-        if last_build["finished"] != 0:
+        if last_build.finished != 0:
             log.info("There are no active jobs")
             return True
-        last_build_number = last_build["number"]
-        build_number = last_build_number
+        build_number = last_build.number
 
     first_time = True
     while True:
         build = drone.build_info(project_pipeline, build_number)
 
-        try:
-            if build["finished"] == 0:
-                if first_time:
-                    log.info(
-                        f"Waiting for job #{build['number']} started by "
-                        f"a {build['event']} event by {build['trigger']}."
-                    )
-                    first_time = False
-                time.sleep(1)
-                continue
-            log.info(
-                f"Job #{build['number']} has finished with status {build['status']}"
-            )
-        except KeyError:
-            log.info(f"Job #{build_number} has not started yet")
+        if build.finished == 0:
+            if first_time:
+                log.info(
+                    f"Waiting for job #{build.number} started by "
+                    f"a {build.event} event by {build.trigger}."
+                )
+                first_time = False
+            time.sleep(1)
+            continue
+        log.info(f"Job #{build.number} has finished with status {build.status}")
         return True
 
 
@@ -149,23 +143,22 @@ def promote(
     """
     if build_number is None:
         build = drone.last_success_build_info(project_pipeline)
-        build_number = build["number"]
     else:
         build = drone.build_info(project_pipeline, build_number)
 
-    if build["status"] != "success":
+    if build.status != "success":
         raise DronePromoteError(
-            f"You can't promote job #{build_number} to {environment} "
-            f"as it's status is {build['status']}"
+            f"You can't promote job #{build.number} to {environment} "
+            f"as it's status is {build.status}"
         )
 
     log.info(
-        f"You're about to promote job #{build_number} "
+        f"You're about to promote job #{build.number} "
         f"of the pipeline {project_pipeline} to {environment}\n\n"
-        f"      With commit {build['after'][:8]}: {build['message']}"
+        f"      With commit {build.after[:8]}: {build.message}"
     )
     if ask("Are you sure? [y/N]: "):
-        return drone.promote(project_pipeline, build_number, environment)
+        return drone.promote(project_pipeline, build.number, environment)
     return None
 
 

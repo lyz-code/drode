@@ -16,6 +16,8 @@ from drode.config import Config
 from drode.entrypoints.cli import cli
 from drode.version import __version__
 
+from ..factories import BuildInfoFactory
+
 FakeDeps = TypedDict("FakeDeps", {"drone": FakeDrone, "aws": FakeAWS})
 
 
@@ -174,7 +176,16 @@ def test_wait_subcommand_calls_wait_service(
     Then: The service wait is called and it informs that there are no active jobs,
         raising the terminal bell when finished.
     """
-    fake_dependencies["drone"].set_builds({209: [{"number": 209, "finished": 1}]})
+    fake_dependencies["drone"].set_builds(
+        {
+            209: [
+                BuildInfoFactory.build(
+                    number=209,
+                    finished=1,
+                ),
+            ]
+        }
+    )
 
     result = runner.invoke(cli, ["wait"], obj=fake_dependencies)
 
@@ -195,16 +206,20 @@ def test_wait_subcommand_accepts_build_number_argument(
     When: The wait command is called with a non existent build number.
     Then: The service wait is called with the build number.
     """
-    fake_dependencies["drone"].set_builds({209: [{"number": 209}]})
+    fake_dependencies["drone"].set_builds(
+        {
+            209: [
+                BuildInfoFactory.build(
+                    number=209,
+                    finished=1,
+                ),
+            ]
+        }
+    )
 
     result = runner.invoke(cli, ["wait", "209"], obj=fake_dependencies)
 
     assert result.exit_code == 0
-    assert (
-        "drode.services",
-        logging.INFO,
-        "Job #209 has not started yet",
-    ) in caplog.record_tuples
 
 
 def test_wait_subcommand_handles_unhappy_path(
@@ -215,9 +230,15 @@ def test_wait_subcommand_handles_unhappy_path(
     When: The wait subcommand is called with an inexistent job number.
     Then: The exception is handled gracefully.
     """
-    # ignore: we know that the type of number is wrong, we want to raise the exception.
     fake_dependencies["drone"].set_builds(
-        {209: [{"number": "invalid", "finished": 1}]}  # type: ignore
+        {
+            209: [
+                BuildInfoFactory.build(
+                    number="invalid",
+                    finished=1,
+                ),
+            ]
+        }
     )
 
     result = runner.invoke(cli, ["wait", "1"], obj=fake_dependencies)
@@ -268,24 +289,24 @@ def test_promote_happy_path(
     fake_dependencies["drone"].set_builds(
         {
             208: [
-                {
-                    "number": 208,
-                    "finished": 1,
-                    "target": "master",
-                    "status": "success",
-                    "after": "9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-                    "message": "updated README",
-                    "event": "push",
-                },
-                {
-                    "number": 208,
-                    "finished": 1,
-                    "target": "master",
-                    "status": "success",
-                    "after": "9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-                    "message": "updated README",
-                    "event": "push",
-                },
+                BuildInfoFactory.build(
+                    number=208,
+                    finished=1,
+                    target="master",
+                    status="success",
+                    after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                    message="updated README",
+                    event="push",
+                ),
+                BuildInfoFactory.build(
+                    number=208,
+                    finished=1,
+                    target="master",
+                    status="success",
+                    after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                    message="updated README",
+                    event="push",
+                ),
             ],
         }
     )
@@ -319,24 +340,24 @@ def test_promote_happy_path_with_wait_flag(
     fake_dependencies["drone"].set_builds(
         {
             208: [
-                {
-                    "number": 208,
-                    "finished": 1,
-                    "target": "master",
-                    "status": "success",
-                    "after": "9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-                    "message": "updated README",
-                    "event": "push",
-                },
-                {
-                    "number": 208,
-                    "finished": 1,
-                    "target": "master",
-                    "status": "success",
-                    "after": "9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-                    "message": "updated README",
-                    "event": "push",
-                },
+                BuildInfoFactory.build(
+                    number=208,
+                    finished=1,
+                    target="master",
+                    status="success",
+                    after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                    message="updated README",
+                    event="push",
+                ),
+                BuildInfoFactory.build(
+                    number=208,
+                    finished=1,
+                    target="master",
+                    status="success",
+                    after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                    message="updated README",
+                    event="push",
+                ),
             ],
         }
     )
@@ -353,12 +374,6 @@ def test_promote_happy_path_with_wait_flag(
         logging.INFO,
         "You're about to promote job #208 of the pipeline test_projects/webpage to "
         "production\n\n      With commit 9fc1ad6e: updated README",
-    ) in caplog.record_tuples
-    # Assert we are waiting for the promote build
-    assert (
-        "drode.services",
-        logging.INFO,
-        "Job #209 has not started yet",
     ) in caplog.record_tuples
 
 
