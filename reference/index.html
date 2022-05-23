@@ -192,12 +192,14 @@
     <span class=sd>&quot;&quot;&quot;Exception to gather AWS client configuration errors.&quot;&quot;&quot;</span>
 </code></pre></div> </details> </div> </div> <div class="doc doc-object doc-class"> <h4 id=drode.adapters.aws.AWSStateError class="doc doc-heading"> <code> AWSStateError (<span title="Exception">Exception</span>) </code> <a href=#drode.adapters.aws.AWSStateError class=headerlink title="Permanent link">&para;</a></h4> <div class="doc doc-contents "> <p>Exception to gather AWS unexpected resource states.</p> <details class=quote> <summary>Source code in <code>drode/adapters/aws.py</code></summary> <div class=highlight><pre><span></span><code><span class=k>class</span> <span class=nc>AWSStateError</span><span class=p>(</span><span class=ne>Exception</span><span class=p>):</span>
     <span class=sd>&quot;&quot;&quot;Exception to gather AWS unexpected resource states.&quot;&quot;&quot;</span>
-</code></pre></div> </details> </div> </div> </div> </div> </div> <div class="doc doc-object doc-module"> <h3 id=drode.adapters.drone class="doc doc-heading"> <code>drone</code> <a href=#drode.adapters.drone class=headerlink title="Permanent link">&para;</a></h3> <div class="doc doc-contents "> <p>Gather the integration with the Drone web application.</p> <div class="doc doc-children"> <div class="doc doc-object doc-class"> <h4 id=drode.adapters.drone.BuildInfo class="doc doc-heading"> <code> BuildInfo (<span title="dict">dict</span>) </code> <a href=#drode.adapters.drone.BuildInfo class=headerlink title="Permanent link">&para;</a></h4> <div class="doc doc-contents "> <p>Build information schema.</p> <details class=quote> <summary>Source code in <code>drode/adapters/drone.py</code></summary> <div class=highlight><pre><span></span><code><span class=k>class</span> <span class=nc>BuildInfo</span><span class=p>(</span><span class=n>TypedDict</span><span class=p>,</span> <span class=n>total</span><span class=o>=</span><span class=kc>False</span><span class=p>):</span>
+</code></pre></div> </details> </div> </div> </div> </div> </div> <div class="doc doc-object doc-module"> <h3 id=drode.adapters.drone class="doc doc-heading"> <code>drone</code> <a href=#drode.adapters.drone class=headerlink title="Permanent link">&para;</a></h3> <div class="doc doc-contents "> <p>Gather the integration with the Drone web application.</p> <div class="doc doc-children"> <div class="doc doc-object doc-class"> <h4 id=drode.adapters.drone.BuildInfo class="doc doc-heading"> <code> BuildInfo </code> <span class="doc doc-properties"> <small class="doc doc-property doc-property-dataclass"><code>dataclass</code></small> </span> <a href=#drode.adapters.drone.BuildInfo class=headerlink title="Permanent link">&para;</a></h4> <div class="doc doc-contents "> <p>Build information schema.</p> <details class=quote> <summary>Source code in <code>drode/adapters/drone.py</code></summary> <div class=highlight><pre><span></span><code><span class=nd>@dataclass</span>
+<span class=c1># R0902: Too many attributes, but it&#39;s a model, so it doesn&#39;t mind</span>
+<span class=k>class</span> <span class=nc>BuildInfo</span><span class=p>:</span>  <span class=c1># noqa: R0902</span>
     <span class=sd>&quot;&quot;&quot;Build information schema.&quot;&quot;&quot;</span>
 
     <span class=c1># VNE003: variables should not shadow builtins. As we&#39;re defining just the schema</span>
     <span class=c1>#   of a dictionary we can safely ignore it.</span>
-    <span class=nb>id</span><span class=p>:</span> <span class=nb>int</span>  <span class=c1># noqa: VNE003</span>
+    <span class=nb>id</span><span class=p>:</span> <span class=nb>int</span>  <span class=c1># noqa: VNE003, C0103</span>
     <span class=n>status</span><span class=p>:</span> <span class=nb>str</span>
     <span class=n>number</span><span class=p>:</span> <span class=nb>int</span>
     <span class=n>trigger</span><span class=p>:</span> <span class=nb>str</span>
@@ -206,10 +208,14 @@
     <span class=n>source</span><span class=p>:</span> <span class=nb>str</span>
     <span class=n>after</span><span class=p>:</span> <span class=nb>str</span>
     <span class=n>target</span><span class=p>:</span> <span class=nb>str</span>
-    <span class=n>author_name</span><span class=p>:</span> <span class=nb>str</span>
     <span class=n>deploy_to</span><span class=p>:</span> <span class=nb>str</span>
     <span class=n>started</span><span class=p>:</span> <span class=nb>int</span>
     <span class=n>finished</span><span class=p>:</span> <span class=nb>int</span>
+    <span class=n>parent</span><span class=p>:</span> <span class=n>Optional</span><span class=p>[</span><span class=nb>int</span><span class=p>]</span>
+    <span class=n>before</span><span class=p>:</span> <span class=n>Optional</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span>
+    <span class=n>author_login</span><span class=p>:</span> <span class=n>Optional</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span>
+    <span class=n>author_name</span><span class=p>:</span> <span class=n>Optional</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span>
+    <span class=n>sender</span><span class=p>:</span> <span class=n>Optional</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span>
     <span class=n>stages</span><span class=p>:</span> <span class=n>List</span><span class=p>[</span><span class=n>Any</span><span class=p>]</span>
 </code></pre></div> </details> <div class="doc doc-children"> </div> </div> </div> <div class="doc doc-object doc-class"> <h4 id=drode.adapters.drone.Drone class="doc doc-heading"> <code> Drone </code> <a href=#drode.adapters.drone.Drone class=headerlink title="Permanent link">&para;</a></h4> <div class="doc doc-contents "> <p>Drone adapter.</p> <p><strong>Attributes:</strong></p> <table> <thead> <tr> <th>Name</th> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>drone_url</code></td> <td></td> <td><p>Drone API server base url.</p></td> </tr> <tr> <td><code>drone_token</code></td> <td></td> <td><p>Drone token to interact with the API.</p></td> </tr> </tbody> </table> <details class=quote> <summary>Source code in <code>drode/adapters/drone.py</code></summary> <div class=highlight><pre><span></span><code><span class=k>class</span> <span class=nc>Drone</span><span class=p>:</span>
     <span class=sd>&quot;&quot;&quot;Drone adapter.</span>
@@ -256,9 +262,10 @@
 <span class=sd>            info: build information.</span>
 <span class=sd>        &quot;&quot;&quot;</span>
         <span class=k>try</span><span class=p>:</span>
-            <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>get</span><span class=p>(</span>
+            <span class=n>build_data</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>get</span><span class=p>(</span>
                 <span class=sa>f</span><span class=s2>&quot;</span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>drone_url</span><span class=si>}</span><span class=s2>/api/repos/</span><span class=si>{</span><span class=n>project_pipeline</span><span class=si>}</span><span class=s2>/builds/</span><span class=si>{</span><span class=n>build_number</span><span class=si>}</span><span class=s2>&quot;</span>
-            <span class=p>)</span><span class=o>.</span><span class=n>json</span><span class=p>()</span>
+            <span class=p>)</span><span class=o>.</span><span class=n>json</span><span class=p>()[</span><span class=mi>0</span><span class=p>]</span>
+            <span class=k>return</span> <span class=n>BuildInfo</span><span class=p>(</span><span class=o>**</span><span class=n>build_data</span><span class=p>)</span>
         <span class=k>except</span> <span class=n>DroneAPIError</span> <span class=k>as</span> <span class=n>error</span><span class=p>:</span>
             <span class=k>raise</span> <span class=n>DroneBuildError</span><span class=p>(</span>
                 <span class=sa>f</span><span class=s2>&quot;The build </span><span class=si>{</span><span class=n>build_number</span><span class=si>}</span><span class=s2> was not found at &quot;</span>
@@ -317,9 +324,10 @@
 <span class=sd>        Returns:</span>
 <span class=sd>            info: Last build information.</span>
 <span class=sd>        &quot;&quot;&quot;</span>
-        <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=sa>f</span><span class=s2>&quot;</span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>drone_url</span><span class=si>}</span><span class=s2>/api/repos/</span><span class=si>{</span><span class=n>project_pipeline</span><span class=si>}</span><span class=s2>/builds&quot;</span><span class=p>)</span><span class=o>.</span><span class=n>json</span><span class=p>()[</span>
-            <span class=mi>0</span>
-        <span class=p>]</span>
+        <span class=n>build_data</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>get</span><span class=p>(</span>
+            <span class=sa>f</span><span class=s2>&quot;</span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>drone_url</span><span class=si>}</span><span class=s2>/api/repos/</span><span class=si>{</span><span class=n>project_pipeline</span><span class=si>}</span><span class=s2>/builds&quot;</span>
+        <span class=p>)</span><span class=o>.</span><span class=n>json</span><span class=p>()[</span><span class=mi>0</span><span class=p>]</span>
+        <span class=k>return</span> <span class=n>BuildInfo</span><span class=p>(</span><span class=o>**</span><span class=n>build_data</span><span class=p>)</span>
 
     <span class=k>def</span> <span class=nf>last_success_build_info</span><span class=p>(</span>
         <span class=bp>self</span><span class=p>,</span> <span class=n>project_pipeline</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>branch</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&quot;master&quot;</span>
@@ -338,13 +346,13 @@
             <span class=sa>f</span><span class=s2>&quot;</span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>drone_url</span><span class=si>}</span><span class=s2>/api/repos/</span><span class=si>{</span><span class=n>project_pipeline</span><span class=si>}</span><span class=s2>/builds&quot;</span>
         <span class=p>)</span><span class=o>.</span><span class=n>json</span><span class=p>()</span>
 
-        <span class=k>for</span> <span class=n>build</span> <span class=ow>in</span> <span class=n>build_history</span><span class=p>:</span>
+        <span class=k>for</span> <span class=n>build_data</span> <span class=ow>in</span> <span class=n>build_history</span><span class=p>:</span>
             <span class=k>if</span> <span class=p>(</span>
-                <span class=n>build</span><span class=p>[</span><span class=s2>&quot;status&quot;</span><span class=p>]</span> <span class=o>==</span> <span class=s2>&quot;success&quot;</span>
-                <span class=ow>and</span> <span class=n>build</span><span class=p>[</span><span class=s2>&quot;target&quot;</span><span class=p>]</span> <span class=o>==</span> <span class=n>branch</span>
-                <span class=ow>and</span> <span class=n>build</span><span class=p>[</span><span class=s2>&quot;event&quot;</span><span class=p>]</span> <span class=o>==</span> <span class=s2>&quot;push&quot;</span>
+                <span class=n>build_data</span><span class=p>[</span><span class=s2>&quot;status&quot;</span><span class=p>]</span> <span class=o>==</span> <span class=s2>&quot;success&quot;</span>
+                <span class=ow>and</span> <span class=n>build_data</span><span class=p>[</span><span class=s2>&quot;target&quot;</span><span class=p>]</span> <span class=o>==</span> <span class=n>branch</span>
+                <span class=ow>and</span> <span class=n>build_data</span><span class=p>[</span><span class=s2>&quot;event&quot;</span><span class=p>]</span> <span class=o>==</span> <span class=s2>&quot;push&quot;</span>
             <span class=p>):</span>
-                <span class=k>return</span> <span class=n>build</span>
+                <span class=k>return</span> <span class=n>BuildInfo</span><span class=p>(</span><span class=o>**</span><span class=n>build_data</span><span class=p>)</span>
         <span class=k>raise</span> <span class=n>DroneBuildError</span><span class=p>(</span>
             <span class=sa>f</span><span class=s2>&quot;There are no successful jobs with target branch </span><span class=si>{</span><span class=n>branch</span><span class=si>}</span><span class=s2>&quot;</span>
         <span class=p>)</span>
@@ -387,9 +395,10 @@
 <span class=sd>        info: build information.</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=k>try</span><span class=p>:</span>
-        <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>get</span><span class=p>(</span>
+        <span class=n>build_data</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>get</span><span class=p>(</span>
             <span class=sa>f</span><span class=s2>&quot;</span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>drone_url</span><span class=si>}</span><span class=s2>/api/repos/</span><span class=si>{</span><span class=n>project_pipeline</span><span class=si>}</span><span class=s2>/builds/</span><span class=si>{</span><span class=n>build_number</span><span class=si>}</span><span class=s2>&quot;</span>
-        <span class=p>)</span><span class=o>.</span><span class=n>json</span><span class=p>()</span>
+        <span class=p>)</span><span class=o>.</span><span class=n>json</span><span class=p>()[</span><span class=mi>0</span><span class=p>]</span>
+        <span class=k>return</span> <span class=n>BuildInfo</span><span class=p>(</span><span class=o>**</span><span class=n>build_data</span><span class=p>)</span>
     <span class=k>except</span> <span class=n>DroneAPIError</span> <span class=k>as</span> <span class=n>error</span><span class=p>:</span>
         <span class=k>raise</span> <span class=n>DroneBuildError</span><span class=p>(</span>
             <span class=sa>f</span><span class=s2>&quot;The build </span><span class=si>{</span><span class=n>build_number</span><span class=si>}</span><span class=s2> was not found at &quot;</span>
@@ -465,9 +474,10 @@
 <span class=sd>    Returns:</span>
 <span class=sd>        info: Last build information.</span>
 <span class=sd>    &quot;&quot;&quot;</span>
-    <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=sa>f</span><span class=s2>&quot;</span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>drone_url</span><span class=si>}</span><span class=s2>/api/repos/</span><span class=si>{</span><span class=n>project_pipeline</span><span class=si>}</span><span class=s2>/builds&quot;</span><span class=p>)</span><span class=o>.</span><span class=n>json</span><span class=p>()[</span>
-        <span class=mi>0</span>
-    <span class=p>]</span>
+    <span class=n>build_data</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>get</span><span class=p>(</span>
+        <span class=sa>f</span><span class=s2>&quot;</span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>drone_url</span><span class=si>}</span><span class=s2>/api/repos/</span><span class=si>{</span><span class=n>project_pipeline</span><span class=si>}</span><span class=s2>/builds&quot;</span>
+    <span class=p>)</span><span class=o>.</span><span class=n>json</span><span class=p>()[</span><span class=mi>0</span><span class=p>]</span>
+    <span class=k>return</span> <span class=n>BuildInfo</span><span class=p>(</span><span class=o>**</span><span class=n>build_data</span><span class=p>)</span>
 </code></pre></div> </details> </div> </div> <div class="doc doc-object doc-method"> <h5 id=drode.adapters.drone.Drone.last_success_build_info class="doc doc-heading"> <code class="highlight language-python"><span class=n>last_success_build_info</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>project_pipeline</span><span class=p>,</span> <span class=n>branch</span><span class=o>=</span><span class=s1>&#39;master&#39;</span><span class=p>)</span></code> <a href=#drode.adapters.drone.Drone.last_success_build_info class=headerlink title="Permanent link">&para;</a></h5> <div class="doc doc-contents "> <p>Return the information of the last successful build.</p> <p><strong>Parameters:</strong></p> <table> <thead> <tr> <th>Name</th> <th>Type</th> <th>Description</th> <th>Default</th> </tr> </thead> <tbody> <tr> <td><code>project_pipeline</code></td> <td><code>str</code></td> <td><p>Drone pipeline identifier. In the format of <code>repo_owner/repo_name</code>.</p></td> <td><em>required</em></td> </tr> <tr> <td><code>branch</code></td> <td><code>str</code></td> <td><p>Branch to search the last build.</p></td> <td><code>&#39;master&#39;</code></td> </tr> </tbody> </table> <p><strong>Returns:</strong></p> <table> <thead> <tr> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>info</code></td> <td><p>last successful build number information.</p></td> </tr> </tbody> </table> <details class=quote> <summary>Source code in <code>drode/adapters/drone.py</code></summary> <div class=highlight><pre><span></span><code><span class=k>def</span> <span class=nf>last_success_build_info</span><span class=p>(</span>
     <span class=bp>self</span><span class=p>,</span> <span class=n>project_pipeline</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span> <span class=n>branch</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s2>&quot;master&quot;</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>BuildInfo</span><span class=p>:</span>
@@ -485,13 +495,13 @@
         <span class=sa>f</span><span class=s2>&quot;</span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>drone_url</span><span class=si>}</span><span class=s2>/api/repos/</span><span class=si>{</span><span class=n>project_pipeline</span><span class=si>}</span><span class=s2>/builds&quot;</span>
     <span class=p>)</span><span class=o>.</span><span class=n>json</span><span class=p>()</span>
 
-    <span class=k>for</span> <span class=n>build</span> <span class=ow>in</span> <span class=n>build_history</span><span class=p>:</span>
+    <span class=k>for</span> <span class=n>build_data</span> <span class=ow>in</span> <span class=n>build_history</span><span class=p>:</span>
         <span class=k>if</span> <span class=p>(</span>
-            <span class=n>build</span><span class=p>[</span><span class=s2>&quot;status&quot;</span><span class=p>]</span> <span class=o>==</span> <span class=s2>&quot;success&quot;</span>
-            <span class=ow>and</span> <span class=n>build</span><span class=p>[</span><span class=s2>&quot;target&quot;</span><span class=p>]</span> <span class=o>==</span> <span class=n>branch</span>
-            <span class=ow>and</span> <span class=n>build</span><span class=p>[</span><span class=s2>&quot;event&quot;</span><span class=p>]</span> <span class=o>==</span> <span class=s2>&quot;push&quot;</span>
+            <span class=n>build_data</span><span class=p>[</span><span class=s2>&quot;status&quot;</span><span class=p>]</span> <span class=o>==</span> <span class=s2>&quot;success&quot;</span>
+            <span class=ow>and</span> <span class=n>build_data</span><span class=p>[</span><span class=s2>&quot;target&quot;</span><span class=p>]</span> <span class=o>==</span> <span class=n>branch</span>
+            <span class=ow>and</span> <span class=n>build_data</span><span class=p>[</span><span class=s2>&quot;event&quot;</span><span class=p>]</span> <span class=o>==</span> <span class=s2>&quot;push&quot;</span>
         <span class=p>):</span>
-            <span class=k>return</span> <span class=n>build</span>
+            <span class=k>return</span> <span class=n>BuildInfo</span><span class=p>(</span><span class=o>**</span><span class=n>build_data</span><span class=p>)</span>
     <span class=k>raise</span> <span class=n>DroneBuildError</span><span class=p>(</span>
         <span class=sa>f</span><span class=s2>&quot;There are no successful jobs with target branch </span><span class=si>{</span><span class=n>branch</span><span class=si>}</span><span class=s2>&quot;</span>
     <span class=p>)</span>
@@ -856,23 +866,22 @@
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=k>if</span> <span class=n>build_number</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span>
         <span class=n>build</span> <span class=o>=</span> <span class=n>drone</span><span class=o>.</span><span class=n>last_success_build_info</span><span class=p>(</span><span class=n>project_pipeline</span><span class=p>)</span>
-        <span class=n>build_number</span> <span class=o>=</span> <span class=n>build</span><span class=p>[</span><span class=s2>&quot;number&quot;</span><span class=p>]</span>
     <span class=k>else</span><span class=p>:</span>
         <span class=n>build</span> <span class=o>=</span> <span class=n>drone</span><span class=o>.</span><span class=n>build_info</span><span class=p>(</span><span class=n>project_pipeline</span><span class=p>,</span> <span class=n>build_number</span><span class=p>)</span>
 
-    <span class=k>if</span> <span class=n>build</span><span class=p>[</span><span class=s2>&quot;status&quot;</span><span class=p>]</span> <span class=o>!=</span> <span class=s2>&quot;success&quot;</span><span class=p>:</span>
+    <span class=k>if</span> <span class=n>build</span><span class=o>.</span><span class=n>status</span> <span class=o>!=</span> <span class=s2>&quot;success&quot;</span><span class=p>:</span>
         <span class=k>raise</span> <span class=n>DronePromoteError</span><span class=p>(</span>
-            <span class=sa>f</span><span class=s2>&quot;You can&#39;t promote job #</span><span class=si>{</span><span class=n>build_number</span><span class=si>}</span><span class=s2> to </span><span class=si>{</span><span class=n>environment</span><span class=si>}</span><span class=s2> &quot;</span>
-            <span class=sa>f</span><span class=s2>&quot;as it&#39;s status is </span><span class=si>{</span><span class=n>build</span><span class=p>[</span><span class=s1>&#39;status&#39;</span><span class=p>]</span><span class=si>}</span><span class=s2>&quot;</span>
+            <span class=sa>f</span><span class=s2>&quot;You can&#39;t promote job #</span><span class=si>{</span><span class=n>build</span><span class=o>.</span><span class=n>number</span><span class=si>}</span><span class=s2> to </span><span class=si>{</span><span class=n>environment</span><span class=si>}</span><span class=s2> &quot;</span>
+            <span class=sa>f</span><span class=s2>&quot;as it&#39;s status is </span><span class=si>{</span><span class=n>build</span><span class=o>.</span><span class=n>status</span><span class=si>}</span><span class=s2>&quot;</span>
         <span class=p>)</span>
 
     <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span>
-        <span class=sa>f</span><span class=s2>&quot;You&#39;re about to promote job #</span><span class=si>{</span><span class=n>build_number</span><span class=si>}</span><span class=s2> &quot;</span>
+        <span class=sa>f</span><span class=s2>&quot;You&#39;re about to promote job #</span><span class=si>{</span><span class=n>build</span><span class=o>.</span><span class=n>number</span><span class=si>}</span><span class=s2> &quot;</span>
         <span class=sa>f</span><span class=s2>&quot;of the pipeline </span><span class=si>{</span><span class=n>project_pipeline</span><span class=si>}</span><span class=s2> to </span><span class=si>{</span><span class=n>environment</span><span class=si>}</span><span class=se>\n\n</span><span class=s2>&quot;</span>
-        <span class=sa>f</span><span class=s2>&quot;      With commit </span><span class=si>{</span><span class=n>build</span><span class=p>[</span><span class=s1>&#39;after&#39;</span><span class=p>][:</span><span class=mi>8</span><span class=p>]</span><span class=si>}</span><span class=s2>: </span><span class=si>{</span><span class=n>build</span><span class=p>[</span><span class=s1>&#39;message&#39;</span><span class=p>]</span><span class=si>}</span><span class=s2>&quot;</span>
+        <span class=sa>f</span><span class=s2>&quot;      With commit </span><span class=si>{</span><span class=n>build</span><span class=o>.</span><span class=n>after</span><span class=p>[:</span><span class=mi>8</span><span class=p>]</span><span class=si>}</span><span class=s2>: </span><span class=si>{</span><span class=n>build</span><span class=o>.</span><span class=n>message</span><span class=si>}</span><span class=s2>&quot;</span>
     <span class=p>)</span>
     <span class=k>if</span> <span class=n>ask</span><span class=p>(</span><span class=s2>&quot;Are you sure? [y/N]: &quot;</span><span class=p>):</span>
-        <span class=k>return</span> <span class=n>drone</span><span class=o>.</span><span class=n>promote</span><span class=p>(</span><span class=n>project_pipeline</span><span class=p>,</span> <span class=n>build_number</span><span class=p>,</span> <span class=n>environment</span><span class=p>)</span>
+        <span class=k>return</span> <span class=n>drone</span><span class=o>.</span><span class=n>promote</span><span class=p>(</span><span class=n>project_pipeline</span><span class=p>,</span> <span class=n>build</span><span class=o>.</span><span class=n>number</span><span class=p>,</span> <span class=n>environment</span><span class=p>)</span>
     <span class=k>return</span> <span class=kc>None</span>
 </code></pre></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h3 id=drode.services.set_active_project class="doc doc-heading"> <code class="highlight language-python"><span class=n>set_active_project</span><span class=p>(</span><span class=n>config</span><span class=p>,</span> <span class=n>project_id</span><span class=p>)</span></code> <a href=#drode.services.set_active_project class=headerlink title="Permanent link">&para;</a></h3> <div class="doc doc-contents "> <p>Set the active project.</p> <p><strong>Exceptions:</strong></p> <table> <thead> <tr> <th>Type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>ConfigError</code></td> <td><p>If the project to activate doesn't exist.</p></td> </tr> </tbody> </table> <details class=quote> <summary>Source code in <code>drode/services.py</code></summary> <div class=highlight><pre><span></span><code><span class=k>def</span> <span class=nf>set_active_project</span><span class=p>(</span><span class=n>config</span><span class=p>:</span> <span class=n>Config</span><span class=p>,</span> <span class=n>project_id</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=kc>None</span><span class=p>:</span>
     <span class=sd>&quot;&quot;&quot;Set the active project.</span>
@@ -903,31 +912,25 @@
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=k>if</span> <span class=n>build_number</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span>
         <span class=n>last_build</span> <span class=o>=</span> <span class=n>drone</span><span class=o>.</span><span class=n>last_build_info</span><span class=p>(</span><span class=n>project_pipeline</span><span class=p>)</span>
-        <span class=k>if</span> <span class=n>last_build</span><span class=p>[</span><span class=s2>&quot;finished&quot;</span><span class=p>]</span> <span class=o>!=</span> <span class=mi>0</span><span class=p>:</span>
+        <span class=k>if</span> <span class=n>last_build</span><span class=o>.</span><span class=n>finished</span> <span class=o>!=</span> <span class=mi>0</span><span class=p>:</span>
             <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s2>&quot;There are no active jobs&quot;</span><span class=p>)</span>
             <span class=k>return</span> <span class=kc>True</span>
-        <span class=n>last_build_number</span> <span class=o>=</span> <span class=n>last_build</span><span class=p>[</span><span class=s2>&quot;number&quot;</span><span class=p>]</span>
-        <span class=n>build_number</span> <span class=o>=</span> <span class=n>last_build_number</span>
+        <span class=n>build_number</span> <span class=o>=</span> <span class=n>last_build</span><span class=o>.</span><span class=n>number</span>
 
     <span class=n>first_time</span> <span class=o>=</span> <span class=kc>True</span>
     <span class=k>while</span> <span class=kc>True</span><span class=p>:</span>
         <span class=n>build</span> <span class=o>=</span> <span class=n>drone</span><span class=o>.</span><span class=n>build_info</span><span class=p>(</span><span class=n>project_pipeline</span><span class=p>,</span> <span class=n>build_number</span><span class=p>)</span>
 
-        <span class=k>try</span><span class=p>:</span>
-            <span class=k>if</span> <span class=n>build</span><span class=p>[</span><span class=s2>&quot;finished&quot;</span><span class=p>]</span> <span class=o>==</span> <span class=mi>0</span><span class=p>:</span>
-                <span class=k>if</span> <span class=n>first_time</span><span class=p>:</span>
-                    <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span>
-                        <span class=sa>f</span><span class=s2>&quot;Waiting for job #</span><span class=si>{</span><span class=n>build</span><span class=p>[</span><span class=s1>&#39;number&#39;</span><span class=p>]</span><span class=si>}</span><span class=s2> started by &quot;</span>
-                        <span class=sa>f</span><span class=s2>&quot;a </span><span class=si>{</span><span class=n>build</span><span class=p>[</span><span class=s1>&#39;event&#39;</span><span class=p>]</span><span class=si>}</span><span class=s2> event by </span><span class=si>{</span><span class=n>build</span><span class=p>[</span><span class=s1>&#39;trigger&#39;</span><span class=p>]</span><span class=si>}</span><span class=s2>.&quot;</span>
-                    <span class=p>)</span>
-                    <span class=n>first_time</span> <span class=o>=</span> <span class=kc>False</span>
-                <span class=n>time</span><span class=o>.</span><span class=n>sleep</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
-                <span class=k>continue</span>
-            <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span>
-                <span class=sa>f</span><span class=s2>&quot;Job #</span><span class=si>{</span><span class=n>build</span><span class=p>[</span><span class=s1>&#39;number&#39;</span><span class=p>]</span><span class=si>}</span><span class=s2> has finished with status </span><span class=si>{</span><span class=n>build</span><span class=p>[</span><span class=s1>&#39;status&#39;</span><span class=p>]</span><span class=si>}</span><span class=s2>&quot;</span>
-            <span class=p>)</span>
-        <span class=k>except</span> <span class=ne>KeyError</span><span class=p>:</span>
-            <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&quot;Job #</span><span class=si>{</span><span class=n>build_number</span><span class=si>}</span><span class=s2> has not started yet&quot;</span><span class=p>)</span>
+        <span class=k>if</span> <span class=n>build</span><span class=o>.</span><span class=n>finished</span> <span class=o>==</span> <span class=mi>0</span><span class=p>:</span>
+            <span class=k>if</span> <span class=n>first_time</span><span class=p>:</span>
+                <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span>
+                    <span class=sa>f</span><span class=s2>&quot;Waiting for job #</span><span class=si>{</span><span class=n>build</span><span class=o>.</span><span class=n>number</span><span class=si>}</span><span class=s2> started by &quot;</span>
+                    <span class=sa>f</span><span class=s2>&quot;a </span><span class=si>{</span><span class=n>build</span><span class=o>.</span><span class=n>event</span><span class=si>}</span><span class=s2> event by </span><span class=si>{</span><span class=n>build</span><span class=o>.</span><span class=n>trigger</span><span class=si>}</span><span class=s2>.&quot;</span>
+                <span class=p>)</span>
+                <span class=n>first_time</span> <span class=o>=</span> <span class=kc>False</span>
+            <span class=n>time</span><span class=o>.</span><span class=n>sleep</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+            <span class=k>continue</span>
+        <span class=n>log</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=sa>f</span><span class=s2>&quot;Job #</span><span class=si>{</span><span class=n>build</span><span class=o>.</span><span class=n>number</span><span class=si>}</span><span class=s2> has finished with status </span><span class=si>{</span><span class=n>build</span><span class=o>.</span><span class=n>status</span><span class=si>}</span><span class=s2>&quot;</span><span class=p>)</span>
         <span class=k>return</span> <span class=kc>True</span>
 </code></pre></div> </details> </div> </div> </div> </div> </div> <div class="doc doc-object doc-module"> <h2 id=drode.version class="doc doc-heading"> <code>version</code> <a href=#drode.version class=headerlink title="Permanent link">&para;</a></h2> <div class="doc doc-contents "> <p>Utilities to retrieve the information of the program version.</p> <div class="doc doc-children"> <div class="doc doc-object doc-function"> <h3 id=drode.version.version_info class="doc doc-heading"> <code class="highlight language-python"><span class=n>version_info</span><span class=p>()</span></code> <a href=#drode.version.version_info class=headerlink title="Permanent link">&para;</a></h3> <div class="doc doc-contents "> <p>Display the version of the program, python and the platform.</p> <details class=quote> <summary>Source code in <code>drode/version.py</code></summary> <div class=highlight><pre><span></span><code><span class=k>def</span> <span class=nf>version_info</span><span class=p>()</span> <span class=o>-&gt;</span> <span class=nb>str</span><span class=p>:</span>
     <span class=sd>&quot;&quot;&quot;Display the version of the program, python and the platform.&quot;&quot;&quot;</span>
