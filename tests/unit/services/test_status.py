@@ -56,8 +56,8 @@ def test_project_status_works_for_undefined_autoscaling_groups(
     result = services.project_status(config, aws)
 
     assert result == {
-        "Production": AutoscalerInfo(instances=[]),
-        "Staging": AutoscalerInfo(instances=[]),
+        "Production": AutoscalerInfo(),
+        "Staging": AutoscalerInfo(),
     }
 
 
