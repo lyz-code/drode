@@ -185,7 +185,7 @@ def project_status(config: Config, aws: AWS) -> ProjectStatus:
                 raise ConfigError("The autoscaler name is not a string")
             autoscaler_info = aws.get_autoscaling_group(autoscaler_name)
         except ConfigError:
-            autoscaler_info = AutoscalerInfo(instances=[])
+            autoscaler_info = AutoscalerInfo()
 
         project[environment] = autoscaler_info
 

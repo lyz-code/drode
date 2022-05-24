@@ -1,11 +1,12 @@
 """Gather the integration with the AWS boto library."""
 
 import logging
-from dataclasses import dataclass
 from typing import Dict, List
 
 import boto3
 from botocore.exceptions import ClientError, NoRegionError
+from pydantic import BaseModel  # noqa: E0611
+from pydantic import Field
 
 log = logging.getLogger(__name__)
 
@@ -21,11 +22,10 @@ class AWSStateError(Exception):
 InstanceInfo = Dict[str, str]
 
 
-@dataclass
-class AutoscalerInfo:
+class AutoscalerInfo(BaseModel):
     """Model the response of the AWS API regarding ASGs."""
 
-    instances: List[InstanceInfo]
+    instances: List[InstanceInfo] = Field(default_factory=list)
     template: str = ""
 
 
@@ -76,10 +76,7 @@ class AWS:
         ec2 = boto3.client("ec2")
         autoscaling = boto3.client("autoscaling")
 
-        autoscaler_info = AutoscalerInfo(
-            template="",
-            instances=[],
-        )
+        autoscaler_info = AutoscalerInfo()
 
         try:
             autoscaling_group = autoscaling.describe_auto_scaling_groups(
