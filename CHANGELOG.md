@@ -1,3 +1,10 @@
+## 1.2.3 (2022-05-24)
+
+### Fix
+
+- remove more traces of mypy-extensions from the code
+- remove more traces of mypy-extensions from the code
+
 ## 1.2.2 (2022-05-23)
 
 ### Fix
