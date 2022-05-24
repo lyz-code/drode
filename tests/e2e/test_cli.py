@@ -3,12 +3,12 @@
 import logging
 import os
 import re
+from typing import Any, Dict
 from unittest.mock import patch
 
 import pytest
 from _pytest.logging import LogCaptureFixture
 from click.testing import CliRunner
-from mypy_extensions import TypedDict
 from py._path.local import LocalPath
 from tests.fake_adapters import FakeAWS, FakeDrone
 
@@ -18,7 +18,7 @@ from drode.version import __version__
 
 from ..factories import BuildInfoFactory
 
-FakeDeps = TypedDict("FakeDeps", {"drone": FakeDrone, "aws": FakeAWS})
+FakeDeps = Dict[str, Any]
 
 
 @pytest.fixture(name="fake_dependencies")

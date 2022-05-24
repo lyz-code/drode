@@ -205,9 +205,9 @@ class FakeAWS(AWS):
         Raises:
             AWSStateError: If no autoscaling groups are found with that name.
         """
-        return {
-            "template": "launch-config-name",
-            "instances": [
+        return AutoscalerInfo(
+            template="launch-config-name",
+            instances=[
                 {
                     "Instance": "i-xxxxxxxxxxxxxxxxx",
                     "IP": "192.168.1.13",
@@ -216,4 +216,4 @@ class FakeAWS(AWS):
                     "Template": "old-launch-config-name",
                 }
             ],
-        }
+        )
