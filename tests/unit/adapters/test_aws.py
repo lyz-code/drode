@@ -9,7 +9,7 @@ import pytest
 from _pytest.logging import LogCaptureFixture
 from botocore.exceptions import NoRegionError
 
-from drode.adapters.aws import AWS, AWSConfigurationError, AWSStateError
+from drode.adapters.aws import AWS, AutoscalerInfo, AWSConfigurationError, AWSStateError
 
 
 @pytest.fixture(name="boto")
@@ -118,9 +118,9 @@ def test_get_autoscaling_returns_instances_info(aws: AWS, boto: Mock) -> None:
         ],
         "ResponseMetadata": {"HTTPStatusCode": 200},
     }
-    desired_result = {
-        "template": "launch-config-name",
-        "instances": [
+    desired_result = AutoscalerInfo(
+        template="launch-config-name",
+        instances=[
             {
                 "Instance": "i-xxxxxxxxxxxxxxxxx",
                 "IP": "192.168.1.13",
@@ -129,7 +129,7 @@ def test_get_autoscaling_returns_instances_info(aws: AWS, boto: Mock) -> None:
                 "Template": "old-launch-config-name",
             }
         ],
-    }
+    )
 
     result = aws.get_autoscaling_group("production_autoscaling_group_name")
 
@@ -223,9 +223,9 @@ def test_get_autoscaling_handles_launch_templates(aws: AWS, boto: Mock) -> None:
         ],
         "ResponseMetadata": {"HTTPStatusCode": 200},
     }
-    desired_result = {
-        "template": "launch-template-name:1",
-        "instances": [
+    desired_result = AutoscalerInfo(
+        template="launch-template-name:1",
+        instances=[
             {
                 "Instance": "i-xxxxxxxxxxxxxxxxx",
                 "IP": "192.168.1.13",
@@ -234,7 +234,7 @@ def test_get_autoscaling_handles_launch_templates(aws: AWS, boto: Mock) -> None:
                 "Template": "old-launch-template-name:1",
             }
         ],
-    }
+    )
 
     result = aws.get_autoscaling_group("production_autoscaling_group_name")
 

@@ -3,7 +3,7 @@
 import pytest
 
 from drode import services
-from drode.adapters.aws import AWS
+from drode.adapters.aws import AWS, AutoscalerInfo
 from drode.config import Config, ConfigError
 
 
@@ -16,9 +16,9 @@ def test_project_status_happy_path(aws: AWS, config: Config) -> None:
     result = services.project_status(config, aws)
 
     assert result == {
-        "Production": {
-            "template": "launch-config-name",
-            "instances": [
+        "Production": AutoscalerInfo(
+            template="launch-config-name",
+            instances=[
                 {
                     "Instance": "i-xxxxxxxxxxxxxxxxx",
                     "IP": "192.168.1.13",
@@ -27,10 +27,10 @@ def test_project_status_happy_path(aws: AWS, config: Config) -> None:
                     "Template": "old-launch-config-name",
                 }
             ],
-        },
-        "Staging": {
-            "template": "launch-config-name",
-            "instances": [
+        ),
+        "Staging": AutoscalerInfo(
+            template="launch-config-name",
+            instances=[
                 {
                     "Instance": "i-xxxxxxxxxxxxxxxxx",
                     "IP": "192.168.1.13",
@@ -39,7 +39,7 @@ def test_project_status_happy_path(aws: AWS, config: Config) -> None:
                     "Template": "old-launch-config-name",
                 }
             ],
-        },
+        ),
     }
 
 
@@ -56,8 +56,8 @@ def test_project_status_works_for_undefined_autoscaling_groups(
     result = services.project_status(config, aws)
 
     assert result == {
-        "Production": {},
-        "Staging": {},
+        "Production": AutoscalerInfo(instances=[]),
+        "Staging": AutoscalerInfo(instances=[]),
     }
 
 
