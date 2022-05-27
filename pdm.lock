@@ -139,18 +139,18 @@ dependencies = [
 
 [[package]]
 name = "boto3"
-version = "1.23.8"
+version = "1.23.9"
 requires_python = ">= 3.6"
 summary = "The AWS SDK for Python"
 dependencies = [
-    "botocore<1.27.0,>=1.26.8",
+    "botocore<1.27.0,>=1.26.9",
     "jmespath<2.0.0,>=0.7.1",
     "s3transfer<0.6.0,>=0.5.0",
 ]
 
 [[package]]
 name = "botocore"
-version = "1.26.8"
+version = "1.26.9"
 requires_python = ">= 3.6"
 summary = "Low-level, data-driven core of boto 3."
 dependencies = [
@@ -1385,7 +1385,7 @@ summary = "Typing stubs for click"
 
 [[package]]
 name = "types-requests"
-version = "2.27.28"
+version = "2.27.29"
 summary = "Typing stubs for requests"
 dependencies = [
     "types-urllib3<1.27",
@@ -1398,7 +1398,7 @@ summary = "Typing stubs for tabulate"
 
 [[package]]
 name = "types-urllib3"
-version = "1.26.14"
+version = "1.26.15"
 summary = "Typing stubs for urllib3"
 
 [[package]]
@@ -1572,13 +1572,11 @@ content_hash = "sha256:e68351854abf61a47c8a6c8827cb61a387dd594b4843c737a23ea402b
     {file = "bleach-5.0.0-py3-none-any.whl", hash = "sha256:08a1fe86d253b5c88c92cc3d810fd8048a16d15762e1e5b74d502256e5926aa1"},
     {file = "bleach-5.0.0.tar.gz", hash = "sha256:c6d6cc054bdc9c83b48b8083e236e5f00f238428666d2ce2e083eaa5fd568565"},
 ]
-"boto3 1.23.8" = [
-    {file = "boto3-1.23.8-py3-none-any.whl", hash = "sha256:15733c2bbedce7a36fcf1749560c72c3ee90785aa6302a98658c7bffdcbe1f2a"},
-    {file = "boto3-1.23.8.tar.gz", hash = "sha256:ea8ebcea4ccb70d1cf57526d9eec6012c76796f28ada3e9cc1d89178683d8107"},
+"boto3 1.23.9" = [
+    {file = "boto3-1.23.9-py3-none-any.whl", hash = "sha256:9e44d22a9cfb72e84add3ce1580e6dfef6a67321da0b958f7f33411de468a7ea"},
 ]
-"botocore 1.26.8" = [
-    {file = "botocore-1.26.8-py3-none-any.whl", hash = "sha256:620851daf1245af5bc28137aa821375bac964aa0eddc482437c783fe01e298fc"},
-    {file = "botocore-1.26.8.tar.gz", hash = "sha256:e786722cb14de7319331cc55e9092174de66a768559700ef656d05ff41b3e24f"},
+"botocore 1.26.9" = [
+    {file = "botocore-1.26.9-py3-none-any.whl", hash = "sha256:c5f33c814f8c5e1a0bec2084760fe00ea4d43cbfbb868b05fbb83bbeb6303844"},
 ]
 "cached-property 1.5.2" = [
     {file = "cached_property-1.5.2-py2.py3-none-any.whl", hash = "sha256:df4f613cf7ad9a588cc381aaf4a512d26265ecebd5eb9e1ba12f1319eb85a6a0"},
@@ -2521,17 +2519,17 @@ content_hash = "sha256:e68351854abf61a47c8a6c8827cb61a387dd594b4843c737a23ea402b
     {file = "types_click-7.1.8-py3-none-any.whl", hash = "sha256:8cb030a669e2e927461be9827375f83c16b8178c365852c060a34e24871e7e81"},
     {file = "types-click-7.1.8.tar.gz", hash = "sha256:b6604968be6401dc516311ca50708a0a28baa7a0cb840efd7412f0dbbff4e092"},
 ]
-"types-requests 2.27.28" = [
-    {file = "types_requests-2.27.28-py3-none-any.whl", hash = "sha256:c2647aca57977bc7a4e9c9d9e14a6c76e6503bc64dcbc9f03836df26e54a80c8"},
-    {file = "types-requests-2.27.28.tar.gz", hash = "sha256:46c72c9ddc73010b14cd19f67023df4a01519411ecf632a305b02e32ca8eb3b8"},
+"types-requests 2.27.29" = [
+    {file = "types_requests-2.27.29-py3-none-any.whl", hash = "sha256:014f4f82db7b96c41feea9adaea30e68cd64c230eeab34b70c29bebb26ec74ac"},
+    {file = "types-requests-2.27.29.tar.gz", hash = "sha256:fb453b3a76a48eca66381cea8004feaaea12835e838196f5c7ac87c75c5c19ef"},
 ]
 "types-tabulate 0.8.9" = [
     {file = "types_tabulate-0.8.9-py3-none-any.whl", hash = "sha256:7971ed0cd40454eb18d82c01e2f18bcd09ca23cc9eb901c62d2b04e5d1f57f84"},
     {file = "types-tabulate-0.8.9.tar.gz", hash = "sha256:2fc3fa4fe1853ac987cf50e8d4599e3fe446dd53064fe86a46a407a98e9fc04f"},
 ]
-"types-urllib3 1.26.14" = [
-    {file = "types_urllib3-1.26.14-py3-none-any.whl", hash = "sha256:5d2388aa76395b1e3999ff789ea5b3283677dad8e9bcf3d9117ba19271fd35d9"},
-    {file = "types-urllib3-1.26.14.tar.gz", hash = "sha256:2a2578e4b36341ccd240b00fccda9826988ff0589a44ba4a664bbd69ef348d27"},
+"types-urllib3 1.26.15" = [
+    {file = "types_urllib3-1.26.15-py3-none-any.whl", hash = "sha256:6011befa13f901fc934f59bb1fd6973be6f3acf4ebfce427593a27e7f492918f"},
+    {file = "types-urllib3-1.26.15.tar.gz", hash = "sha256:c89283541ef92e344b7f59f83ea9b5a295b16366ceee3f25ecfc5593c79f794e"},
 ]
 "typing-extensions 4.2.0" = [
     {file = "typing_extensions-4.2.0-py3-none-any.whl", hash = "sha256:6657594ee297170d19f67d55c05852a874e7eb634f4f753dbd667855e07c1708"},
