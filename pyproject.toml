@@ -114,9 +114,9 @@ doc = [
     "mkdocs-minify-plugin>=0.5.0",
     "mkdocs-autolinks-plugin>=0.4.0",
     "mkdocs-material>=8.0.5",
-    "mkdocstrings>=0.16.2",
     "markdown-include>=0.6.0",
     "mkdocs-section-index>=0.3.2",
+    "mkdocstrings[python]>=0.19.0",
 ]
 security = [
     "safety>=1.10.3",
