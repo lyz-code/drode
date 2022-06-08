@@ -151,6 +151,11 @@ dependencies = [
 ]
 
 [[package]]
+name = "cached-property"
+version = "1.5.2"
+summary = "A decorator for caching properties in classes."
+
+[[package]]
 name = "certifi"
 version = "2022.5.18.1"
 requires_python = ">=3.6"
@@ -585,6 +590,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "griffe"
+version = "0.20.0"
+requires_python = ">=3.7"
+summary = "Signatures for entire Python programs. Extract the structure, the frame, the skeleton of your project, to generate API documentation or find breaking changes in your API."
+dependencies = [
+    "cached-property; python_version < \"3.8\"",
+]
+
+[[package]]
 name = "htmlmin"
 version = "0.1.12"
 summary = "An HTML Minifier"
@@ -745,6 +759,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "mkdocs-autorefs"
+version = "0.4.1"
+requires_python = ">=3.7"
+summary = "Automatically link across pages in MkDocs."
+dependencies = [
+    "Markdown>=3.3",
+    "mkdocs>=1.1",
+]
+
+[[package]]
 name = "mkdocs-git-revision-date-localized-plugin"
 version = "1.0.1"
 requires_python = ">=3.6"
@@ -807,6 +831,41 @@ requires_python = ">=3.6,<4.0"
 summary = "MkDocs plugin to allow clickable sections that lead to an index page"
 dependencies = [
     "mkdocs<2.0,>=1.1",
+]
+
+[[package]]
+name = "mkdocstrings"
+version = "0.19.0"
+requires_python = ">=3.7"
+summary = "Automatic documentation from sources, for MkDocs."
+dependencies = [
+    "Jinja2>=2.11.1",
+    "Markdown>=3.3",
+    "MarkupSafe>=1.1",
+    "mkdocs-autorefs>=0.3.1",
+    "mkdocs>=1.2",
+    "pymdown-extensions>=6.3",
+]
+
+[[package]]
+name = "mkdocstrings-python"
+version = "0.7.0"
+requires_python = ">=3.7"
+summary = "A Python handler for mkdocstrings."
+dependencies = [
+    "griffe>=0.11.1",
+    "mkdocstrings>=0.19",
+]
+
+[[package]]
+name = "mkdocstrings"
+version = "0.19.0"
+extras = ["python"]
+requires_python = ">=3.7"
+summary = "Automatic documentation from sources, for MkDocs."
+dependencies = [
+    "mkdocstrings",
+    "mkdocstrings-python>=0.5.2",
 ]
 
 [[package]]
@@ -1414,7 +1473,7 @@ summary = "Backport of pathlib-compatible object wrapper for zip files"
 
 [metadata]
 lock_version = "3.1"
-content_hash = "sha256:813e6bd9c8ddb74710dfb3b9142ed94b70cbb638be4e59fe65f67d71e8c9c621"
+content_hash = "sha256:2c5eaf4d1ad1f500aaca5f19c2d86c57d834f5e3146bf1c54ff4bf3f28950ea4"
 
 [metadata.files]
 "argcomplete 1.12.3" = [
@@ -1500,6 +1559,10 @@ content_hash = "sha256:813e6bd9c8ddb74710dfb3b9142ed94b70cbb638be4e59fe65f67d71e
 "botocore 1.27.4" = [
     {file = "botocore-1.27.4-py3-none-any.whl", hash = "sha256:54ef4b035c51fe8937a61d3017e30e0a47237916143889ecf4eace481220029a"},
     {file = "botocore-1.27.4.tar.gz", hash = "sha256:866ac4ad7de326cfb6956462cc224eee1ef1c17987c2313c6fecdbe017e753fc"},
+]
+"cached-property 1.5.2" = [
+    {file = "cached_property-1.5.2-py2.py3-none-any.whl", hash = "sha256:df4f613cf7ad9a588cc381aaf4a512d26265ecebd5eb9e1ba12f1319eb85a6a0"},
+    {file = "cached-property-1.5.2.tar.gz", hash = "sha256:9fa5755838eecbb2d234c3aa390bd80fbd3ac6b6869109bfc1b499f7bd89a130"},
 ]
 "certifi 2022.5.18.1" = [
     {file = "certifi-2022.5.18.1-py3-none-any.whl", hash = "sha256:f1d53542ee8cbedbe2118b5686372fb33c297fcd6379b050cca0ef13a597382a"},
@@ -1804,6 +1867,10 @@ content_hash = "sha256:813e6bd9c8ddb74710dfb3b9142ed94b70cbb638be4e59fe65f67d71e
     {file = "goodconf-2.0.1-py2.py3-none-any.whl", hash = "sha256:a4153d63d5684826dd8275542dcfb4577576ecfe9da3a08ed362c9fb9b8d7338"},
     {file = "goodconf-2.0.1.tar.gz", hash = "sha256:23b7d7841b4e6e615aabecb56497f86c65284570c931f58061e724c8c1b852b3"},
 ]
+"griffe 0.20.0" = [
+    {file = "griffe-0.20.0-py3-none-any.whl", hash = "sha256:899e0c9c09baf22b31de1c969a03edaf0ddf72d0a7183df8de746b6c26ed62f4"},
+    {file = "griffe-0.20.0.tar.gz", hash = "sha256:bf181de6e661c0d2a229c1dc7e90db0def280ee3a89c6829fcc1695baee65f7f"},
+]
 "htmlmin 0.1.12" = [
     {file = "htmlmin-0.1.12.tar.gz", hash = "sha256:50c1ef4630374a5d723900096a961cff426dff46b48f34d194a81bbe14eca178"},
 ]
@@ -2019,6 +2086,10 @@ content_hash = "sha256:813e6bd9c8ddb74710dfb3b9142ed94b70cbb638be4e59fe65f67d71e
     {file = "mkdocs_autolinks_plugin-0.5.0-py3-none-any.whl", hash = "sha256:6072c10cbec716c8a46cec7cf6f1e8c7dd52576fce59915e219a7911d457e72f"},
     {file = "mkdocs-autolinks-plugin-0.5.0.tar.gz", hash = "sha256:cdfc8909c3756ab0531c0bfec33f11ae87d60ea2d89df46742daf28d389b6a3f"},
 ]
+"mkdocs-autorefs 0.4.1" = [
+    {file = "mkdocs_autorefs-0.4.1-py3-none-any.whl", hash = "sha256:a2248a9501b29dc0cc8ba4c09f4f47ff121945f6ce33d760f145d6f89d313f5b"},
+    {file = "mkdocs-autorefs-0.4.1.tar.gz", hash = "sha256:70748a7bd025f9ecd6d6feeba8ba63f8e891a1af55f48e366d6d6e78493aba84"},
+]
 "mkdocs-git-revision-date-localized-plugin 1.0.1" = [
     {file = "mkdocs_git_revision_date_localized_plugin-1.0.1-py3-none-any.whl", hash = "sha256:ffcf206b5108d9f729af6cd42377d2e0e25c080817fdad0119549ac924b526f3"},
     {file = "mkdocs-git-revision-date-localized-plugin-1.0.1.tar.gz", hash = "sha256:f3e020b445e7b4fb4e58ccd46b07adecbca0f85ac1659e1a63e38b8779c81ba7"},
@@ -2042,6 +2113,14 @@ content_hash = "sha256:813e6bd9c8ddb74710dfb3b9142ed94b70cbb638be4e59fe65f67d71e
 "mkdocs-section-index 0.3.4" = [
     {file = "mkdocs_section_index-0.3.4-py3-none-any.whl", hash = "sha256:214f7a6df9d35a5772e9577f3899ff3edd90044064589e6dd4d84615b72a8024"},
     {file = "mkdocs-section-index-0.3.4.tar.gz", hash = "sha256:050151bfe7c0e374f197335e0ecb19c45b53dbafc0f817aa203f0cc24bcf7d10"},
+]
+"mkdocstrings 0.19.0" = [
+    {file = "mkdocstrings-0.19.0-py3-none-any.whl", hash = "sha256:3217d510d385c961f69385a670b2677e68e07b5fea4a504d86bf54c006c87c7d"},
+    {file = "mkdocstrings-0.19.0.tar.gz", hash = "sha256:efa34a67bad11229d532d89f6836a8a215937548623b64f3698a1df62e01cc3e"},
+]
+"mkdocstrings-python 0.7.0" = [
+    {file = "mkdocstrings_python-0.7.0-py3-none-any.whl", hash = "sha256:6964bd92f106766e771ac6cd5bc02643a960602b4d921b95362e31d491e9a6db"},
+    {file = "mkdocstrings-python-0.7.0.tar.gz", hash = "sha256:e54c67890e8bb7dc4604360c8ef5dd214b23b6924de7706f461e3c998d4ea061"},
 ]
 "mypy 0.961" = [
     {file = "mypy-0.961-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:697540876638ce349b01b6786bc6094ccdaba88af446a9abb967293ce6eaa2b0"},
