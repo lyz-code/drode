@@ -2,6 +2,7 @@
 
 import logging
 from dataclasses import dataclass
+from inspect import signature
 from typing import Any, List, Optional
 
 import requests
@@ -41,15 +42,32 @@ class BuildInfo:  # noqa: R0902
     source: str
     after: str
     target: str
-    deploy_to: str
     started: int
     finished: int
-    parent: Optional[int]
-    before: Optional[str]
-    author_login: Optional[str]
-    author_name: Optional[str]
-    sender: Optional[str]
-    stages: List[Any]
+    deploy_to: Optional[str] = None
+    parent: Optional[int] = None
+    before: Optional[str] = None
+    author_login: Optional[str] = None
+    author_name: Optional[str] = None
+    sender: Optional[str] = None
+    stages: Optional[List[Any]] = None
+
+    @classmethod
+    def from_kwargs(cls, **kwargs: Any) -> "BuildInfo":  # noqa: ANN401
+        """Load only the attributes of the class, ignore the rest."""
+        # Fetch the constructor's signature
+        cls_fields = set(signature(cls).parameters)
+
+        # split the kwargs into native ones and new ones
+        native_args = {}
+        for key, value in kwargs.items():
+            if key in cls_fields:
+                native_args[key] = value
+
+        # Use the native ones to create the class
+        entity = cls(**native_args)
+
+        return entity
 
 
 class Drone:
@@ -100,7 +118,7 @@ class Drone:
             build_data = self.get(
                 f"{self.drone_url}/api/repos/{project_pipeline}/builds/{build_number}"
             ).json()[0]
-            return BuildInfo(**build_data)
+            return BuildInfo.from_kwargs(**build_data)
         except DroneAPIError as error:
             raise DroneBuildError(
                 f"The build {build_number} was not found at "
@@ -162,7 +180,7 @@ class Drone:
         build_data = self.get(
             f"{self.drone_url}/api/repos/{project_pipeline}/builds"
         ).json()[0]
-        return BuildInfo(**build_data)
+        return BuildInfo.from_kwargs(**build_data)
 
     def last_success_build_info(
         self, project_pipeline: str, branch: str = "master"
@@ -187,7 +205,7 @@ class Drone:
                 and build_data["target"] == branch
                 and build_data["event"] == "push"
             ):
-                return BuildInfo(**build_data)
+                return BuildInfo.from_kwargs(**build_data)
         raise DroneBuildError(
             f"There are no successful jobs with target branch {branch}"
         )
