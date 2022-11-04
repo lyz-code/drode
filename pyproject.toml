@@ -145,6 +145,7 @@ dev = [
     "commitizen>=2.32.2",
 ]
 
+
 [build-system]
 requires = ["pdm-pep517"]
 build-backend = "pdm.pep517.api"
@@ -240,6 +241,10 @@ flake8-debugger = ["+*"]
 flake8-docstrings = [
   "+*",
   "-D101", # Missing docstring, already covered by C0115 of pylint
+  "-D410", # Missing line before docstring. Black is doing it so it looks like a false
+           # positive
+  "-D411", # Missing line after docstring. Black is doing it so it looks like a false
+           # positive
 ]
 flake8-eradicate = ["+*"]
 flake8-expression-complexity = ["+*"]
