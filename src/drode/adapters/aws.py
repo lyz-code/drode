@@ -51,7 +51,7 @@ class AWS:
 
     @staticmethod
     def get_autoscaling_group(autoscaling_name: str) -> AutoscalerInfo:
-        """Get information of the autoscaling group and associated resources.
+        """Get information of the autoscaling group and associated resources. # noqa
 
         Args:
             autoscaling_name: Autoscaling group name

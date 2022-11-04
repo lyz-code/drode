@@ -149,11 +149,13 @@ class Drone:
                     response = requests.post(
                         url,
                         headers={"Authorization": f"Bearer {self.drone_token}"},
+                        timeout=10,
                     )
                 else:
                     response = requests.get(
                         url,
                         headers={"Authorization": f"Bearer {self.drone_token}"},
+                        timeout=10,
                     )
 
                 if response.status_code == 200:
