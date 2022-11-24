@@ -3,13 +3,13 @@
 import logging
 import os
 import re
+from pathlib import Path
 from typing import Any, Dict
 from unittest.mock import patch
 
 import pytest
 from _pytest.logging import LogCaptureFixture
 from click.testing import CliRunner
-from py._path.local import LocalPath
 from tests.fake_adapters import FakeAWS, FakeDrone
 
 from drode.config import Config
@@ -55,15 +55,15 @@ def test_version(runner: CliRunner) -> None:
 
 
 def test_load_config_handles_configerror_exceptions(
-    runner: CliRunner, tmpdir: LocalPath, caplog: LogCaptureFixture
+    runner: CliRunner, tmp_path: Path, caplog: LogCaptureFixture
 ) -> None:
     """
     Given: A wrong configuration file.
     When: CLI is initialized
     Then: The ConfigError exception is gracefully handled.
     """
-    config_file = tmpdir.join("config.yaml")  # type: ignore
-    config_file.write("[ invalid yaml")
+    config_file = tmp_path / "config.yaml"
+    config_file.write_text("[ invalid yaml")
 
     result = runner.invoke(cli, ["-c", str(config_file), "null"])
 
@@ -177,14 +177,12 @@ def test_wait_subcommand_calls_wait_service(
         raising the terminal bell when finished.
     """
     fake_dependencies["drone"].set_builds(
-        {
-            209: [
-                BuildInfoFactory.build(
-                    number=209,
-                    finished=1,
-                ),
-            ]
-        }
+        [
+            BuildInfoFactory.build(
+                number=209,
+                finished=1,
+            ),
+        ]
     )
 
     result = runner.invoke(cli, ["wait"], obj=fake_dependencies)
@@ -207,14 +205,12 @@ def test_wait_subcommand_accepts_build_number_argument(
     Then: The service wait is called with the build number.
     """
     fake_dependencies["drone"].set_builds(
-        {
-            209: [
-                BuildInfoFactory.build(
-                    number=209,
-                    finished=1,
-                ),
-            ]
-        }
+        [
+            BuildInfoFactory.build(
+                number=209,
+                finished=1,
+            ),
+        ]
     )
 
     result = runner.invoke(cli, ["wait", "209"], obj=fake_dependencies)
@@ -231,14 +227,12 @@ def test_wait_subcommand_handles_unhappy_path(
     Then: The exception is handled gracefully.
     """
     fake_dependencies["drone"].set_builds(
-        {
-            209: [
-                BuildInfoFactory.build(
-                    number="invalid",
-                    finished=1,
-                ),
-            ]
-        }
+        [
+            BuildInfoFactory.build(
+                number="invalid",
+                finished=1,
+            ),
+        ]
     )
 
     result = runner.invoke(cli, ["wait", "1"], obj=fake_dependencies)
@@ -287,28 +281,26 @@ def test_promote_happy_path(
     Then: The build is promoted.
     """
     fake_dependencies["drone"].set_builds(
-        {
-            208: [
-                BuildInfoFactory.build(
-                    number=208,
-                    finished=1,
-                    target="master",
-                    status="success",
-                    after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-                    message="updated README",
-                    event="push",
-                ),
-                BuildInfoFactory.build(
-                    number=208,
-                    finished=1,
-                    target="master",
-                    status="success",
-                    after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-                    message="updated README",
-                    event="push",
-                ),
-            ],
-        }
+        [
+            BuildInfoFactory.build(
+                number=208,
+                finished=1,
+                target="master",
+                status="success",
+                after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                message="updated README",
+                event="push",
+            ),
+            BuildInfoFactory.build(
+                number=208,
+                finished=1,
+                target="master",
+                status="success",
+                after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                message="updated README",
+                event="push",
+            ),
+        ],
     )
     with patch("drode.services.ask", return_value=True):
 
@@ -338,28 +330,26 @@ def test_promote_happy_path_with_wait_flag(
     Then: The build is promoted and then we wait for it to finish.
     """
     fake_dependencies["drone"].set_builds(
-        {
-            208: [
-                BuildInfoFactory.build(
-                    number=208,
-                    finished=1,
-                    target="master",
-                    status="success",
-                    after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-                    message="updated README",
-                    event="push",
-                ),
-                BuildInfoFactory.build(
-                    number=208,
-                    finished=1,
-                    target="master",
-                    status="success",
-                    after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-                    message="updated README",
-                    event="push",
-                ),
-            ],
-        }
+        [
+            BuildInfoFactory.build(
+                number=208,
+                finished=1,
+                target="master",
+                status="success",
+                after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                message="updated README",
+                event="push",
+            ),
+            BuildInfoFactory.build(
+                number=208,
+                finished=1,
+                target="master",
+                status="success",
+                after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                message="updated README",
+                event="push",
+            ),
+        ],
     )
     with patch("drode.services.ask", return_value=True):
 
@@ -493,3 +483,140 @@ def test_status_unhappy_path(
         "There are more than one project configured but none is marked as active. "
         "Please use drode set command to define one.",
     ) in caplog.record_tuples
+
+
+def test_time_happy_path(
+    runner: CliRunner,
+    caplog: LogCaptureFixture,
+    fake_dependencies: FakeDeps,
+) -> None:
+    """
+    Given: A drode program with two builds
+    When: The time subcommand is called.
+    Then: The mean and standard error of the build times is returned.
+    """
+    fake_dependencies["drone"].set_builds(
+        [
+            BuildInfoFactory.build(
+                number=596,
+                target="master",
+                status="success",
+                started=1669045653,
+                finished=1669046073,
+                after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                message="updated README",
+                event="push",
+            ),
+            BuildInfoFactory.build(
+                number=612,
+                target="master",
+                status="success",
+                started=1669212776,
+                finished=1669213278,
+                after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                message="updated README",
+                event="push",
+            ),
+        ],
+    )
+    with patch("drode.services.ask", return_value=True):
+
+        result = runner.invoke(cli, ["time"], obj=fake_dependencies)
+
+    assert result.exit_code == 0
+    assert "Analyzing pipeline test_projects/webpage" in result.stdout
+    assert "Using 2 successful builds" in result.stdout
+    assert "Mean build time: 07:41" in result.stdout
+    assert "Standard deviation time: 00:29" in result.stdout
+
+
+def test_time_limit_number_jobs(
+    runner: CliRunner,
+    caplog: LogCaptureFixture,
+    fake_dependencies: FakeDeps,
+) -> None:
+    """
+    Given: A drode program with two builds
+    When: The time subcommand is called with a limit in number of jobs
+    Then: The mean and standard error of the build times is returned.
+    """
+    fake_dependencies["drone"].set_builds(
+        [
+            BuildInfoFactory.build(
+                number=612,
+                target="master",
+                status="success",
+                started=1669212776,
+                finished=1669213278,
+                after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                message="updated README",
+                event="push",
+            ),
+            BuildInfoFactory.build(
+                number=596,
+                target="master",
+                status="success",
+                started=1669045653,
+                finished=1669046073,
+                after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                message="updated README",
+                event="push",
+            ),
+        ],
+    )
+    with patch("drode.services.ask", return_value=True):
+
+        result = runner.invoke(cli, ["time", "-n", "1"], obj=fake_dependencies)
+
+    assert result.exit_code == 0
+    assert "Analyzing pipeline test_projects/webpage" in result.stdout
+    assert "Using 1 successful builds" in result.stdout
+    assert "Mean build time: 08:22" in result.stdout
+    assert "Standard deviation time: 00:00" in result.stdout
+
+
+def test_time_specified_pipeline(
+    runner: CliRunner,
+    caplog: LogCaptureFixture,
+    fake_dependencies: FakeDeps,
+) -> None:
+    """
+    Given: A drode program with two builds
+    When: The time subcommand is called with a specific pipeline.
+    Then: The mean and standard error of the build times is returned.
+    """
+    fake_dependencies["drone"].set_builds(
+        [
+            BuildInfoFactory.build(
+                number=596,
+                target="master",
+                status="success",
+                started=1669045653,
+                finished=1669046073,
+                after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                message="updated README",
+                event="push",
+            ),
+            BuildInfoFactory.build(
+                number=612,
+                target="master",
+                status="success",
+                started=1669212776,
+                finished=1669213278,
+                after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                message="updated README",
+                event="push",
+            ),
+        ],
+    )
+    with patch("drode.services.ask", return_value=True):
+
+        result = runner.invoke(
+            cli, ["time", "--pipeline", "test/pipeline"], obj=fake_dependencies
+        )
+
+    assert result.exit_code == 0
+    assert "Analyzing pipeline test/pipeline" in result.stdout
+    assert "Using 2 successful builds" in result.stdout
+    assert "Mean build time: 07:41" in result.stdout
+    assert "Standard deviation time: 00:29" in result.stdout

@@ -144,6 +144,37 @@ def status(ctx: Context) -> None:
         sys.exit(1)
 
 
+@cli.command()
+@click.option(
+    "-p",
+    "--pipeline",
+    type=str,
+    help="Analyze a pipeline that's not from the active project",
+)
+@click.option("-n", "--number_builds", type=int, help="Successful builds to analyze")
+@click.pass_context
+def time(
+    ctx: Context, pipeline: Optional[str] = None, number_builds: Optional[int] = None
+) -> None:
+    """Print the mean and standard deviation time of successful builds."""
+    try:
+        config = ctx.obj["config"]
+        if pipeline is None:
+            project_pipeline = config.get(
+                f"projects.{config['active_project']}.pipeline"
+            )
+        else:
+            project_pipeline = pipeline
+
+        pipeline_times = services.pipeline_times(
+            project_pipeline, ctx.obj["drone"], number_builds
+        )
+        views.print_times(project_pipeline, pipeline_times)
+    except ConfigError as error:
+        log.error(error)
+        sys.exit(1)
+
+
 @cli.command(hidden=True)
 def null() -> None:
     """Do nothing.

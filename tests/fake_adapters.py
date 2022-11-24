@@ -1,7 +1,7 @@
 """Gather the Fake adapters for the e2e tests."""
 
 import logging
-from typing import Dict, List
+from typing import List
 
 from drode.adapters.aws import AWS, AutoscalerInfo, AWSConfigurationError
 from drode.adapters.drone import (
@@ -13,9 +13,6 @@ from drode.adapters.drone import (
 
 from .factories import BuildInfoFactory
 
-Builds = Dict[int, List[BuildInfo]]
-
-
 log = logging.getLogger(__name__)
 
 
@@ -25,7 +22,8 @@ class FakeDrone(Drone):
     def __init__(self, drone_url: str, drone_token: str) -> None:
         """Configure the connection details."""
         super().__init__(drone_url, drone_token)
-        self.builds: Builds = {}
+        self._builds: List[BuildInfo] = []
+        self._build_infos: List[BuildInfo] = []
         self.correct_config = True
 
     def check_configuration(self) -> None:
@@ -46,26 +44,50 @@ class FakeDrone(Drone):
             )
         log.info("Drone: OK")
 
-    def set_builds(self, builds: Builds) -> None:
-        """Set the builds expected by the tests
+    def set_builds(self, builds: List[BuildInfo]) -> None:
+        """Set the builds expected by the tests.
 
         Args:
             builds: The builds definition required by the test.
 
-                It expects a dictionary with the build number as keys, the values are
-                a list of the different states of the build number each time it's
-                queried.
+                For example:
+
+                builds = [
+                    BuildInfo("number": 209, "finished": 0),
+                    BuildInfo("number": 209, "finished": 1591129124),
+                ]
+        """
+        self._builds = builds
+
+    def builds(self, project_pipeline: str) -> List[BuildInfo]:
+        """Return the builds of a project pipeline.
+
+        Args:
+            project_pipeline: Drone pipeline identifier.
+                In the format of `repo_owner/repo_name`.
+
+        Returns:
+            info: all builds information.
+        """
+        return self._builds
+
+    def set_build_infos(self, builds: List[BuildInfo]) -> None:
+        """Set the build info expected by the tests.
+
+        Each element will be returned each time you call build_info.
+
+        Args:
+            builds: The builds definition required by the test.
 
                 For example:
 
-                builds = {
-                    274: [
-                        {"number": 209, "finished": 0},
-                        {"number": 209, "finished": 1591129124},
-                    ]
-                }
+                builds = [
+                    BuildInfo("number": 209, "finished": 0),
+                    BuildInfo("number": 209, "finished": 1591129124),
+                ]
         """
-        self.builds = builds
+        self._build_infos = builds
+        self._builds = builds
 
     def build_info(self, project_pipeline: str, build_number: int) -> BuildInfo:
         """Return the information of the build.
@@ -78,58 +100,15 @@ class FakeDrone(Drone):
         Returns:
             info: build information.
         """
+        if self._build_infos:
+            return self._build_infos.pop(0)
         try:
-            return self.builds[build_number].pop(0)
-        except KeyError as error:
+            return [build for build in self._builds if build.number == build_number][0]
+        except IndexError as error:
             raise DroneBuildError(
                 f"The build {build_number} was not found at "
                 f"the pipeline {project_pipeline}"
             ) from error
-
-    def last_build_info(self, project_pipeline: str) -> BuildInfo:
-        """Return the information of the last build.
-
-        Args:
-            project_pipeline: Drone pipeline identifier.
-                In the format of `repo_owner/repo_name`.
-        Returns:
-            info: Last build information.
-        """
-        try:
-            last_build_number = sorted(self.builds.keys(), reverse=True)[0]
-        except IndexError as error:
-            raise ValueError("There are no builds") from error
-
-        return self.build_info(project_pipeline, last_build_number)
-
-    def last_success_build_info(
-        self, project_pipeline: str, branch: str = "master"
-    ) -> BuildInfo:
-        """Return the information of the last successful build.
-
-        Args:
-            project_pipeline: Drone pipeline identifier.
-                In the format of `repo_owner/repo_name`.
-            branch: Branch to search the last build.
-
-        Returns:
-            info: last successful build number information.
-        """
-        build_candidates = [
-            build_number
-            for build_number, build in self.builds.items()
-            if (
-                build[0].status == "success"
-                and build[0].target == branch
-                and build[0].event == "push"
-            )
-        ]
-        try:
-            last_build_number = sorted(build_candidates)[0]
-        except IndexError as error:
-            raise ValueError("There are no valid builds") from error
-
-        return self.build_info(project_pipeline, last_build_number)
 
     def promote(
         self, project_pipeline: str, build_number: int, environment: str
@@ -151,9 +130,7 @@ class FakeDrone(Drone):
             raise ValueError("You don't have defined correctly the build number")
 
         new_build_number = last_build.number + 1
-        self.builds[new_build_number] = [
-            BuildInfoFactory.build(number=new_build_number)
-        ]
+        self._builds.append(BuildInfoFactory.build(number=new_build_number))
 
         return new_build_number
 
@@ -202,6 +179,7 @@ class FakeAWS(AWS):
                         'template': str = LaunchConfiguration or
                             LaunchTemplate:LaunchTemplateVersion that generated the
                             instance.
+
         Raises:
             AWSStateError: If no autoscaling groups are found with that name.
         """

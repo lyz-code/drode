@@ -20,22 +20,20 @@ def test_wait_waits_for_the_build_to_finish(
     Then: It will wait till the build has finished.
     """
     # The first time we query for the job 209, we'll get that it has not finished
-    drone.set_builds(
-        {
-            209: [
-                BuildInfoFactory.build(
-                    number=209,
-                    event="promote",
-                    trigger="trigger_author",
-                    finished=0,
-                ),
-                BuildInfoFactory.build(
-                    number=209,
-                    finished=1591129124,
-                    status="success",
-                ),
-            ]
-        }
+    drone.set_build_infos(
+        [
+            BuildInfoFactory.build(
+                number=209,
+                event="promote",
+                trigger="trigger_author",
+                finished=0,
+            ),
+            BuildInfoFactory.build(
+                number=209,
+                finished=1591129124,
+                status="success",
+            ),
+        ]
     )
     with patch("drode.services.time") as time_mock:
 
@@ -67,31 +65,24 @@ def test_wait_defaults_to_the_last_build(
     When: the service wait is called without a build number.
     Then: It will wait on the last build number.
     """
-    drone.set_builds(
-        {
-            209: [
-                BuildInfoFactory.build(
-                    number=209,
-                    finished=0,
-                ),
-                BuildInfoFactory.build(
-                    number=209,
-                    event="promote",
-                    trigger="trigger_author",
-                    finished=0,
-                ),
-                BuildInfoFactory.build(
-                    number=209,
-                    finished=1591129124,
-                    status="success",
-                ),
-            ],
-            208: [
-                BuildInfoFactory.build(
-                    number=208, finished=1591129124, status="success"
-                )
-            ],
-        }
+    drone.set_build_infos(
+        [
+            BuildInfoFactory.build(
+                number=209,
+                finished=0,
+            ),
+            BuildInfoFactory.build(
+                number=209,
+                event="promote",
+                trigger="trigger_author",
+                finished=0,
+            ),
+            BuildInfoFactory.build(
+                number=209,
+                finished=1591129124,
+                status="success",
+            ),
+        ],
     )
     with patch("drode.services.time"):
 
@@ -114,13 +105,7 @@ def test_wait_returns_if_there_are_no_running_builds(
     Then: It will inform the user that there are no active jobs.
     """
     drone.set_builds(
-        {
-            208: [
-                BuildInfoFactory.build(
-                    number=208, finished=1591129124, status="success"
-                )
-            ],
-        }
+        [BuildInfoFactory.build(number=208, finished=1591129124, status="success")],
     )
 
     result = services.wait(drone, "owner/repository")
