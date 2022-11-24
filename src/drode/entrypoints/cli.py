@@ -163,7 +163,6 @@ def time(
             project_pipeline = config.get(
                 f"projects.{config['active_project']}.pipeline"
             )
-            assert isinstance(project_pipeline, str)
         else:
             project_pipeline = pipeline
 

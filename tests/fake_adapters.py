@@ -23,6 +23,7 @@ class FakeDrone(Drone):
         """Configure the connection details."""
         super().__init__(drone_url, drone_token)
         self._builds: List[BuildInfo] = []
+        self._build_infos: List[BuildInfo] = []
         self.correct_config = True
 
     def check_configuration(self) -> None:
@@ -70,6 +71,24 @@ class FakeDrone(Drone):
         """
         return self._builds
 
+    def set_build_infos(self, builds: List[BuildInfo]) -> None:
+        """Set the build info expected by the tests.
+
+        Each element will be returned each time you call build_info.
+
+        Args:
+            builds: The builds definition required by the test.
+
+                For example:
+
+                builds = [
+                    BuildInfo("number": 209, "finished": 0),
+                    BuildInfo("number": 209, "finished": 1591129124),
+                ]
+        """
+        self._build_infos = builds
+        self._builds = builds
+
     def build_info(self, project_pipeline: str, build_number: int) -> BuildInfo:
         """Return the information of the build.
 
@@ -81,6 +100,8 @@ class FakeDrone(Drone):
         Returns:
             info: build information.
         """
+        if self._build_infos:
+            return self._build_infos.pop(0)
         try:
             return [build for build in self._builds if build.number == build_number][0]
         except IndexError as error:
@@ -158,6 +179,7 @@ class FakeAWS(AWS):
                         'template': str = LaunchConfiguration or
                             LaunchTemplate:LaunchTemplateVersion that generated the
                             instance.
+
         Raises:
             AWSStateError: If no autoscaling groups are found with that name.
         """

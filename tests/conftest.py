@@ -1,10 +1,10 @@
 """Store the classes and fixtures used throughout the tests."""
 
 import os
+from pathlib import Path
 from shutil import copyfile
 
 import pytest
-from _pytest.tmpdir import TempPathFactory
 
 from drode.config import Config
 
@@ -15,12 +15,13 @@ os.environ["DRONE_TOKEN"] = "drone_token"
 
 
 @pytest.fixture(name="config")
-def fixture_config(tmpdir_factory: TempPathFactory) -> Config:
+def fixture_config(tmp_path: Path) -> Config:
     """Configure the Config object for the tests."""
-    data = tmpdir_factory.mktemp("data")
-    config_file = str(data.join("config.yaml"))  # type: ignore
+    data = tmp_path / "data"
+    data.mkdir()
+    config_file = data / "config.yaml"
     copyfile("tests/assets/config.yaml", config_file)
-    config = Config(config_file)
+    config = Config(str(config_file))
 
     return config
 

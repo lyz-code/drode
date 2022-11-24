@@ -20,7 +20,7 @@ def test_wait_waits_for_the_build_to_finish(
     Then: It will wait till the build has finished.
     """
     # The first time we query for the job 209, we'll get that it has not finished
-    drone.set_builds(
+    drone.set_build_infos(
         [
             BuildInfoFactory.build(
                 number=209,
@@ -65,7 +65,7 @@ def test_wait_defaults_to_the_last_build(
     When: the service wait is called without a build number.
     Then: It will wait on the last build number.
     """
-    drone.set_builds(
+    drone.set_build_infos(
         [
             BuildInfoFactory.build(
                 number=209,
@@ -82,7 +82,6 @@ def test_wait_defaults_to_the_last_build(
                 finished=1591129124,
                 status="success",
             ),
-            BuildInfoFactory.build(number=208, finished=1591129124, status="success"),
         ],
     )
     with patch("drode.services.time"):

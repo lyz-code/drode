@@ -70,6 +70,7 @@ class AWS:
                         'Template': str = LaunchConfiguration or
                             LaunchTemplate:LaunchTemplateVersion that generated the
                             instance.
+
         Raises:
             AWSStateError: If no autoscaling groups are found with that name.
         """
