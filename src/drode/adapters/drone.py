@@ -69,6 +69,14 @@ class BuildInfo:  # noqa: R0902
 
         return entity
 
+    def __gt__(self, other: "BuildInfo") -> bool:
+        """Return if we're greater than other."""
+        return self.id > other.id
+
+    def __lt__(self, other: "BuildInfo") -> bool:
+        """Return if we're smaller than other."""
+        return self.id < other.id
+
 
 class Drone:
     """Drone adapter.
@@ -83,25 +91,23 @@ class Drone:
         self.drone_url = drone_url
         self.drone_token = drone_token
 
-    def check_configuration(self) -> None:
-        """Check if the client is able to interact with the server.
+    def builds(self, project_pipeline: str) -> List[BuildInfo]:
+        """Return the builds of a project pipeline.
 
-        Makes sure that an API call works as expected.
+        Args:
+            project_pipeline: Drone pipeline identifier.
+                In the format of `repo_owner/repo_name`.
 
-        Raises:
-            DroneConfigurationError: if any of the checks fail.
+        Returns:
+            info: all builds information.
         """
-        try:
-            self.get(f"{self.drone_url}/api/user/repos")
-        except DroneAPIError as error:
-            log.error("Drone: KO")
-            raise DroneConfigurationError(
-                "There was a problem contacting the Drone server. \n\n"
-                "\t  Please make sure the DRONE_SERVER and DRONE_TOKEN "
-                "environmental variables are set. \n"
-                "\t  https://docs.drone.io/cli/configure/"
-            ) from error
-        log.info("Drone: OK")
+        build_history = self.get(
+            f"{self.drone_url}/api/repos/{project_pipeline}/builds"
+        ).json()
+
+        builds = [BuildInfo.from_kwargs(**build_data) for build_data in build_history]
+
+        return builds
 
     def build_info(self, project_pipeline: str, build_number: int) -> BuildInfo:
         """Return the information of the build.
@@ -149,11 +155,13 @@ class Drone:
                     response = requests.post(
                         url,
                         headers={"Authorization": f"Bearer {self.drone_token}"},
+                        timeout=2,
                     )
                 else:
                     response = requests.get(
                         url,
                         headers={"Authorization": f"Bearer {self.drone_token}"},
+                        timeout=2,
                     )
 
                 if response.status_code == 200:
@@ -168,19 +176,37 @@ class Drone:
             f"{response.status_code} error while trying to access {url}"
         )
 
+    def check_configuration(self) -> None:
+        """Check if the client is able to interact with the server.
+
+        Makes sure that an API call works as expected.
+
+        Raises:
+            DroneConfigurationError: if any of the checks fail.
+        """
+        try:
+            self.get(f"{self.drone_url}/api/user/repos")
+        except DroneAPIError as error:
+            log.error("Drone: KO")
+            raise DroneConfigurationError(
+                "There was a problem contacting the Drone server. \n\n"
+                "\t  Please make sure the DRONE_SERVER and DRONE_TOKEN "
+                "environmental variables are set. \n"
+                "\t  https://docs.drone.io/cli/configure/"
+            ) from error
+        log.info("Drone: OK")
+
     def last_build_info(self, project_pipeline: str) -> BuildInfo:
         """Return the information of the last build.
 
         Args:
             project_pipeline: Drone pipeline identifier.
                 In the format of `repo_owner/repo_name`.
+
         Returns:
             info: Last build information.
         """
-        build_data = self.get(
-            f"{self.drone_url}/api/repos/{project_pipeline}/builds"
-        ).json()[0]
-        return BuildInfo.from_kwargs(**build_data)
+        return self.builds(project_pipeline)[0]
 
     def last_success_build_info(
         self, project_pipeline: str, branch: str = "master"
@@ -195,17 +221,13 @@ class Drone:
         Returns:
             info: last successful build number information.
         """
-        build_history = self.get(
-            f"{self.drone_url}/api/repos/{project_pipeline}/builds"
-        ).json()
-
-        for build_data in build_history:
+        for build in self.builds(project_pipeline):
             if (
-                build_data["status"] == "success"
-                and build_data["target"] == branch
-                and build_data["event"] == "push"
+                build.status == "success"
+                and build.target == branch
+                and build.event == "push"
             ):
-                return BuildInfo.from_kwargs(**build_data)
+                return build
         raise DroneBuildError(
             f"There are no successful jobs with target branch {branch}"
         )

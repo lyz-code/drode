@@ -6,7 +6,8 @@ and handlers to achieve the program's purpose.
 
 import logging
 import time
-from typing import Dict, Optional
+from math import sqrt
+from typing import Dict, Optional, Tuple
 
 from .adapters import Drone
 from .adapters.aws import AWS, AutoscalerInfo
@@ -190,3 +191,37 @@ def project_status(config: Config, aws: AWS) -> ProjectStatus:
         project[environment] = autoscaler_info
 
     return project
+
+
+PipelineTimes = Tuple[float, float, int]
+
+
+def pipeline_times(
+    project_pipeline: str, drone: Drone, number_builds: Optional[int] = None
+) -> PipelineTimes:
+    """Calculate the mean and standard deviation times of the successful builds.
+
+    Args:
+        config: Program configuration.
+        drone: Drone adapter.
+
+    Returns:
+        mean_time:
+        standard_deviation:
+            number_builds:
+    """
+    successful_builds = [
+        build for build in drone.builds(project_pipeline) if build.status == "success"
+    ]
+    if number_builds is not None:
+        successful_builds = successful_builds[:number_builds]
+
+    number_builds = len(successful_builds)
+    build_times = [build.finished - build.started for build in successful_builds]
+    mean_time = sum(build_times) / number_builds
+    standard_deviation = (
+        sqrt(sum((build_time - mean_time) ** 2 for build_time in build_times))
+        / number_builds
+    )
+
+    return mean_time, standard_deviation, number_builds

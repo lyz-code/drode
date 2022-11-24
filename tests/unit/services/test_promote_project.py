@@ -22,28 +22,24 @@ def test_promote_promotes_desired_build_number(
     Then: The build is promoted.
     """
     drone.set_builds(
-        {
-            209: [
-                BuildInfoFactory.build(
-                    number=209,
-                    finished=1,
-                    target="feat/1",
-                    status="success",
-                    event="push",
-                )
-            ],
-            208: [
-                BuildInfoFactory.build(
-                    number=208,
-                    finished=1,
-                    target="master",
-                    status="success",
-                    event="push",
-                    after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-                    message="updated README",
-                )
-            ],
-        }
+        [
+            BuildInfoFactory.build(
+                number=209,
+                finished=1,
+                target="feat/1",
+                status="success",
+                event="push",
+            ),
+            BuildInfoFactory.build(
+                number=208,
+                finished=1,
+                target="master",
+                status="success",
+                event="push",
+                after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                message="updated README",
+            ),
+        ],
     )
     with patch("drode.services.ask", return_value=True) as ask_mock:
 
@@ -69,19 +65,17 @@ def test_promote_does_nothing_if_user_doesnt_confirm(
     Then: The build is not promoted.
     """
     drone.set_builds(
-        {
-            208: [
-                BuildInfoFactory.build(
-                    number=208,
-                    finished=1,
-                    target="master",
-                    status="success",
-                    event="push",
-                    after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-                    message="updated README",
-                )
-            ],
-        }
+        [
+            BuildInfoFactory.build(
+                number=208,
+                finished=1,
+                target="master",
+                status="success",
+                event="push",
+                after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                message="updated README",
+            )
+        ],
     )
     with patch("drode.services.ask", return_value=False) as ask_mock:
 
@@ -103,14 +97,12 @@ def test_promote_doesnt_promote_failed_jobs(drone: FakeDrone) -> None:
     Then: An exception is raised
     """
     drone.set_builds(
-        {
-            209: [
-                BuildInfoFactory.build(
-                    number=209,
-                    status="killed",
-                )
-            ]
-        }
+        [
+            BuildInfoFactory.build(
+                number=209,
+                status="killed",
+            )
+        ]
     )
 
     with pytest.raises(DronePromoteError) as error:
@@ -130,28 +122,24 @@ def test_promote_launches_last_successful_master_job_if_none(
     Then: The last successful build that pushed to master is promoted.
     """
     drone.set_builds(
-        {
-            209: [
-                BuildInfoFactory.build(
-                    number=209,
-                    finished=1,
-                    target="feat/1",
-                    status="success",
-                    event="push",
-                )
-            ],
-            208: [
-                BuildInfoFactory.build(
-                    number=208,
-                    finished=1,
-                    target="master",
-                    status="success",
-                    event="push",
-                    after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
-                    message="updated README",
-                )
-            ],
-        }
+        [
+            BuildInfoFactory.build(
+                number=209,
+                finished=1,
+                target="feat/1",
+                status="success",
+                event="push",
+            ),
+            BuildInfoFactory.build(
+                number=208,
+                finished=1,
+                target="master",
+                status="success",
+                event="push",
+                after="9fc1ad6ebf12462f3f9773003e26b4c6f54a772e",
+                message="updated README",
+            ),
+        ],
     )
     with patch("drode.services.ask", return_value=True) as ask_mock:
 
