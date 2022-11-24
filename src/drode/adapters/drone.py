@@ -26,8 +26,8 @@ class DronePromoteError(Exception):
     """Exception to gather job promotion errors."""
 
 
-@dataclass
 # R0902: Too many attributes, but it's a model, so it doesn't mind
+@dataclass  # noqa: R0902
 class BuildInfo:  # noqa: R0902
     """Build information schema."""
 
