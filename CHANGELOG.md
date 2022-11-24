@@ -1,3 +1,15 @@
+## 1.3.0 (2022-11-24)
+
+### Feat
+
+- add the time command
+- allow the ordering of BuildInfo models
+
+### Refactor
+
+- reorder Drone methods
+- **drone**: create the builds method
+
 ## 1.2.4 (2022-07-12)
 
 ### Fix
