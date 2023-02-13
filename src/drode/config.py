@@ -10,7 +10,6 @@ from ruamel.yaml import YAML
 from ruamel.yaml.parser import ParserError
 from ruamel.yaml.scanner import ScannerError
 
-
 # NOTE: We can't migrate to maison or goodconf as they only support read only
 # interaction with the configuration, and we need to update it because we save the
 # state in the config file, which is not that nice.

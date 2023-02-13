@@ -12,7 +12,6 @@ from ..adapters import Drone
 from ..adapters.aws import AWS
 from ..config import Config, ConfigError
 
-
 log = logging.getLogger(__name__)
 
 

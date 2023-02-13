@@ -8,7 +8,6 @@ from botocore.exceptions import ClientError, NoRegionError
 from pydantic import BaseModel  # noqa: E0611
 from pydantic import Field
 
-
 log = logging.getLogger(__name__)
 
 

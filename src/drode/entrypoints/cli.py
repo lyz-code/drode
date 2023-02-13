@@ -15,7 +15,6 @@ from ..config import ConfigError
 from ..version import __version__
 from . import load_aws, load_config, load_drone, load_logger
 
-
 log = logging.getLogger(__name__)
 
 

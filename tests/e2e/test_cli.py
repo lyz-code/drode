@@ -18,7 +18,6 @@ from drode.version import __version__
 
 from ..factories import BuildInfoFactory
 
-
 FakeDeps = Dict[str, Any]
 
 

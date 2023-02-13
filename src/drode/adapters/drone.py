@@ -7,7 +7,6 @@ from typing import Any, List, Optional
 
 import requests
 
-
 log = logging.getLogger(__name__)
 
 

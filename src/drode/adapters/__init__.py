@@ -2,5 +2,4 @@
 
 from .drone import Drone, DroneConfigurationError
 
-
 __all__ = ["Drone", "DroneConfigurationError"]
