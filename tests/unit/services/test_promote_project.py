@@ -42,6 +42,7 @@ def test_promote_promotes_desired_build_number(
         ],
     )
     with patch("drode.services.ask", return_value=True) as ask_mock:
+        # Until https://github.com/jamescooke/flake8-aaa/issues/192 is solved
 
         result = services.promote(drone, "owner/repository", "production", 208)
 
@@ -78,6 +79,7 @@ def test_promote_does_nothing_if_user_doesnt_confirm(
         ],
     )
     with patch("drode.services.ask", return_value=False) as ask_mock:
+        # Until https://github.com/jamescooke/flake8-aaa/issues/192 is solved
 
         result = services.promote(drone, "owner/repository", "production", 208)
 
@@ -142,6 +144,7 @@ def test_promote_launches_last_successful_master_job_if_none(
         ],
     )
     with patch("drode.services.ask", return_value=True) as ask_mock:
+        # Until https://github.com/jamescooke/flake8-aaa/issues/192 is solved
 
         result = services.promote(drone, "owner/repository", "production")
 
@@ -163,6 +166,7 @@ def test_ask_returns_true_if_user_anwers_yes(answer: str) -> None:
     Then: it returns True
     """
     with patch("builtins.input", return_value=answer):
+        # Until https://github.com/jamescooke/flake8-aaa/issues/192 is solved
 
         result = services.ask("Do you want to continue? ([y]/n): ")
 
@@ -177,6 +181,7 @@ def test_ask_returns_false_otherwise(answer: str) -> None:
     Then: it returns True
     """
     with patch("builtins.input", return_value=answer):
+        # Until https://github.com/jamescooke/flake8-aaa/issues/192 is solved
 
         result = services.ask("Do you want to continue? ([y]/n): ")
 

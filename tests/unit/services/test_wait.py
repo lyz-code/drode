@@ -1,6 +1,7 @@
 """Tests the wait service."""
 
 import logging
+from unittest import mock
 from unittest.mock import call, patch
 
 from _pytest.logging import LogCaptureFixture
@@ -35,7 +36,8 @@ def test_wait_waits_for_the_build_to_finish(
             ),
         ]
     )
-    with patch("drode.services.time") as time_mock:
+    with mock.patch("drode.services.time") as time_mock:
+        # Until https://github.com/jamescooke/flake8-aaa/issues/192 is solved
 
         result = services.wait(drone, "owner/repository", 209)
 
@@ -85,6 +87,7 @@ def test_wait_defaults_to_the_last_build(
         ],
     )
     with patch("drode.services.time"):
+        # Until https://github.com/jamescooke/flake8-aaa/issues/192 is solved
 
         result = services.wait(drone, "owner/repository")
 

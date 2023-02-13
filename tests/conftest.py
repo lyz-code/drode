@@ -10,6 +10,7 @@ from drode.config import Config
 
 from .fake_adapters import FakeAWS, FakeDrone
 
+
 os.environ["DRONE_SERVER"] = "https://drone.url"
 os.environ["DRONE_TOKEN"] = "drone_token"
 

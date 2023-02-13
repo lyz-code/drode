@@ -14,6 +14,7 @@ from .adapters.aws import AWS, AutoscalerInfo
 from .adapters.drone import DronePromoteError
 from .config import Config, ConfigError
 
+
 log = logging.getLogger(__name__)
 
 

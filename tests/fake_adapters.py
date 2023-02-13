@@ -13,6 +13,7 @@ from drode.adapters.drone import (
 
 from .factories import BuildInfoFactory
 
+
 log = logging.getLogger(__name__)
 
 
