@@ -303,6 +303,7 @@ def test_promote_happy_path(
         ],
     )
     with patch("drode.services.ask", return_value=True):
+        # Until https://github.com/jamescooke/flake8-aaa/issues/192 is solved
 
         result = runner.invoke(
             cli, ["promote", "production", "208"], obj=fake_dependencies
@@ -352,6 +353,7 @@ def test_promote_happy_path_with_wait_flag(
         ],
     )
     with patch("drode.services.ask", return_value=True):
+        # Until https://github.com/jamescooke/flake8-aaa/issues/192 is solved
 
         result = runner.invoke(
             cli, ["promote", "production", "208", wait_flag], obj=fake_dependencies
@@ -520,6 +522,7 @@ def test_time_happy_path(
         ],
     )
     with patch("drode.services.ask", return_value=True):
+        # Until https://github.com/jamescooke/flake8-aaa/issues/192 is solved
 
         result = runner.invoke(cli, ["time"], obj=fake_dependencies)
 
@@ -565,6 +568,7 @@ def test_time_limit_number_jobs(
         ],
     )
     with patch("drode.services.ask", return_value=True):
+        # Until https://github.com/jamescooke/flake8-aaa/issues/192 is solved
 
         result = runner.invoke(cli, ["time", "-n", "1"], obj=fake_dependencies)
 
@@ -610,6 +614,7 @@ def test_time_specified_pipeline(
         ],
     )
     with patch("drode.services.ask", return_value=True):
+        # Until https://github.com/jamescooke/flake8-aaa/issues/192 is solved
 
         result = runner.invoke(
             cli, ["time", "--pipeline", "test/pipeline"], obj=fake_dependencies
